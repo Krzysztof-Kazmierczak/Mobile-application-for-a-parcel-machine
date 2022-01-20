@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "847602620715",
+    "project_id": "appinz-ce387",
+    "storage_bucket": "appinz-ce387.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:847602620715:android:3c8aea1d77457472718d6e",
+        "android_client_info": {
+          "package_name": "com.example.inzynierka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "847602620715-ll2q8cgg2cgcp2mu1iimet1sduij0vrr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD93nfrBuBHgox78Nz1-sm32HXbMUrmbVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "847602620715-ll2q8cgg2cgcp2mu1iimet1sduij0vrr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

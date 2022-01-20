@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.inzynierka.fragmenty.home.HomeFragment"
+        android:label="home_fragment">
+        <action
+            android:id="@+id/action_homeFragment_to_takepackFragment"
+            app:destination="@id/takepackFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_send"
+            app:destination="@id/send" />
+    </fragment>
+    <fragment
+        android:id="@+id/takepackFragment"
+        android:name="com.example.inzynierka.fragmenty.TakePack.TakepackFragment"
+        android:label="takepack_fragment"
+        tools:layout="@layout/takepack_fragment" >
+        <action
+            android:id="@+id/action_takepackFragment_to_confirmTake"
+            app:destination="@id/confirmTake" />
+    </fragment>
+    <fragment
+        android:id="@+id/send"
+        android:name="com.example.inzynierka.fragmenty.Send.Send"
+        android:label="send_fragment"
+        tools:layout="@layout/send_fragment" >
+        <action
+            android:id="@+id/action_send_to_confirmSend"
+            app:destination="@id/confirmSend" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmSend"
+        android:name="com.example.inzynierka.fragmenty.potwierdzenie.ConfirmSend"
+        android:label="confirm_send_fragment"
+        tools:layout="@layout/confirm_send_fragment" >
+        <action
+            android:id="@+id/action_confirmSend_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmTake"
+        android:name="com.example.inzynierka.fragmenty.potwierdzenie.ConfirmTake"
+        android:label="ConfirmTake" >
+        <action
+            android:id="@+id/action_confirmTake_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+</navigation>
