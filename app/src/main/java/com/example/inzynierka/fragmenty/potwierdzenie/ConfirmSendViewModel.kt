@@ -27,6 +27,15 @@ class ConfirmSendViewModel : ViewModel() {
      //   return cloudResult
    // }
 
+
+//    private var _numerBoxu = MutableLiveData<String>()
+//    val numerBoxu: LiveData<String> = _numerBoxu
+//
+//    fun setNumberId(id: String){
+//        _numerBoxu.postValue(id)
+//    }
+//
+
     fun numberPack(): String {
         numerPaczki = send.getIdPack()
 
@@ -38,9 +47,12 @@ class ConfirmSendViewModel : ViewModel() {
         repository.sendInfoToUser(Id_pack, uid)
     }
 
-    fun boxId(): String {
+
+    fun boxId(): String? {
         numerBoxu = send.getIdBox()
+//        _numerBoxu.value = send.getIdBox()
         return numerBoxu
+//        return _numerBoxu.value
     }
 
 

@@ -54,6 +54,7 @@ class TakepackFragment : Fragment() {
                     //Pobieram informacje o paczce
                     TakepackVm.packData(idMyPack)
                     TakepackVm.cloudResult.observe(viewLifecycleOwner, { packInfo ->
+
                         val sizePack = packInfo.Size
                         val idBoxToOpen = packInfo.Id_box
                         boxIdTF = packInfo.Id_box.toString()

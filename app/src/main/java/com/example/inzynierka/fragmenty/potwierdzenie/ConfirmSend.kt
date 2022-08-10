@@ -21,6 +21,8 @@ import com.example.inzynierka.databinding.ConfirmSendFragmentBinding
 import com.example.inzynierka.databinding.SendFragmentBinding
 import com.example.inzynierka.fragmenty.Send.SendDirections
 import com.example.inzynierka.fragmenty.Send.SendViewModel
+import com.example.inzynierka.fragmenty.TakePack.TakepackFragmentDirections
+import com.example.inzynierka.fragmenty.TakePack.boxIdTF
 import com.example.inzynierka.fragmenty.home.HomeFragmentDirections
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.newFixedThreadPoolContext
@@ -31,8 +33,8 @@ class ConfirmSend : Fragment() {
     private val Send_DEBUG = "Send_DEBUG"
     private var _binding:  ConfirmSendFragmentBinding? = null
     private val binding get() = _binding!!
-    private val ConfirmSendVm by viewModels<ConfirmSendViewModel>()
-
+    private val ConfirmSendVm: ConfirmSendViewModel by viewModels()
+              //confirmSendViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,11 +51,12 @@ class ConfirmSend : Fragment() {
         var numerIdPack = String()
         ConfirmSendVm.boxId()
         ConfirmSendVm.numberPack()
+
         numerIdBox = ConfirmSendVm.numerBoxu
         numerIdPack = ConfirmSendVm.numerPaczki
         if(numerIdBox.toInt()<6)
         {
-            size = "boxsS"
+            size = "box"
         }
         else
         {
@@ -81,7 +84,7 @@ class ConfirmSend : Fragment() {
             ConfirmSendVm.closeBox(size, numerIdBox)
 
             ConfirmSendVm.editPackData(numerIdPack ,numerIdBox)
-            //ConfirmSendVm.packBox()
+            ConfirmSendVm.getPackData(numerIdPack)
 
             findNavController()
                 .navigate(ConfirmSendDirections.actionConfirmSendToHomeFragment().actionId)

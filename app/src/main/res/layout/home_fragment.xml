@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/main_page_color">
 
+
     <Button
         android:id="@+id/Send"
         android:layout_width="wrap_content"

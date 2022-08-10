@@ -41,7 +41,7 @@ class ConfirmTake : Fragment() {
         numerIdPaczki = ConfirmTakeVm.numerPaczki
         if(numerIdBox.toInt()<6)
         {
-            size = "boxsS"
+            size = "box"
         }
         else
         {

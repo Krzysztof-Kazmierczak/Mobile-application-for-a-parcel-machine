@@ -33,4 +33,9 @@ class SendViewModel : ViewModel() {
         repository.editBoxData(size, id, packID)
     }
 
+    fun editUserData(Uid: String, packID: String)
+    {
+        repository.editUserData(Uid, packID)
+    }
+
 }

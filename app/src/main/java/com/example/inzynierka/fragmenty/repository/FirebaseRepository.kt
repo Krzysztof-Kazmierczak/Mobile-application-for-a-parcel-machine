@@ -25,7 +25,7 @@ class FirebaseRepository {
     fun getUserData(): LiveData<User> {
         val cloudResult = MutableLiveData<User>()
         val uid = auth.currentUser?.uid
-        cloud.collection("users")
+        cloud.collection("user")
             .document(uid!!)
             .get()
             .addOnSuccessListener {
@@ -39,14 +39,14 @@ class FirebaseRepository {
     }
 
     fun createNewUser(user: User){
-        cloud.collection("users")
+        cloud.collection("user")
             .document(user.uid!!)
             .set(user)
     }
 
     fun getPackData(id:String): LiveData<Pack> {
         val cloudResult = MutableLiveData<Pack>()
-        cloud.collection("packs")
+        cloud.collection("pack")
             .document(id)
             .get()
             .addOnSuccessListener {
@@ -63,12 +63,13 @@ class FirebaseRepository {
         val uid = auth.currentUser?.uid
         val cloudResult = MutableLiveData<String>()
         var Id_mypack = String()
-        cloud.collection("users")
+        cloud.collection("user")
             .document(uid!!)
             .get()
             .addOnSuccessListener {
                 val pack = it.toObject(User::class.java)
                 if (pack != null) {
+                    Log.d(REPO_DEBUG, pack.toMePackID.toString())
                     Id_mypack = pack.toMePackID.toString()
                 }
                 cloudResult.postValue(Id_mypack)
@@ -84,8 +85,8 @@ class FirebaseRepository {
     fun PutPack(id:String): LiveData<Pack>{
         val cloudResult = MutableLiveData<Pack>()
         val uid = id
-        cloud.collection("packs")
-            .document(uid!!)
+        cloud.collection("pack")
+            .document(uid)
             .get()
             .addOnSuccessListener {
                 val paczka = it.toObject(Pack::class.java)
@@ -260,6 +261,18 @@ class FirebaseRepository {
             }
     }
 
+    fun editUserData(Uid: String, packID: String){
+        cloud.collection("user")
+            .document(Uid)
+            .update("check",1, "toMePackID", packID.toString())
+            .addOnSuccessListener{
+                Log.d("Zaktualizowano dane uzytkownika ", Uid)
+            }
+            .addOnFailureListener{
+                Log.d(REPO_DEBUG, it.message.toString())
+            }
+    }
+
     fun openBoxCT(size: String, id: String){
         cloud.collection(size)
             .document(id)
@@ -276,7 +289,7 @@ class FirebaseRepository {
         var rozmiar = String()
         if(size==1.toString())
         {
-            rozmiar = "boxsS"
+            rozmiar = "box"
         }
         cloud.collection(rozmiar)
 
@@ -293,7 +306,7 @@ class FirebaseRepository {
     //Funkcja zmieniająca w bazie danych informację użytkownikowi że odstał paczkę o danym numerze ID
     fun sendInfoToUser(Id_pack: String, uid:String)
     {
-        cloud.collection("users")
+        cloud.collection("user")
             .document(uid)
             .update("toMePackID",Id_pack)
             .addOnSuccessListener{
@@ -343,7 +356,7 @@ class FirebaseRepository {
 
     fun editPackData(numerIdPack: String, numerIdBox: String)
     {
-        cloud.collection("packs")
+        cloud.collection("pack")
             .document(numerIdPack)
                 //packInBox jeżeli 1 to paczka jest w jakims boxie
                 //Id boxu oznacza w jakiej skrytce znajduje się paczka

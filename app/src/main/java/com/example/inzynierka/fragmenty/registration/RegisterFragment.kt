@@ -29,7 +29,7 @@ class RegisterFragment : BaseFragment() {
     ): View? {
         _binding = FragmentRegistrationBinding.inflate(layoutInflater, container, false)
         return binding.root
-        return inflater.inflate(R.layout.fragment_registration, container, false)
+//        return inflater.inflate(R.layout.fragment_registration, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,10 +58,7 @@ class RegisterFragment : BaseFragment() {
                                 "",
                                 authRes.user!!.email,
                                 "",
-                                "0")
-                                //authRes.user!!.email,
-                                //listOf(),
-                                //"")
+                                0)
                             regVm.createNewUser(user)
                             startApp()
                         }
@@ -71,8 +68,6 @@ class RegisterFragment : BaseFragment() {
                             .show()
                         Log.d(REG_DEBUG, exc.message.toString())
                     }
-
-
             }
         }
     }

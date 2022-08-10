@@ -21,7 +21,6 @@ class App: Application() {
             val serviceChannel = NotificationChannel(CHANNEL_ID,"ExampleServiceChannel", NotificationManager.IMPORTANCE_DEFAULT)
             val mng = getSystemService(NotificationManager::class.java)
             mng.createNotificationChannel(serviceChannel)
-
            }
 
     }

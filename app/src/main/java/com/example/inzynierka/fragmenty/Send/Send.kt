@@ -26,15 +26,20 @@ import com.example.inzynierka.fragmenty.repository.BaseFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.delay
 
+
+// wspólny viewModel, datastore/sharePrefereces, callback, navargs / intent.bundle (putString())
 var boxId = String()
 var numerPaczkiGL = String()
 
+//TODO SendFragment
 class Send : Fragment() {
 
+    //TODO CONSTANT ALL_CAPS
     private val Send_DEBUG = "Send_DEBUG"
     private var _binding: SendFragmentBinding? = null
     private val binding get() = _binding!!
     private val SendVm by viewModels<SendViewModel>()
+//    private var boxId = ""
 
 
     override fun onCreateView(
@@ -51,69 +56,54 @@ class Send : Fragment() {
         PutPack()
     }
 
-    //Funkcja która się wykonuje w momencie wpisania id paczki i wciśnięciu przycisku "Umieść paczkę"
+
     private fun PutPack(){
         binding.SendUmiesPaczke.setOnClickListener {
-            //Pobieramy stringa wpisanego przez użytkownika (powinien to być numer ID paczki)
-
             val numerPaczki = binding.SendWpiszNumer.text?.trim().toString()
-            numerPaczkiGL = numerPaczki
-            //Wywołujemy wynkjcę, która szuka paczkę o danym ID i zapisuje jej wynik w cloudResult
+            if (numerPaczki != "") {
+                numerPaczkiGL = numerPaczki
+                SendVm.putPack(numerPaczki)
+                SendVm.cloudResult.observe(viewLifecycleOwner, { pack ->
+                    if (pack != null) {
+                        bindPackInfo(pack)
+                        if (pack.Size == 1.toString()) {
+                            Log.d("To jest mała paczka", pack.Size)
+                            SendVm.findEmptyBoxS("box")
+                            SendVm.cloudResultBoxS.observe(viewLifecycleOwner, { idBoxS ->
+                                if (idBoxS != null) {
+                                    Toast.makeText(requireContext(), idBoxS, Toast.LENGTH_SHORT)
+                                        .show()
+                                    boxId = idBoxS.toString() // TODO to remove
+//                                SendVm.setNumberId(idBoxS.toString())
+                                    SendVm.editBoxData("box", idBoxS, numerPaczki)
 
-            SendVm.putPack(numerPaczki)
-            SendVm.cloudResult.observe(viewLifecycleOwner,{pack->
-                //Sprawdzamy czy przesyłka o takim ID znajduje się w naszej bazie danych
-                if(pack!=null)
-                {
-                    //Wyświetlamy informacje o paczce z wpisanym ID
-                    bindPackInfo(pack)
-                    //Sprawdzamy czy rozmiar paczki o danym id jest 1,2 czy 3. (mała, średnia, duża)
-                      if(pack.Size == 1.toString())
-                      {
-                          Log.d("To jest mała paczka",pack.Size)
+                                    SendVm.editUserData(pack.uid.toString(), numerPaczki)
 
-                          SendVm.findEmptyBoxS("boxsS")
-                          SendVm.cloudResultBoxS.observe(viewLifecycleOwner,{idBoxS->
-                              if(idBoxS!=null)
-                              {
-                                  //Jeżeli funkcja zwróciła wolna skrytkę wywołuje funkcję która nakazuje jej otwarcie
-                                  //Poprzez zmienienie jej stanu OC na 1
-                                  //Następnie wyświetla się komunikat użytkownikowi że dana skrytka jest otwarta i że należy
-                                  //Umieścić w niej paczkę a następnie potwierdzić że się ją zamknęło
-                                  //Po potwierdzeniu ustawiamy stan skrytki że jest pełna oraz że została zamknięta
 
-                                  Toast.makeText(requireContext(), idBoxS, Toast.LENGTH_SHORT).show()
-                                  boxId = idBoxS.toString()
 
-                                  SendVm.editBoxData("boxsS" , idBoxS, numerPaczki)
-                                  //TODO to powinno wywoływać moment zamknięcia skrytki
-                                  //TODO stworzyc funkcje ktora przekazuje informacje do kolejnego fragmentu
-                                  findNavController()
-                                      .navigate(SendDirections.actionSendToConfirmSend().actionId)
-                                  //W tym momencie wyświetla się ekran z potwierdzeniem
-                                  //TODO Zrobić dlaszą część tego if`a. W tym momencie mamy zmiane w bazie danych ze skrzynka jest otwarta
-
-                              }
-                              else
-                              {
-                                  //Jeżeli wszystkie skrytki są zajęte wyświetla komunikat użytkownikowi!
-                                  Toast.makeText(requireContext(),"Wszystkie małe skrytki są zajęte!", Toast.LENGTH_SHORT).show()
-                              }
-                          })
-                      }
-                      else
-                      {
-                          //TODO zrobić kod do paczki z rozmiarem 2 i 3
-                          Log.d("To jest rozmiar paczki",pack.Size.toString())
-                      }
-                }
-                //Jeżeli nie ma takiej paczki wyświetla Tosta z informacją dla użytkownika
-                else
-                {
-                    Log.d("Ten numer paczki nie istnieje!",numerPaczki)
-                    Toast.makeText(requireContext(),"Nie ma takiej paczki w bazie danych", Toast.LENGTH_SHORT).show()
-                }
-            })
+                                    findNavController()
+                                        .navigate(SendDirections.actionSendToConfirmSend().actionId)
+                                } else {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Wszystkie małe skrytki są zajęte!",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            })
+                        } else {
+                            Log.d("To jest rozmiar paczki", pack.Size.toString())
+                        }
+                    } else {
+                        Log.d("Ten numer paczki nie istnieje!", numerPaczki)
+                        Toast.makeText(
+                            requireContext(),
+                            "Nie ma takiej paczki w bazie danych",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
+            }
         }
     }
 

@@ -23,13 +23,22 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.inzynierka.R
+import com.example.inzynierka.constants.Constants.Companion.TOPIC
 import com.example.inzynierka.databinding.ActivityMainBinding
 import com.example.inzynierka.databinding.HomeFragmentBinding
+import com.example.inzynierka.firebase.NotificationData
+import com.example.inzynierka.firebase.PushNotification
+import com.example.inzynierka.firebase.RetrofitInstance
 import com.example.inzynierka.fragmenty.Send.Send
 import com.example.inzynierka.fragmenty.home.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,7 +53,29 @@ class MainActivity : AppCompatActivity() {
         val fragmentSend = Send()
         val HomeFragment = HomeFragment()
 
+        intent.extras?.getString("title")?.let{ title ->
+            Log.i("MyTag", "FROM notification $title")
+        }
 
+
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
+        val notification = PushNotification(
+            data = NotificationData("Otrzymano Paczkę", "Twoja paczka znajduje się w skrytce numer 3.", 10, false),
+            to = TOPIC)
+        sendNotification(notification)
+    }
+
+    private fun sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch {
+        try {
+            val response = RetrofitInstance.api.postNotification(notification)
+            if(response.isSuccessful){
+                Log.i("MyTag", "Response ${Gson().toJson(response)}")
+            } else{
+                Log.i("MyTag", "Response ELSE ${response.message()}")
+            }
+        } catch (e: Exception){
+            Log.i("MyTag", "Response Exception ${e.message}")
+        }
     }
 
 

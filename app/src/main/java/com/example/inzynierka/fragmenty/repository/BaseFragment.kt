@@ -15,6 +15,7 @@ abstract class BaseFragment: Fragment() {
         //enterTransition = transInflater.inflateTransition(R.transition.slide_right)
         //exitTransition = transInflater.inflateTransition(R.transition.fade_out)
     }
+
     protected fun startApp(){
         val intent = Intent(requireContext(), MainActivity::class.java).apply {
             flags = (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
