@@ -261,6 +261,30 @@ class FirebaseRepository {
             }
     }
 
+    fun upDataPack(numerIDPack: String){
+        cloud.collection("pack")
+            .document(numerIDPack)
+            .update("Id_box","", "packInBox", "")
+            .addOnSuccessListener{
+                Log.d("Zaktualizowano dane paczki ", numerIDPack)
+            }
+            .addOnFailureListener{
+                Log.d(REPO_DEBUG, it.message.toString())
+            }
+    }
+    fun upDataUser(){
+        val uid = auth.currentUser?.uid
+        cloud.collection("user")
+            .document(uid!!)
+            .update("check",0, "toMePackID", "")
+            .addOnSuccessListener{
+                Log.d("Zaktualizowano dane uzytkownika ", uid)
+            }
+            .addOnFailureListener{
+                Log.d(REPO_DEBUG, it.message.toString())
+            }
+    }
+
     fun editUserData(Uid: String, packID: String){
         cloud.collection("user")
             .document(Uid)

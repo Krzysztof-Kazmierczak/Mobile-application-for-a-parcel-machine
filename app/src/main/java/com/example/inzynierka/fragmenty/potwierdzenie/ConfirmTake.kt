@@ -37,6 +37,8 @@ class ConfirmTake : Fragment() {
         var numerIdPaczki = String()
 
         ConfirmTakeVm.boxId()
+        ConfirmTakeVm.packId()
+
         numerIdBox = ConfirmTakeVm.numerBoxu
         numerIdPaczki = ConfirmTakeVm.numerPaczki
         if(numerIdBox.toInt()<6)
@@ -65,6 +67,11 @@ class ConfirmTake : Fragment() {
             Log.d("To jest rozmiar paczki",numerIdBox.toString())
 
             ConfirmTakeVm.boxEmpty(size, numerIdBox)
+
+            ConfirmTakeVm.upDataUser()
+
+            ConfirmTakeVm.upDataPack(numerIdPaczki)
+
             ConfirmTakeVm.closeBox(size, numerIdBox)
             findNavController()
                 .navigate(ConfirmTakeDirections.actionConfirmTakeToHomeFragment().actionId)

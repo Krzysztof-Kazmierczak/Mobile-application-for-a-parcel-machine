@@ -27,6 +27,16 @@ class ConfirmTakeViewModel : ViewModel() {
         return numerBoxu
     }
 
+    fun upDataUser()
+    {
+        repository.upDataUser()
+    }
+
+    fun upDataPack(numerIDPack: String)
+    {
+        repository.upDataPack(numerIDPack)
+    }
+
     fun packId(): String {
         numerPaczki = takePack.getIdPack()
         return numerPaczki
