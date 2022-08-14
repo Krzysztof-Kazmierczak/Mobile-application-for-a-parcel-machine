@@ -53,6 +53,8 @@ class MainActivity : AppCompatActivity() {
         val fragmentSend = Send()
         val HomeFragment = HomeFragment()
 
+
+
         intent.extras?.getString("title")?.let{ title ->
             Log.i("MyTag", "FROM notification $title")
         }

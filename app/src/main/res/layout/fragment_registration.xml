@@ -9,12 +9,12 @@
         android:id="@+id/CreateAccButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="150dp"
         android:gravity="center"
         android:text="@string/Zarejestruj"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/RegMail"
@@ -24,8 +24,22 @@
         android:ems="10"
         android:hint="@string/W_Maila"
         android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/RegNumPhon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/RegNumPhon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:ems="10"
+        android:hint="@string/W_Tel"
+        android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/RegPass"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText

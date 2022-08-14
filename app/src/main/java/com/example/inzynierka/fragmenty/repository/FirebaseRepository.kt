@@ -3,11 +3,9 @@ package com.example.inzynierka.fragmenty.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.inzynierka.data.Box
 import com.example.inzynierka.data.BoxS
 import com.example.inzynierka.data.Pack
 import com.example.inzynierka.data.User
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -16,7 +14,7 @@ class FirebaseRepository {
 
     private val REPO_DEBUG = "REPO_DEBUG"
 
-    private val storage= FirebaseStorage.getInstance()
+    private val storage = FirebaseStorage.getInstance()
     private val auth = FirebaseAuth.getInstance()
     private val cloud = FirebaseFirestore.getInstance()
 
@@ -30,21 +28,22 @@ class FirebaseRepository {
             .get()
             .addOnSuccessListener {
                 val user = it.toObject(User::class.java)
+                listOf(user?.paczki.toString())
                 cloudResult.postValue(user)
             }
-            .addOnFailureListener{
+            .addOnFailureListener {
                 Log.d(REPO_DEBUG, it.message.toString())
             }
         return cloudResult
     }
 
-    fun createNewUser(user: User){
+    fun createNewUser(user: User) {
         cloud.collection("user")
             .document(user.uid!!)
             .set(user)
     }
 
-    fun getPackData(id:String): LiveData<Pack> {
+    fun getPackData(id: String): LiveData<Pack> {
         val cloudResult = MutableLiveData<Pack>()
         cloud.collection("pack")
             .document(id)
@@ -53,7 +52,7 @@ class FirebaseRepository {
                 val pack = it.toObject(Pack::class.java)
                 cloudResult.postValue(pack)
             }
-            .addOnFailureListener{
+            .addOnFailureListener {
                 Log.d(REPO_DEBUG, it.message.toString())
             }
         return cloudResult
@@ -63,6 +62,7 @@ class FirebaseRepository {
         val uid = auth.currentUser?.uid
         val cloudResult = MutableLiveData<String>()
         var Id_mypack = String()
+        var listaPaczek: ArrayList<String>? = null
         cloud.collection("user")
             .document(uid!!)
             .get()
@@ -70,9 +70,61 @@ class FirebaseRepository {
                 val pack = it.toObject(User::class.java)
                 if (pack != null) {
                     Log.d(REPO_DEBUG, pack.toMePackID.toString())
+                    var cos = pack.paczki.toString()
+                    var jakasliczba = pack.paczki?.size
+                    listaPaczek = pack.paczki
+                    var jaksliczhba = cos.length
                     Id_mypack = pack.toMePackID.toString()
                 }
                 cloudResult.postValue(Id_mypack)
+            }
+            .addOnFailureListener {
+                Log.d(REPO_DEBUG, it.message.toString())
+            }
+        return cloudResult
+    }
+
+    fun getmyPacks(mojePaczki: List<String>): LiveData<List<Pack>> {
+        val cloudResult = MutableLiveData<List<Pack>>()
+
+        val liczbaPaczek = (mojePaczki.size) - 1
+        var idPaczek = mojePaczki.get(0)
+        var tworzycliste = ArrayList<Pack>(liczbaPaczek + 1)
+        if (mojePaczki != null) {
+            for (i in 0..liczbaPaczek) {
+                idPaczek = mojePaczki.get(i)
+                cloud.collection("pack")
+                    .document(idPaczek)
+                    .get()
+                    .addOnSuccessListener {
+                        val pack = it.toObject(Pack::class.java)
+                        if (pack != null) {
+
+                            tworzycliste.add(pack)
+                        }
+                    }
+                    .addOnFailureListener {
+                        Log.d(REPO_DEBUG, it.message.toString())
+                    }
+           }
+        }
+            cloudResult.postValue(tworzycliste)
+            return cloudResult
+    }
+
+    fun packsToMe(): LiveData<List<String>> {
+        val uid = auth.currentUser?.uid
+        val cloudResult = MutableLiveData<List<String>>()
+        var listaPaczek: ArrayList<String>? = null
+        cloud.collection("user")
+            .document(uid!!)
+            .get()
+            .addOnSuccessListener {
+                val pack = it.toObject(User::class.java)
+                if(pack?.paczki?.size!! > 1 || pack.paczki.get(0) != ""){
+                    listaPaczek = pack.paczki
+                }
+                cloudResult.postValue(listaPaczek)
             }
             .addOnFailureListener{
                 Log.d(REPO_DEBUG, it.message.toString())

@@ -7,10 +7,12 @@
     <string name="Zarejestruj">Zarejestruj mnie!</string>
     <string name="W_Maila">Wpisz e-mail</string>
     <string name="W_Haslo">Wpisz hasło</string>
+    <string name="W_Tel">Wpisz numer telefonu</string>
     <string name="Zaloguj">Zaloguj się</string>
     <string name="PWH_Haslo">Powtórz hasło</string>
     <string name="Wyloguj">Wyloguj się</string>
     <string name="Odbierz_Paczke">Odbierz paczkę</string>
+    <string name="Moje_Paczki">Moje paczki</string>
     <string name="Nadaj_Paczke">Nadaj paczkę</string>
     <string name="Numer_Paczki">Wpisz numer paczki</string>
     <string name="Umiesc_Paczke">Umieść paczkę</string>
@@ -22,4 +24,7 @@
     <string name="Nie_Otworz_TP">Nie, otwórz skrzynkę ponownie</string>
     <string name="CzyNaPewno">Czy na pewno chcesz teraz otworzyć swoją skrytkę</string>
     <string name="TakChce">Tak, otwórz moją skrytkę</string>
+    <string name="MP_ID">ID paczki</string>
+    <string name="MP_Rozmiar">Rozmiar paczki</string>
+    <string name="MP_Odbierz_Paczke">Odbierz paczkę</string>
 </resources>

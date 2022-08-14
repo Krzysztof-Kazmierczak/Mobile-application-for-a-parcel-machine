@@ -47,27 +47,44 @@ class RegisterFragment : BaseFragment() {
             val email = binding.RegMail.text?.trim().toString()
             val pass = binding.RegPass.text?.trim().toString()
             val repeatPass = binding.RegPassRep.text?.trim().toString()
-
-            if(pass==repeatPass){
+            val phoneNumber = binding.RegNumPhon.text?.trim().toString()
+        if (phoneNumber != "")
+        {
+            if(pass==repeatPass) {
                 fbAuth.createUserWithEmailAndPassword(email, pass)
-                    .addOnSuccessListener {authRes ->
-                        if(authRes.user != null){
+                    .addOnSuccessListener { authRes ->
+                        if (authRes.user != null) {
                             val user = com.example.inzynierka.data.User(
                                 authRes.user!!.uid,
                                 "",
                                 "",
+                                arrayListOf(""),
                                 authRes.user!!.email,
                                 "",
-                                0)
+                                phoneNumber,
+                                0
+                            )
                             regVm.createNewUser(user)
                             startApp()
                         }
                     }
-                    .addOnFailureListener{exc ->
-                        Snackbar.make(requireView(), "Upss...Something went wrong...", Snackbar.LENGTH_SHORT)
+                    .addOnFailureListener { exc ->
+                        Snackbar.make(
+                            requireView(),
+                            "Upss...Something went wrong...",
+                            Snackbar.LENGTH_SHORT
+                        )
                             .show()
                         Log.d(REG_DEBUG, exc.message.toString())
                     }
+                }
+            }else{
+            Snackbar.make(
+                requireView(),
+                "Upss...Must pass phone number...",
+                Snackbar.LENGTH_SHORT
+            )
+                .show()
             }
         }
     }
