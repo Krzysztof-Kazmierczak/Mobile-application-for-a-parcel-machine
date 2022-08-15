@@ -15,56 +15,86 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/MP_id_pack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MP_tv_ID" />
+        <TextView
+            android:id="@+id/MP_id_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/MP_tv_ID" />
 
-    <Button
-        android:id="@+id/MP_b_odbierzPaczke"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="30dp"
-        android:text="@string/MP_Odbierz_Paczke"
-        app:layout_constraintStart_toEndOf="@+id/MP_tv_rozmiar"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/MP_b_odbierzPaczke"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="24dp"
+            android:text="@string/MP_Odbierz_Paczke"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/MP_rozmiar_paczki" />
 
-    <TextView
-        android:id="@+id/MP_tv_ID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/MP_ID"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/MP_tv_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/MP_boxID"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/MP_tv_rozmiar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/MP_Rozmiar"
-        app:layout_constraintStart_toEndOf="@+id/MP_tv_ID"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/MP_tv_packID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/MP_packID"
+            app:layout_constraintStart_toEndOf="@+id/MP_tv_rozmiar"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/MP_rozmiar_paczki"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="24dp"
-        android:text="@string/MP_ID"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/MP_tv_ID"
-        app:layout_constraintTop_toBottomOf="@+id/MP_tv_rozmiar" />
+        <TextView
+            android:id="@+id/MP_tv_rozmiar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/MP_Rozmiar"
+            app:layout_constraintStart_toEndOf="@+id/MP_tv_ID"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/MP_rozmiar_paczki"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toEndOf="@+id/MP_tv_ID"
+            app:layout_constraintTop_toBottomOf="@+id/MP_tv_rozmiar" />
+
+        <TextView
+            android:id="@+id/MP_ID_pack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toEndOf="@+id/MP_tv_rozmiar"
+            app:layout_constraintTop_toBottomOf="@+id/MP_tv_packID" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="@+id/MP_ID_pack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/MP_tv_packID"
+            app:layout_constraintTop_toTopOf="@+id/MP_tv_packID"
+            app:srcCompat="@drawable/ic_action_name"
+            android:contentDescription="@string/todo" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

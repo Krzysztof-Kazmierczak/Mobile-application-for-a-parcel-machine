@@ -10,12 +10,12 @@ class TakepackViewModel : ViewModel() {
     private val repository = FirebaseRepository()
 
     var idPackToMe = MutableLiveData<String>()
-    var idPacksToMe = MutableLiveData<ArrayList<String>>()
+    //var idPacksToMe = MutableLiveData<ArrayList<String>>()
     var cloudResult = MutableLiveData<Pack>()
     var mypacks = MutableLiveData<List<Pack>>()
     //val user = repository.getUserData()
 
-    val idPacksToMe2 = repository.packsToMe()
+    val idPacksToMe = repository.packsToMe()
 
 
     fun packData(mojePaczki: List<String>): MutableLiveData<List<Pack>> {
@@ -23,22 +23,12 @@ class TakepackViewModel : ViewModel() {
         return mypacks
     }
 
+   // fun packsToMe(): LiveData<ArrayList<String>>
+    //{
+      //  idPacksToMe = repository.packsToMe() as MutableLiveData<ArrayList<String>>
 
-    fun packToMe(): LiveData<String>
-    {
-        idPackToMe = repository.packToMe() as MutableLiveData<String>
-
-        return idPackToMe
-    }
-
-
-
-    fun packsToMe(): LiveData<ArrayList<String>>
-    {
-        idPacksToMe = repository.packsToMe() as MutableLiveData<ArrayList<String>>
-
-        return idPacksToMe
-    }
+        //return idPacksToMe
+    //}
 
 
     fun packData(id: String): LiveData<Pack> {
