@@ -29,4 +29,6 @@
     <string name="MP_Rozmiar">Rozmiar paczki</string>
     <string name="MP_Odbierz_Paczke">Odbierz paczkę</string>
     <string name="todo">TODO</string>
+    <string name="TP_BrakPaczek">Nie masz żadnych paczek do odebrania</string>
+
 </resources>

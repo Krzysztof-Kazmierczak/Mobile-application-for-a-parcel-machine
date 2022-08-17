@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.inzynierka.R
+import com.example.inzynierka.data.Pack
 import com.example.inzynierka.databinding.ConfirmSendFragmentBinding
 import com.example.inzynierka.databinding.ConfirmTakeFragmentBinding
 
@@ -66,9 +67,25 @@ class ConfirmTake : Fragment() {
             Log.d("To jest rozmiar paczki",size.toString())
             Log.d("To jest rozmiar paczki",numerIdBox.toString())
 
+            ConfirmTakeVm.idPacksToMe.observe(viewLifecycleOwner, { listMyPack ->
+                var nowaListaPaczekUzytkownika = ArrayList<String>()
+
+
+                val liczbaPaczek = (listMyPack.size) - 1
+                var idPaczek = listMyPack.get(0)
+                for (i in 0..liczbaPaczek) {
+                        idPaczek = listMyPack.get(i)
+                        if(numerIdPaczki != idPaczek)
+                        {
+                            nowaListaPaczekUzytkownika.add(idPaczek)
+                        }
+                }
+                ConfirmTakeVm.upDataUser(nowaListaPaczekUzytkownika)
+                })
+
             ConfirmTakeVm.boxEmpty(size, numerIdBox)
 
-            ConfirmTakeVm.upDataUser()
+
 
             ConfirmTakeVm.upDataPack(numerIdPaczki)
 
@@ -77,7 +94,4 @@ class ConfirmTake : Fragment() {
                 .navigate(ConfirmTakeDirections.actionConfirmTakeToHomeFragment().actionId)
         }
     }
-
-
-
 }

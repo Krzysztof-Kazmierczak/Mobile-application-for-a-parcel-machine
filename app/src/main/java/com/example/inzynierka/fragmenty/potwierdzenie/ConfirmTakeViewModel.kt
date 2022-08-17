@@ -20,6 +20,7 @@ class ConfirmTakeViewModel : ViewModel() {
     var numerBoxu = String()
     var isPack = MutableLiveData<Int>()
 
+    val idPacksToMe = repository.packsToMe()
 
 
     fun boxId(): String {
@@ -27,9 +28,9 @@ class ConfirmTakeViewModel : ViewModel() {
         return numerBoxu
     }
 
-    fun upDataUser()
+    fun upDataUser(nowaListaPaczekUzytkownika : ArrayList<String>)
     {
-        repository.upDataUser()
+        repository.upDataUser(nowaListaPaczekUzytkownika)
     }
 
     fun upDataPack(numerIDPack: String)

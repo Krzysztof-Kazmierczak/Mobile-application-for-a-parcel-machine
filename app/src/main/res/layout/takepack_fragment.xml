@@ -10,7 +10,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
-        tools:listitem="@layout/mypacks_row" />
+        android:textAlignment="center"
+        android:visibility="visible"
+        tools:listitem="@layout/mypacks_row" >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/TPBrakPaczek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:justificationMode="none"
+        android:text="@string/TP_BrakPaczek"
+        android:textSize="24sp"
+        android:visibility="visible"
+        tools:visibility="visible" />
 
 
 </FrameLayout>

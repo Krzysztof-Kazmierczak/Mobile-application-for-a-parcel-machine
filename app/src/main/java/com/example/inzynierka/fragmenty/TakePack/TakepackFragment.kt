@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,19 +13,18 @@ import com.example.inzynierka.R
 import com.example.inzynierka.data.Pack
 import com.example.inzynierka.databinding.TakepackFragmentBinding
 import com.example.inzynierka.fragmenty.home.MyPacksAdapter
-import com.example.inzynierka.fragmenty.home.OnPackItemLongClick
 
 var boxIdTF = String()
 var numerPaczkiGLTF = String()
 
-class TakepackFragment : Fragment(), OnPackItemLongClick {
+class TakepackFragment : Fragment(){//, OnPackItemLongClick {
 
     private val PROFILE_DEBUG = "PROFILE_DEBUG"
     private var _binding: TakepackFragmentBinding? = null
     private val binding get() = _binding!!
     private val TakepackVm by viewModels<TakepackViewModel>()
 
-    private val adapter = MyPacksAdapter(this)
+    private lateinit var adapter: MyPacksAdapter
 
 
     override fun onCreateView(
@@ -42,30 +40,51 @@ class TakepackFragment : Fragment(), OnPackItemLongClick {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerViewTakepack.layoutManager = LinearLayoutManager(requireContext())
+        adapter = MyPacksAdapter { position ->
+            boxIdTF = TakepackVm.mypacks.value?.get(position)?.Id_box.toString()
+            numerPaczkiGLTF = TakepackVm.mypacks.value?.get(position)?.packID.toString()
+
+            TakepackVm.openBox(
+                TakepackVm.mypacks.value?.get(position)?.Size.toString(),
+                boxIdTF
+            )
+
+            findNavController()
+                .navigate(TakepackFragmentDirections.actionTakepackFragmentToConfirmTake())
+        }
         binding.recyclerViewTakepack.adapter = adapter
 
-       // takePack()
+        // takePack()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        TakepackVm.idPacksToMe.observe(viewLifecycleOwner, {listMyPack ->
+        TakepackVm.idPacksToMe.observe(viewLifecycleOwner, { listMyPack ->
             //var listPaczek = listMyPack
+            if(listMyPack.isNotEmpty()){
+
+                binding.TPBrakPaczek.visibility = View.INVISIBLE
+
+                //binding.TPBrakPaczek.visibility(View.VISIBLE)
+
             TakepackVm.packData(listMyPack)
-            TakepackVm.mypacks.observe(viewLifecycleOwner, {list ->
+            TakepackVm.mypacks.observe(viewLifecycleOwner, { list ->
                 adapter.setMyPacks(list as ArrayList<Pack>)
-            })
+            })}
+            else{
+                binding.TPBrakPaczek.visibility = View.VISIBLE
+            }
         })
     }
 
     private fun takePack() {
-        binding.recyclerViewTakepack.setOnClickListener{
-       // binding.TakePack.setOnClickListener {
+        binding.recyclerViewTakepack.setOnClickListener {
+            // binding.TakePack.setOnClickListener {
             //Pobralem id paczki ktora chce odebrac
             //TakepackVm.getUserData()
 
-         //   TakepackVm.packsToMe()
+            //   TakepackVm.packsToMe()
             TakepackVm.idPackToMe.observe(viewLifecycleOwner, { idMyPacks ->
                 if (idMyPacks != "") {
                     numerPaczkiGLTF = idMyPacks.toString()
@@ -85,7 +104,6 @@ class TakepackFragment : Fragment(), OnPackItemLongClick {
                     })
                 }
             })
-
 
 
             //TakepackVm.packToMe()
@@ -111,12 +129,12 @@ class TakepackFragment : Fragment(), OnPackItemLongClick {
         }
     }
 
-    fun getIdBox(): String{
+    fun getIdBox(): String {
         Log.d("To zwracam", boxIdTF)
         return boxIdTF
     }
 
-    fun getIdPack(): String{
+    fun getIdPack(): String {
         val numerPaczki = numerPaczkiGLTF
         return numerPaczki
     }
@@ -128,15 +146,15 @@ class TakepackFragment : Fragment(), OnPackItemLongClick {
     }
 
     //override fun onMyPackLongClick(pack: Pack, position: Int) {
-       // Toast.makeText(requireContext(),pack.Id_box,Toast.LENGTH_SHORT).show()
+    // Toast.makeText(requireContext(),pack.Id_box,Toast.LENGTH_SHORT).show()
 
-      //  TakepackVm.openBox(pack.Size.toString(),pack.Id_box.toString())
-   // }
+    //  TakepackVm.openBox(pack.Size.toString(),pack.Id_box.toString())
+    // }
 
-    override fun onBoxOpenClick(pack: Pack, position: Int) {
-        TakepackVm.openBox(pack.Size.toString(),pack.Id_box.toString())
-
-      //  findNavController()
-        //    .navigate(TakepackFragmentDirections.actionTakepackFragmentToConfirmTake().actionId)
-    }
+//    override fun onBoxOpenClick(pack: Pack, position: Int) {
+//        TakepackVm.openBox(pack.Size.toString(),pack.Id_box.toString())
+//
+//        findNavController()
+//            .navigate(TakepackFragmentDirections.actionTakepackFragmentToConfirmTake())
+//    }
 }

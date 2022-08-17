@@ -18,9 +18,9 @@ class TakepackViewModel : ViewModel() {
     val idPacksToMe = repository.packsToMe()
 
 
-    fun packData(mojePaczki: List<String>): MutableLiveData<List<Pack>> {
+    fun packData(mojePaczki: List<String>){//}: MutableLiveData<List<Pack>> {
         mypacks = repository.getmyPacks(mojePaczki) as MutableLiveData<List<Pack>>
-        return mypacks
+       // return mypacks
     }
 
    // fun packsToMe(): LiveData<ArrayList<String>>
@@ -36,9 +36,12 @@ class TakepackViewModel : ViewModel() {
         return cloudResult
     }
 
-    fun openBox(size: String, id: String){
-        repository.openBox(size, id)
-
+    fun openBox(size: String?, id: String?){
+        size?.let{ it1 ->
+            id?.let{ it2->
+                repository.openBox(it1, it2)
+            }
+        }
     }
     fun getUserData(){
         repository.getUserData()
