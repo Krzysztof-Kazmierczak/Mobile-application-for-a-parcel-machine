@@ -5,5 +5,6 @@ data class Pack(
     val Size: String? = null,
     val uid: String? = null,
     val packID: String? = null,
+    val phoneNumber: String? = null,
     val packInBox: String? = null
 )

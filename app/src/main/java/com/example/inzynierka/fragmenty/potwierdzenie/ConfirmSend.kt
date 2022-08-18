@@ -34,7 +34,7 @@ class ConfirmSend : Fragment() {
     private var _binding:  ConfirmSendFragmentBinding? = null
     private val binding get() = _binding!!
     private val ConfirmSendVm: ConfirmSendViewModel by viewModels()
-              //confirmSendViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -84,12 +84,52 @@ class ConfirmSend : Fragment() {
             ConfirmSendVm.closeBox(size, numerIdBox)
 
             ConfirmSendVm.editPackData(numerIdPack ,numerIdBox)
-            ConfirmSendVm.getPackData(numerIdPack)
 
-            findNavController()
-                .navigate(ConfirmSendDirections.actionConfirmSendToHomeFragment().actionId)
-            //TODO wysłać informację do urzytkownika że dostał paczkę
+            ConfirmSendVm.getPackData(numerIdPack.toString().trim())
+            ConfirmSendVm.packSend.observe(viewLifecycleOwner, {packListData ->
+                val numberToSendInfo = packListData.phoneNumber.toString().trim()
+                val numberIDPack = packListData.packID.toString().trim()
+                val numberIDBox = packListData.Id_box.toString().trim()
+                sendSMS(numberToSendInfo,numberIDPack,numberIDBox)
+                /*val numberToSendInfo = packListData.phoneNumber.toString().trim()
+                val numberIDPack = packListData.packID.toString().trim()
+                val numberIDBox = packListData.Id_box.toString().trim()
 
+                val SMS = ("Twoja paczka o numerze " + numberIDPack + " jest gotowa do odebrania. Znajduje się w skrytce numer "
+                        + numberIDBox + ". Zaloguj się do aplikacji")
+
+                var smsManager = SmsManager.getDefault()
+                smsManager.sendTextMessage(numberToSendInfo,null,SMS,null,null)
+
+                Toast.makeText(requireContext(),"SMS został wysłany",Toast.LENGTH_SHORT).show()*/
+
+                //sendSMS(numberToSendInfo, numberIDPack, numberIDBox)
+                findNavController()
+                    .navigate(ConfirmSendDirections.actionConfirmSendToHomeFragment().actionId)
+            })
         }
     }
+
+    private fun sendSMS(numberPH:String,numberPack:String,numberBox:String) {
+        val tresc1 = "Twoja paczka o numerze "
+        val tresc2 = " jest gotowa do odebrania. Znajduje sie w skrytce "
+        val tresc3 = ". Zaloguj sie do aplikacji i odbierz swoja paczke!"
+
+        val SMS = tresc1 + numberPack + tresc2 + numberBox +tresc3
+        //val SMS = numberPack.toString() + numberBox.toString()
+        var smsManager = SmsManager.getDefault()
+        smsManager.sendTextMessage(numberPH,null,SMS,null,null)
+        Log.d("To jest sms",SMS)
+        Toast.makeText(requireContext(),"SMS został wysłany",Toast.LENGTH_SHORT).show()
+    }
+
+    // private fun sendSMS() {
+     //   var phoneNo = 782054003.toString().trim()
+       // var SMS = "no elo".trim()
+  // var smsManager = SmsManager.getDefault()
+   // smsManager.sendTextMessage(phoneNo,null,SMS,null,null)
+
+   // Toast.makeText(requireContext(),"wyslano sms",Toast.LENGTH_SHORT).show()
+
+    //}
 }

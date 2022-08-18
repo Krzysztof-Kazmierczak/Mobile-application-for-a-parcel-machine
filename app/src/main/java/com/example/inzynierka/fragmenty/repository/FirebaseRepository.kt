@@ -155,6 +155,8 @@ class FirebaseRepository {
     fun findEmptyBoxS(size: String): LiveData<String> {
         var emptyBox = null.toString()
         var zwrotEmptyBox = MutableLiveData<String>()
+        var liczbaPelnych = 0
+
         Log.d("Jestem TUTAJ", size.toString())
         cloud.collection(size)
             .document(1.toString())
@@ -174,7 +176,8 @@ class FirebaseRepository {
 
                     } else {
                         Log.d(1.toString() + " skrytka jest zajęta", skrytka.FE.toString())
-
+                        liczbaPelnych = liczbaPelnych + 1
+                        if (liczbaPelnych == 5){zwrotEmptyBox.setValue(null)}
                     }
                 }
 
@@ -198,6 +201,8 @@ class FirebaseRepository {
                         }
                     } else {
                         Log.d(2.toString() + " skrytka jest zajęta", skrytka.FE.toString())
+                        liczbaPelnych = liczbaPelnych + 1
+                        if (liczbaPelnych == 5){zwrotEmptyBox.setValue(null)}
 
                     }
                 }
@@ -222,6 +227,8 @@ class FirebaseRepository {
                         }
                     } else {
                         Log.d(3.toString() + " skrytka jest zajęta", skrytka.FE.toString())
+                        liczbaPelnych = liczbaPelnych + 1
+                        if (liczbaPelnych == 5){zwrotEmptyBox.setValue(null)}
 
                     }
                 }
@@ -246,6 +253,8 @@ class FirebaseRepository {
                         }
                     } else {
                         Log.d(4.toString() + " skrytka jest zajęta", skrytka.FE.toString())
+                        liczbaPelnych = liczbaPelnych + 1
+                        if (liczbaPelnych == 5){zwrotEmptyBox.setValue(null)}
 
                     }
                 }
@@ -270,7 +279,8 @@ class FirebaseRepository {
                         }
                     } else {
                         Log.d(5.toString() + " skrytka jest zajęta", skrytka.FE.toString())
-
+                        liczbaPelnych = liczbaPelnych + 1
+                        if (liczbaPelnych == 5){zwrotEmptyBox.setValue(null)}
                     }
                 }
 

@@ -18,7 +18,7 @@ class ConfirmSendViewModel : ViewModel() {
     var cloudResultBoxS = MutableLiveData<String>()
     var numerPaczki = String()
     var numerBoxu = String()
-    var pack = MutableLiveData<Pack>()
+    var packSend = MutableLiveData<Pack>()
     //var isPack = MutableLiveData<Int>()
 
     //fun ConfirmButton(): LiveData<Pack> {
@@ -59,9 +59,9 @@ class ConfirmSendViewModel : ViewModel() {
 
     fun getPackData(Id_pack: String): LiveData<Pack>
     {
-        pack = repository.getPackData(Id_pack) as MutableLiveData<Pack>
+        packSend = repository.getPackData(Id_pack) as MutableLiveData<Pack>
 
-        return pack
+        return packSend
     }
 
     fun editBoxData(size: String, id: String, idPack: String)
