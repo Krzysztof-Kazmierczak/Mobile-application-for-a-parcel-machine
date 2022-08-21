@@ -6,6 +6,8 @@ import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -16,6 +18,8 @@ import com.example.inzynierka.firebase.PushNotification
 import com.example.inzynierka.firebase.RetrofitInstance
 import com.example.inzynierka.fragmenty.Send.Send
 import com.example.inzynierka.fragmenty.home.HomeFragment
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
@@ -34,21 +38,41 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener(object : OnCompleteListener<String?> {
+                override fun onComplete(@NonNull task: Task<String?>) {
+                    if (!task.isSuccessful()) {
+                        println("Fetching FCM registration token failed")
+                        return
+                    }
+
+                    // Get new FCM registration token
+                    val token: String? = task.getResult()
+
+                    // Log and toast
+                    token?.let { Log.d("moj token ", it) }
+
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Your device registration token is$token",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+            })
+
         val fm = supportFragmentManager
         val fragmentSend = Send()
         val HomeFragment = HomeFragment()
-
-
 
         intent.extras?.getString("title")?.let{ title ->
             Log.i("MyTag", "FROM notification $title")
         }
 
-
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
         val notification = PushNotification(
-            data = NotificationData("Otrzymano Paczkę", "Twoja paczka znajduje się w skrytce numer 3.", 10, false),
-            to = TOPIC)
+            data = NotificationData("Otrzymano Paczkę", "Twoja paczka znajduje się w skrytce numer 153.", 10, false),
+            to = "eH3xSnpRR1qbBN2G1mDbo_:APA91bEWhrCAxRdOBuQAUr6_2fgdjuNe_NIYziPCBt8dqfFQ4zbQiv_dpbwlYEmib9fqg-Rjb7NBDKbxjVZavmU_B8Kj8wDBtoQfLi-MPu2v5sW5udZRuLXcvwOP0xyPz723HRZk7CxR")//TOPIC)
         sendNotification(notification)
 
         if (checkAndRequestPermissions()) {
@@ -84,6 +108,7 @@ class MainActivity : AppCompatActivity() {
         requestCode: Int,
         permissions: Array<String>, grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         Log.d("Permission", "Permission callback called-------")
         when (requestCode) {
             REQUEST_ID_MULTIPLE_PERMISSIONS -> {

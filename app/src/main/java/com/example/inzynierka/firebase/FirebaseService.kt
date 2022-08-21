@@ -34,19 +34,31 @@ class FirebaseService: FirebaseMessagingService() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notificationID = Random.nextInt()
 
-        createChannel(notificationManager)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                PendingIntent.FLAG_MUTABLE
+            )
+            val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle(message.data["title"])
+                .setContentText(message.data["message"])
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
+                .build()
 
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, FLAG_ONE_SHOT)
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle(message.data["title"])
-            .setContentText(message.data["message"])
-            .setSmallIcon(R.drawable.ic_launcher_background)
-            .setAutoCancel(true)
-            .setContentIntent(pendingIntent)
-            .build()
+            notificationManager.notify(notificationID, notification)
+        } else {
+            val pendingIntent = PendingIntent.getActivity(this, 0, intent, FLAG_ONE_SHOT)
+            val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle(message.data["title"])
+                .setContentText(message.data["message"])
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
+                .build()
 
-        notificationManager.notify(notificationID, notification)
+            notificationManager.notify(notificationID, notification)
+        }
     }
 
     private fun createChannel(notificationManager: NotificationManager){
