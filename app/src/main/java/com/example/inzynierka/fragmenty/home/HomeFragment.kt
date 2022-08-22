@@ -7,11 +7,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.NonNull
 
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.inzynierka.aktywnosci.RegistrationActivity
 import com.example.inzynierka.databinding.HomeFragmentBinding
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 
@@ -39,6 +42,32 @@ class HomeFragment : Fragment() {
         setupSendClick()
         setupLogoutClick()
        // havePack()
+      //  token()
+    }
+
+    private fun token(){
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener(object : OnCompleteListener<String?> {
+                override fun onComplete(@NonNull task: Task<String?>) {
+                    if (!task.isSuccessful()) {
+                        println("Fetching FCM registration token failed")
+                        return
+                    }
+
+                    // Get new FCM registration token
+                    val token: String? = task.getResult()
+
+                    // Log and toast
+                    token?.let { Log.d("moj token ", it) }
+
+                    /*Toast.makeText(
+                        this@MainActivity,
+                        "Your device registration token is$token",
+                        Toast.LENGTH_SHORT
+                    ).show()*/
+
+                }
+            })
     }
 
     private fun havePack(){

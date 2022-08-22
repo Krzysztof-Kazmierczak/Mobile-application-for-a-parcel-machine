@@ -62,7 +62,8 @@ class RegisterFragment : BaseFragment() {
                                 authRes.user!!.email,
                                 "",
                                 phoneNumber,
-                                0
+                                0,
+                                ""
                             )
                             regVm.createNewUser(user)
                             startApp()

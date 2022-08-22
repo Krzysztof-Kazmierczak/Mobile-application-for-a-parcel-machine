@@ -9,24 +9,34 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.util.Log
+import androidx.annotation.NonNull
 import androidx.core.app.NotificationCompat
 import com.example.inzynierka.R
 import com.example.inzynierka.aktywnosci.App.Companion.CHANNEL_ID
 import com.example.inzynierka.aktywnosci.MainActivity
+import com.example.inzynierka.fragmenty.repository.FirebaseRepository
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
 import kotlin.random.Random
 
 class FirebaseService: FirebaseMessagingService() {
+    private val repository = FirebaseRepository()
+
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        var zmienna = "asd"
-        zmienna = token
+       // var zmienna = "asd"
+        //zmienna = token
+
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
+        pushNewToken()
+
         Log.i("MyTag", "onMessageReceived ${Gson().toJson(message)}")
 
         val intent = Intent(this, MainActivity::class.java)
@@ -41,7 +51,7 @@ class FirebaseService: FirebaseMessagingService() {
             val notification = NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle(message.data["title"])
                 .setContentText(message.data["message"])
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.drawable.ic_action_name)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
                 .build()
@@ -52,13 +62,39 @@ class FirebaseService: FirebaseMessagingService() {
             val notification = NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle(message.data["title"])
                 .setContentText(message.data["message"])
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.drawable.ic_action_name)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
                 .build()
 
             notificationManager.notify(notificationID, notification)
         }
+    }
+
+    private fun pushNewToken()
+    {
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener(object : OnCompleteListener<String?> {
+                override fun onComplete(@NonNull task: Task<String?>) {
+                    if (!task.isSuccessful()) {
+                        println("Fetching FCM registration token failed")
+                        return
+                    }
+
+                    // Get new FCM registration token
+                    val token: String? = task.getResult()
+
+                    // Log and toast
+                    token?.let { Log.d("moj token ", it) }
+
+                    /*Toast.makeText(
+                        this@MainActivity,
+                        "Your device registration token is$token",
+                        Toast.LENGTH_SHORT
+                    ).show()*/
+                    repository.pushToken(token.toString())
+                }
+            })
     }
 
     private fun createChannel(notificationManager: NotificationManager){

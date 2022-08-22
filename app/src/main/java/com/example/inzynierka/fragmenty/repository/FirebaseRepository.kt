@@ -37,6 +37,21 @@ class FirebaseRepository {
         return cloudResult
     }
 
+    fun pushToken(token: String) {
+
+        val uid = auth.currentUser?.uid
+
+        cloud.collection("user")
+            .document(uid!!)
+            .update("token",token)
+            .addOnSuccessListener {
+                Log.d("Zaktualzowano token ", token)
+            }
+            .addOnFailureListener {
+                Log.d(REPO_DEBUG,it.message.toString())
+            }
+    }
+
     fun createNewUser(user: User) {
         cloud.collection("user")
             .document(user.uid!!)
@@ -57,6 +72,36 @@ class FirebaseRepository {
             }
         return cloudResult
     }
+
+    fun infoUser(uid: String): LiveData<User> {
+        val cloudResult = MutableLiveData<User>()
+        cloud.collection("user")
+            .document(uid)
+            .get()
+            .addOnSuccessListener {
+                val user = it.toObject(User::class.java)
+
+                cloudResult.postValue(user)
+            }
+            .addOnFailureListener {
+                Log.d(REPO_DEBUG, it.message.toString())
+            }
+        return cloudResult
+    }
+
+    fun editUserData(Uid: String, packID: ArrayList<String>) {
+
+        cloud.collection("user")
+            .document(Uid)
+            .update("paczki", packID)
+            .addOnSuccessListener {
+                Log.d("Zaktualizowano dane uzytkownika ", Uid)
+            }
+            .addOnFailureListener {
+                Log.d(REPO_DEBUG, it.message.toString())
+            }
+    }
+
 
     fun packToMe(): LiveData<String> {
         val uid = auth.currentUser?.uid
@@ -337,17 +382,6 @@ class FirebaseRepository {
             }
     }
 
-    fun editUserData(Uid: String, packID: String) {
-        cloud.collection("user")
-            .document(Uid)
-            .update("check", 1, "toMePackID", packID.toString())
-            .addOnSuccessListener {
-                Log.d("Zaktualizowano dane uzytkownika ", Uid)
-            }
-            .addOnFailureListener {
-                Log.d(REPO_DEBUG, it.message.toString())
-            }
-    }
 
     fun openBoxCT(size: String, id: String) {
         cloud.collection(size)

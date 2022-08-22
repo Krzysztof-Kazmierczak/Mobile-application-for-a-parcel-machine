@@ -17,14 +17,23 @@ import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.inzynierka.R
+import com.example.inzynierka.constants.Constants
 import com.example.inzynierka.databinding.ConfirmSendFragmentBinding
 import com.example.inzynierka.databinding.SendFragmentBinding
+import com.example.inzynierka.firebase.NotificationData
+import com.example.inzynierka.firebase.PushNotification
+import com.example.inzynierka.firebase.RetrofitInstance
 import com.example.inzynierka.fragmenty.Send.SendDirections
 import com.example.inzynierka.fragmenty.Send.SendViewModel
 import com.example.inzynierka.fragmenty.TakePack.TakepackFragmentDirections
 import com.example.inzynierka.fragmenty.TakePack.boxIdTF
 import com.example.inzynierka.fragmenty.home.HomeFragmentDirections
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.newFixedThreadPoolContext
 import java.util.jar.Manifest
 
@@ -70,19 +79,13 @@ class ConfirmSend : Fragment() {
             }
         }
         binding.CSFNie.setOnClickListener {
-
-
             ConfirmSendVm.editBoxData(size, numerIdBox, numerIdPack)
             Toast.makeText(requireContext(), "Otwarto ponownie box " + numerIdBox, Toast.LENGTH_SHORT).show()
-            //ConfirmSendVm.ConfirmButton()
         }
 
         binding.CSFTak.setOnClickListener {
-            Log.d("To jest rozmiar paczki",size.toString())
-            Log.d("To jest rozmiar paczki",numerIdBox.toString())
             ConfirmSendVm.boxFull(size, numerIdBox)
             ConfirmSendVm.closeBox(size, numerIdBox)
-
             ConfirmSendVm.editPackData(numerIdPack ,numerIdBox)
 
             ConfirmSendVm.getPackData(numerIdPack.toString().trim())
@@ -90,22 +93,25 @@ class ConfirmSend : Fragment() {
                 val numberToSendInfo = packListData.phoneNumber.toString().trim()
                 val numberIDPack = packListData.packID.toString().trim()
                 val numberIDBox = packListData.Id_box.toString().trim()
+                val numerUID = packListData.uid.toString().trim()
+
                 sendSMS(numberToSendInfo,numberIDPack,numberIDBox)
-                /*val numberToSendInfo = packListData.phoneNumber.toString().trim()
-                val numberIDPack = packListData.packID.toString().trim()
-                val numberIDBox = packListData.Id_box.toString().trim()
 
-                val SMS = ("Twoja paczka o numerze " + numberIDPack + " jest gotowa do odebrania. Znajduje się w skrytce numer "
-                        + numberIDBox + ". Zaloguj się do aplikacji")
+                ConfirmSendVm.getUser(numerUID)
+                ConfirmSendVm.infoUser.observe(viewLifecycleOwner, { user ->
 
-                var smsManager = SmsManager.getDefault()
-                smsManager.sendTextMessage(numberToSendInfo,null,SMS,null,null)
+                    var paczkiUser = user.paczki
+                    paczkiUser?.add(numberIDPack.toString())
 
-                Toast.makeText(requireContext(),"SMS został wysłany",Toast.LENGTH_SHORT).show()*/
+                    ConfirmSendVm.editUserData(numerUID, paczkiUser!!)
 
-                //sendSMS(numberToSendInfo, numberIDPack, numberIDBox)
-                findNavController()
-                    .navigate(ConfirmSendDirections.actionConfirmSendToHomeFragment().actionId)
+                    notyfiactionFunctionSend(numberIDPack,numberIDBox,user.token.toString())
+
+
+
+                    findNavController()
+                        .navigate(ConfirmSendDirections.actionConfirmSendToHomeFragment().actionId)
+                })
             })
         }
     }
@@ -123,6 +129,32 @@ class ConfirmSend : Fragment() {
         Toast.makeText(requireContext(),"SMS został wysłany",Toast.LENGTH_SHORT).show()
     }
 
+    private fun notyfiactionFunctionSend(numberPack:String,numberBox:String,tokenUser:String){
+        val tresc1 = "Twoja paczka o numerze "
+        val tresc2 = " jest gotowa do odebrania. Znajduje sie w skrytce "
+        val tresc3 = ". Zaloguj sie do aplikacji i odbierz swoja paczke!"
+
+        val mess = tresc1 + numberPack + tresc2 + numberBox +tresc3
+        FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC)
+        val notification = PushNotification(
+            data = NotificationData("Otrzymano Paczkę", mess, 10, false),
+            to = tokenUser)
+            //to = "eH3xSnpRR1qbBN2G1mDbo_:APA91bEWhrCAxRdOBuQAUr6_2fgdjuNe_NIYziPCBt8dqfFQ4zbQiv_dpbwlYEmib9fqg-Rjb7NBDKbxjVZavmU_B8Kj8wDBtoQfLi-MPu2v5sW5udZRuLXcvwOP0xyPz723HRZk7CxR")//TOPIC)
+        sendNotification(notification)
+    }
+
+    private fun sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch {
+        try {
+            val response = RetrofitInstance.api.postNotification(notification)
+            if(response.isSuccessful){
+                Log.i("MyTag", "Response ${Gson().toJson(response)}")
+            } else{
+                Log.i("MyTag", "Response ELSE ${response.message()}")
+            }
+        } catch (e: Exception){
+            Log.i("MyTag", "Response Exception ${e.message}")
+        }
+    }
     // private fun sendSMS() {
      //   var phoneNo = 782054003.toString().trim()
        // var SMS = "no elo".trim()

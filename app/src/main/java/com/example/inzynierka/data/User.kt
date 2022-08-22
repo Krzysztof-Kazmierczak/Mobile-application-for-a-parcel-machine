@@ -7,4 +7,5 @@ data class User(val uid:String? = null,
                 val email: String? = null,
                 val toMePackID: String? = null,
                 val phone: String? = null,
-                val check: Int? = null)
+                val check: Int? = null,
+                val token: String? = null)

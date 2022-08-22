@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.inzynierka.data.Pack
+import com.example.inzynierka.data.User
 import com.example.inzynierka.fragmenty.Send.Send
 import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 
@@ -19,6 +20,8 @@ class ConfirmSendViewModel : ViewModel() {
     var numerPaczki = String()
     var numerBoxu = String()
     var packSend = MutableLiveData<Pack>()
+    var infoUser = MutableLiveData<User>()
+   // val idPacksToMe =
     //var isPack = MutableLiveData<Int>()
 
     //fun ConfirmButton(): LiveData<Pack> {
@@ -35,6 +38,11 @@ class ConfirmSendViewModel : ViewModel() {
 //        _numerBoxu.postValue(id)
 //    }
 //
+    fun getUser(uid: String): LiveData<User> {
+    infoUser = repository.infoUser(uid) as MutableLiveData<User>
+    return infoUser
+    }
+
 
     fun numberPack(): String {
         numerPaczki = send.getIdPack()
@@ -42,9 +50,9 @@ class ConfirmSendViewModel : ViewModel() {
         return numerPaczki
     }
 
-    fun sendInfotoUser(Id_pack: String, uid: String)
+    fun editUserData(uid: String, paczki: ArrayList<String>)
     {
-        repository.sendInfoToUser(Id_pack, uid)
+        repository.editUserData(uid, paczki)
     }
 
 

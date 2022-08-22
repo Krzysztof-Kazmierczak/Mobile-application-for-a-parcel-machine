@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        FirebaseMessaging.getInstance().token
+   /*     FirebaseMessaging.getInstance().token
             .addOnCompleteListener(object : OnCompleteListener<String?> {
                 override fun onComplete(@NonNull task: Task<String?>) {
                     if (!task.isSuccessful()) {
@@ -52,14 +52,14 @@ class MainActivity : AppCompatActivity() {
                     // Log and toast
                     token?.let { Log.d("moj token ", it) }
 
-                    Toast.makeText(
+                    /*Toast.makeText(
                         this@MainActivity,
                         "Your device registration token is$token",
                         Toast.LENGTH_SHORT
-                    ).show()
+                    ).show()*/
 
                 }
-            })
+            })*/
 
         val fm = supportFragmentManager
         val fragmentSend = Send()
@@ -68,12 +68,12 @@ class MainActivity : AppCompatActivity() {
         intent.extras?.getString("title")?.let{ title ->
             Log.i("MyTag", "FROM notification $title")
         }
-
+/*
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
         val notification = PushNotification(
             data = NotificationData("Otrzymano Paczkę", "Twoja paczka znajduje się w skrytce numer 153.", 10, false),
             to = "eH3xSnpRR1qbBN2G1mDbo_:APA91bEWhrCAxRdOBuQAUr6_2fgdjuNe_NIYziPCBt8dqfFQ4zbQiv_dpbwlYEmib9fqg-Rjb7NBDKbxjVZavmU_B8Kj8wDBtoQfLi-MPu2v5sW5udZRuLXcvwOP0xyPz723HRZk7CxR")//TOPIC)
-        sendNotification(notification)
+        sendNotification(notification)*/
 
         if (checkAndRequestPermissions()) {
         }

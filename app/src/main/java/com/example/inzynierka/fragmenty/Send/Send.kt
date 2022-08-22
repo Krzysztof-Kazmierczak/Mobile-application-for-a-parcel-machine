@@ -77,7 +77,7 @@ class Send : Fragment() {
 //                                SendVm.setNumberId(idBoxS.toString())
                                     SendVm.editBoxData("box", idBoxS, numerPaczki)
 
-                                    SendVm.editUserData(pack.uid.toString(), numerPaczki)
+                                    //SendVm.editUserData(pack.uid.toString(), numerPaczki)
 
 
 
