@@ -1,14 +1,15 @@
 package com.example.inzynierka.fragmenty.home
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.NonNull
-
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.inzynierka.aktywnosci.RegistrationActivity
@@ -26,13 +27,14 @@ class HomeFragment : Fragment() {
     private var _binding: HomeFragmentBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = HomeFragmentBinding.inflate(layoutInflater, container, false)
         return binding.root
+       // networkConnectioCheck()
+        Log.i("Powtorzenie", "1")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,6 +43,9 @@ class HomeFragment : Fragment() {
         setupTakePackClick()
         setupSendClick()
         setupLogoutClick()
+        networkConnectioCheck()
+        homeFragmentScreen()
+
        // havePack()
       //  token()
     }
@@ -82,7 +87,24 @@ class HomeFragment : Fragment() {
             })
     }
 
+    private fun networkConnectioCheck(){
+        Log.i("Powtorzenie", "1")
+        val connect =
+            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        var networkInfo = connect.activeNetworkInfo
+        // if(.isNotEmpty()){
+        if(networkInfo != null && networkInfo.isConnected)
+        {
+            binding.networkConnection.visibility = View.INVISIBLE
+        }else
+        {
+            binding.networkConnection.visibility = View.VISIBLE
+        }
+       // networkConnectioCheck()
+    }
+
     private fun setupTakePackClick() {
+        Log.i("Powtorzenie", "1")
         binding.TakePack.setOnClickListener {
             findNavController()
                 .navigate(HomeFragmentDirections.actionHomeFragmentToTakepackFragment().actionId)
@@ -90,7 +112,14 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun homeFragmentScreen() {
+        binding.homeFragmentScreen.setOnClickListener {
+            networkConnectioCheck()
+        }
+    }
+
     private fun setupSendClick() {
+        Log.i("Powtorzenie", "1")
         binding.Send.setOnClickListener {
             findNavController()
                 .navigate(HomeFragmentDirections.actionHomeFragmentToSend().actionId)
@@ -98,6 +127,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupLogoutClick() {
+        Log.i("Powtorzenie", "1")
         binding.LogOut.setOnClickListener {
                 fbAuth.signOut()
                 val AktywnoscPierwszeOkno: Intent = Intent(context, RegistrationActivity::class.java)
@@ -107,6 +137,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.i("Powtorzenie", "1")
         _binding = null
     }
 

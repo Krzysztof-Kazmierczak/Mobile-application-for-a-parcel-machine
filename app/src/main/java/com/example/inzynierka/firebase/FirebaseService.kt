@@ -7,10 +7,13 @@ import android.app.PendingIntent.FLAG_ONE_SHOT
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.ConnectivityManager
 import android.os.Build
 import android.util.Log
+import android.view.View
 import androidx.annotation.NonNull
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.inzynierka.R
 import com.example.inzynierka.aktywnosci.App.Companion.CHANNEL_ID
 import com.example.inzynierka.aktywnosci.MainActivity

@@ -36,7 +36,6 @@ class MyPacksAdapter(val onPackClicked: (Int) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: MyPacksViewHolder, position: Int) {
-
         holder.itemView.findViewById<Button>(R.id.MP_b_odbierzPaczke).setOnClickListener {
        // holder.itemView.setOnClickListener {
             onPackClicked(position)

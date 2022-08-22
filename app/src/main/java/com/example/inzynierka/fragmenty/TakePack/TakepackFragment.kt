@@ -1,5 +1,7 @@
 package com.example.inzynierka.fragmenty.TakePack
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -39,44 +41,70 @@ class TakepackFragment : Fragment(){//, OnPackItemLongClick {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerViewTakepack.layoutManager = LinearLayoutManager(requireContext())
-        adapter = MyPacksAdapter { position ->
-            boxIdTF = TakepackVm.mypacks.value?.get(position)?.Id_box.toString()
-            numerPaczkiGLTF = TakepackVm.mypacks.value?.get(position)?.packID.toString()
 
-            TakepackVm.openBox(
-                TakepackVm.mypacks.value?.get(position)?.Size.toString(),
-                boxIdTF
-            )
+        val connect =
+            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        var networkInfo = connect.activeNetworkInfo
+            binding.recyclerViewTakepack.layoutManager = LinearLayoutManager(requireContext())
 
-            findNavController()
-                .navigate(TakepackFragmentDirections.actionTakepackFragmentToConfirmTake())
-        }
-        binding.recyclerViewTakepack.adapter = adapter
+            adapter = MyPacksAdapter { position ->
 
+                boxIdTF = TakepackVm.mypacks.value?.get(position)?.Id_box.toString()
+                numerPaczkiGLTF = TakepackVm.mypacks.value?.get(position)?.packID.toString()
+                if(networkInfo != null && networkInfo.isConnected) {
+                    TakepackVm.openBox(
+                        TakepackVm.mypacks.value?.get(position)?.Size.toString(),
+                        boxIdTF
+                    )
+
+
+                    findNavController()
+                        .navigate(TakepackFragmentDirections.actionTakepackFragmentToConfirmTake())
+                }
+
+            }
+
+            binding.recyclerViewTakepack.adapter = adapter
+
+        //networkConnectioCheck()
         // takePack()
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         TakepackVm.idPacksToMe.observe(viewLifecycleOwner, { listMyPack ->
+
             //var listPaczek = listMyPack
             if(listMyPack.isNotEmpty()){
-
+                networkConnectioCheck()
                 binding.TPBrakPaczek.visibility = View.INVISIBLE
-
-                //binding.TPBrakPaczek.visibility(View.VISIBLE)
-
             TakepackVm.packData(listMyPack)
             TakepackVm.mypacks.observe(viewLifecycleOwner, { list ->
                 adapter.setMyPacks(list as ArrayList<Pack>)
             })}
             else{
-                binding.TPBrakPaczek.visibility = View.VISIBLE
+                networkConnectioCheck()
             }
         })
     }
+
+    private fun networkConnectioCheck(){
+        val connect =
+            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        var networkInfo = connect.activeNetworkInfo
+        // if(.isNotEmpty()){
+        if(networkInfo != null && networkInfo.isConnected)
+        {
+            binding.networkConnection.visibility = View.INVISIBLE
+            binding.TPBrakPaczek.visibility = View.VISIBLE
+        }else
+        {
+            binding.networkConnection.visibility = View.VISIBLE
+        }
+    }
+
 
     private fun takePack() {
         binding.recyclerViewTakepack.setOnClickListener {

@@ -15,10 +15,6 @@ import com.google.firebase.auth.PhoneAuthProvider
 class RegistrationActivity : AppCompatActivity() {
 
     private val fbAuth = FirebaseAuth.getInstance()
-   // lateinit var storedVerificationId:String
-  //  lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
-   // private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +27,6 @@ class RegistrationActivity : AppCompatActivity() {
     }
 
     private fun isCurrentUser() {
-
-
-
         fbAuth.currentUser?.let {auth ->
             val intent = Intent(applicationContext, MainActivity::class.java).apply {
                 flags = (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)

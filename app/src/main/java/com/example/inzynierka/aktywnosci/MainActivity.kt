@@ -31,55 +31,28 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-   val REQUEST_ID_MULTIPLE_PERMISSIONS = 1
+    val REQUEST_ID_MULTIPLE_PERMISSIONS = 1
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-   /*     FirebaseMessaging.getInstance().token
-            .addOnCompleteListener(object : OnCompleteListener<String?> {
-                override fun onComplete(@NonNull task: Task<String?>) {
-                    if (!task.isSuccessful()) {
-                        println("Fetching FCM registration token failed")
-                        return
-                    }
-
-                    // Get new FCM registration token
-                    val token: String? = task.getResult()
-
-                    // Log and toast
-                    token?.let { Log.d("moj token ", it) }
-
-                    /*Toast.makeText(
-                        this@MainActivity,
-                        "Your device registration token is$token",
-                        Toast.LENGTH_SHORT
-                    ).show()*/
-
-                }
-            })*/
-
         val fm = supportFragmentManager
         val fragmentSend = Send()
         val HomeFragment = HomeFragment()
 
+        Log.i("Powtorzenie", "1")
+
         intent.extras?.getString("title")?.let{ title ->
             Log.i("MyTag", "FROM notification $title")
-        }
-/*
-        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
-        val notification = PushNotification(
-            data = NotificationData("Otrzymano Paczkę", "Twoja paczka znajduje się w skrytce numer 153.", 10, false),
-            to = "eH3xSnpRR1qbBN2G1mDbo_:APA91bEWhrCAxRdOBuQAUr6_2fgdjuNe_NIYziPCBt8dqfFQ4zbQiv_dpbwlYEmib9fqg-Rjb7NBDKbxjVZavmU_B8Kj8wDBtoQfLi-MPu2v5sW5udZRuLXcvwOP0xyPz723HRZk7CxR")//TOPIC)
-        sendNotification(notification)*/
-
-        if (checkAndRequestPermissions()) {
         }
     }
 
     private fun checkAndRequestPermissions(): Boolean {
+        Log.i("Powtorzenie", "1")
         val permissionSendMessage = ContextCompat.checkSelfPermission(
             this,
             Manifest.permission.SEND_SMS
@@ -114,7 +87,7 @@ class MainActivity : AppCompatActivity() {
             REQUEST_ID_MULTIPLE_PERMISSIONS -> {
                 val perms: MutableMap<String, Int> = HashMap()
 
-
+                Log.i("Powtorzenie", "1")
                 // Initialize the map with both permissions
                 perms[Manifest.permission.SEND_SMS] = PackageManager.PERMISSION_GRANTED
                 perms[Manifest.permission.RECEIVE_SMS] = PackageManager.PERMISSION_GRANTED
@@ -189,6 +162,7 @@ class MainActivity : AppCompatActivity() {
             .setNegativeButton("Cancel", okListener)
             .create()
             .show()
+        Log.i("Powtorzenie", "1")
     }
 
 
