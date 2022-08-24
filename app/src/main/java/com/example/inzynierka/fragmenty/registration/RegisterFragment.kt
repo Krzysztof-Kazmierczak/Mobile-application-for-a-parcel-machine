@@ -63,7 +63,8 @@ class RegisterFragment : BaseFragment() {
                                 "",
                                 phoneNumber,
                                 0,
-                                ""
+                                "",
+                                0
                             )
                             regVm.createNewUser(user)
                             startApp()

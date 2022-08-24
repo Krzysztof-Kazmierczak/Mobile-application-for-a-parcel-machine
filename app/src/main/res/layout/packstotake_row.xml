@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    android:layout_marginBottom="5dp"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="5dp"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#AC1212"
+        android:outlineAmbientShadowColor="#852929">
+
+
+        <TextView
+            android:id="@+id/PUP_id_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/PUP_tv_ID" />
+
+        <Button
+            android:id="@+id/PUP_b_wyciagnijPaczke"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="#332424"
+            android:text="@string/MP_wyciagnijPaczke"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/PUP_rozmiar_paczki" />
+
+        <TextView
+            android:id="@+id/PUP_tv_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/MP_boxID"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/PUP_tv_pickupTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/MP_pickupTime"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/PUP_id_box" />
+
+        <TextView
+            android:id="@+id/PUP_tv_packID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/MP_packID"
+            app:layout_constraintStart_toEndOf="@+id/PUP_tv_rozmiar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/PUP_tv_rozmiar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/MP_Rozmiar"
+            app:layout_constraintStart_toEndOf="@+id/PUP_tv_ID"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/PUP_rozmiar_paczki"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toEndOf="@+id/PUP_tv_ID"
+            app:layout_constraintTop_toBottomOf="@+id/PUP_tv_rozmiar" />
+
+        <TextView
+            android:id="@+id/PUP_czas_odbioru"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/PUP_tv_ID"
+            app:layout_constraintTop_toBottomOf="@+id/PUP_rozmiar_paczki" />
+
+        <TextView
+            android:id="@+id/PUP_ID_pack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toEndOf="@+id/PUP_tv_rozmiar"
+            app:layout_constraintTop_toBottomOf="@+id/PUP_tv_packID" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/todo"
+            app:layout_constraintBottom_toTopOf="@+id/PUP_tv_pickupTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/PUP_tv_packID"
+            app:layout_constraintTop_toBottomOf="@+id/PUP_tv_packID"
+            app:srcCompat="@drawable/ic_action_name" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

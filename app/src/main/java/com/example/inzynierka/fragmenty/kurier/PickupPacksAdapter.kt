@@ -13,33 +13,33 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 //class MyPacksAdapter(private val listener: OnPackItemLongClick, val onPackClicked: (Int) -> Unit) :
-class MyPacksAdapter(val onPackClicked: (Int) -> Unit) :
-    RecyclerView.Adapter<MyPacksAdapter.MyPacksViewHolder>() {
+class PickupPacksAdapter(val onPackClicked: (Int) -> Unit) :
+    RecyclerView.Adapter<PickupPacksAdapter.PickupPacksViewHolder>() {
 
 
-    private val mypacksList = ArrayList<Pack>()
+    private val pickuppacksList = ArrayList<Pack>()
 
     fun setMyPacks(list: ArrayList<Pack>) {
-        mypacksList.clear()
-        mypacksList.addAll(list)
+        pickuppacksList.clear()
+        pickuppacksList.addAll(list)
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyPacksViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PickupPacksViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.mypacks_row, parent, false)
-        return MyPacksViewHolder(view)
+        return PickupPacksViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MyPacksViewHolder, position: Int) {
-        holder.itemView.findViewById<Button>(R.id.MP_b_odbierzPaczke).setOnClickListener {
-       // holder.itemView.setOnClickListener {
+    override fun onBindViewHolder(holder: PickupPacksViewHolder, position: Int) {
+        holder.itemView.findViewById<Button>(R.id.PUP_b_wyciagnijPaczke).setOnClickListener {
+            // holder.itemView.setOnClickListener {
             onPackClicked(position)
         }
         bindData(holder)
     }
 
-    private fun bindData(holder: MyPacksViewHolder) {
+    private fun bindData(holder: PickupPacksViewHolder) {
 
         holder.itemView.apply {
             val id_pack = findViewById<TextView>(R.id.PUP_ID_pack)
@@ -50,7 +50,7 @@ class MyPacksAdapter(val onPackClicked: (Int) -> Unit) :
             // val take_pack = holder.itemView.findViewById<Button>(R.id.MP_b_odbierzPaczke)
             val cal = Calendar.getInstance()
             cal.time
-            mypacksList[holder.adapterPosition].apply {
+            pickuppacksList[holder.adapterPosition].apply {
                 id_pack.text = packID
                 size_pack.text = Size
                 id_box.text = Id_box
@@ -72,13 +72,13 @@ class MyPacksAdapter(val onPackClicked: (Int) -> Unit) :
     }
 
     override fun getItemCount(): Int {
-        return mypacksList.size
+        return pickuppacksList.size
     }
 
-    inner class MyPacksViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class PickupPacksViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         init {
-            val take_pack = itemView.findViewById<Button>(R.id.MP_b_odbierzPaczke)
-            take_pack.setOnClickListener {
+            val pickup_pack = itemView.findViewById<Button>(R.id.PUP_b_wyciagnijPaczke)
+            pickup_pack.setOnClickListener {
             }
         }
     }
