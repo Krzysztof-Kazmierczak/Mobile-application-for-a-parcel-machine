@@ -1,41 +1,35 @@
 package com.example.inzynierka.fragmenty.potwierdzenie
 
-import android.content.pm.PackageManager
-import android.os.Build
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.telephony.SmsManager
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.checkSelfPermission
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.inzynierka.R
 import com.example.inzynierka.constants.Constants
 import com.example.inzynierka.databinding.ConfirmSendFragmentBinding
-import com.example.inzynierka.databinding.SendFragmentBinding
 import com.example.inzynierka.firebase.NotificationData
 import com.example.inzynierka.firebase.PushNotification
 import com.example.inzynierka.firebase.RetrofitInstance
-import com.example.inzynierka.fragmenty.Send.SendDirections
-import com.example.inzynierka.fragmenty.Send.SendViewModel
-import com.example.inzynierka.fragmenty.TakePack.TakepackFragmentDirections
-import com.example.inzynierka.fragmenty.TakePack.boxIdTF
-import com.example.inzynierka.fragmenty.home.HomeFragmentDirections
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
+import com.google.type.Date
+import com.google.type.DateTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.newFixedThreadPoolContext
-import java.util.jar.Manifest
+import java.sql.Time
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
+import java.util.Calendar.getInstance
+
 
 class ConfirmSend : Fragment() {
 
@@ -88,6 +82,30 @@ class ConfirmSend : Fragment() {
             ConfirmSendVm.closeBox(size, numerIdBox)
             ConfirmSendVm.editPackData(numerIdPack ,numerIdBox)
 
+            /*DateTime.getDefaultInstance()
+
+            val time = Date(156)//.time + (1000*3600*24*3)
+            //val time =  Date().time. times( + 1000*3600*24*3)//(3dni w milisekundach)
+
+            val costam = Date(156)
+            costam.before(Date())
+
+            var calendar = Calendar.getInstance()
+            var day = calendar.get(Calendar.DAY_OF_MONTH)
+            var month = calendar.get(Calendar.MONTH)
+            var year = calendar.get(Calendar.YEAR)
+
+            */
+
+            val cal = getInstance()
+            cal.time
+            cal[Calendar.DAY_OF_YEAR] = cal[Calendar.DAY_OF_YEAR] + 3
+            val wyswietlanieDaty = SimpleDateFormat("dd-MM-yyyy",Locale.UK).format(cal.time)
+            var day = cal.get(Calendar.DAY_OF_MONTH)
+            var month = cal.get(Calendar.MONTH)
+            var year = cal.get(Calendar.YEAR)
+            ConfirmSendVm.addDate(day.toString(),(month+1).toString(),year.toString(),numerIdPack)
+
             ConfirmSendVm.getPackData(numerIdPack.toString().trim())
             ConfirmSendVm.packSend.observe(viewLifecycleOwner, {packListData ->
                 val numberToSendInfo = packListData.phoneNumber.toString().trim()
@@ -95,7 +113,7 @@ class ConfirmSend : Fragment() {
                 val numberIDBox = packListData.Id_box.toString().trim()
                 val numerUID = packListData.uid.toString().trim()
 
-                sendSMS(numberToSendInfo,numberIDPack,numberIDBox)
+                sendSMS(numberToSendInfo,numberIDPack,numberIDBox,wyswietlanieDaty)
 
                 ConfirmSendVm.getUser(numerUID)
                 ConfirmSendVm.infoUser.observe(viewLifecycleOwner, { user ->
@@ -105,7 +123,7 @@ class ConfirmSend : Fragment() {
 
                     ConfirmSendVm.editUserData(numerUID, paczkiUser!!)
 
-                    notyfiactionFunctionSend(numberIDPack,numberIDBox,user.token.toString())
+                    notyfiactionFunctionSend(numberIDPack,numberIDBox,user.token.toString(),wyswietlanieDaty)
 
 
 
@@ -116,12 +134,12 @@ class ConfirmSend : Fragment() {
         }
     }
 
-    private fun sendSMS(numberPH:String,numberPack:String,numberBox:String) {
-        val tresc1 = "Twoja paczka o numerze "
-        val tresc2 = " jest gotowa do odebrania. Znajduje sie w skrytce "
-        val tresc3 = ". Zaloguj sie do aplikacji i odbierz swoja paczke!"
+    private fun sendSMS(numberPH:String,numberPack:String,numberBox:String,dataOdbioru:String) {
+        val tresc1 = "Twoja paczka o numerze id "
+        val tresc2 = " znajduje sie w skrytce: "
+        val tresc3 = " Czas na odebranie paczki: "
 
-        val SMS = tresc1 + numberPack + tresc2 + numberBox +tresc3
+        val SMS = tresc1 + numberPack + tresc2 + numberBox + tresc3 + dataOdbioru
         //val SMS = numberPack.toString() + numberBox.toString()
         var smsManager = SmsManager.getDefault()
         smsManager.sendTextMessage(numberPH,null,SMS,null,null)
@@ -129,12 +147,12 @@ class ConfirmSend : Fragment() {
         Toast.makeText(requireContext(),"SMS został wysłany",Toast.LENGTH_SHORT).show()
     }
 
-    private fun notyfiactionFunctionSend(numberPack:String,numberBox:String,tokenUser:String){
-        val tresc1 = "Twoja paczka o numerze "
-        val tresc2 = " jest gotowa do odebrania. Znajduje sie w skrytce "
-        val tresc3 = ". Zaloguj sie do aplikacji i odbierz swoja paczke!"
+    private fun notyfiactionFunctionSend(numberPack:String,numberBox:String,tokenUser:String,dataOdbioru:String){
+        val tresc1 = "Twoja paczka o numerze id "
+        val tresc2 = " znajduje sie w skrytce: "
+        val tresc3 = " Czas na odebranie paczki: "
 
-        val mess = tresc1 + numberPack + tresc2 + numberBox +tresc3
+        val mess = tresc1 + numberPack + tresc2 + numberBox + tresc3 + dataOdbioru
         FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC)
         val notification = PushNotification(
             data = NotificationData("Otrzymano Paczkę", mess, 10, false),

@@ -37,6 +37,19 @@ class FirebaseRepository {
         return cloudResult
     }
 
+    fun addDate(day:String,month:String,year:String, packID:String)
+    {
+        cloud.collection("pack")
+            .document(packID)
+            .update("day",day,"month",month,"year",year)
+            .addOnSuccessListener {
+                Log.d("Zaktualzowano token ", day)
+            }
+            .addOnFailureListener {
+                Log.d(REPO_DEBUG,it.message.toString())
+            }
+    }
+
     fun pushToken(token: String) {
 
         val uid = auth.currentUser?.uid

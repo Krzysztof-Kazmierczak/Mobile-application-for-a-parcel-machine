@@ -6,5 +6,8 @@ data class Pack(
     val uid: String? = null,
     val packID: String? = null,
     val phoneNumber: String? = null,
-    val packInBox: String? = null
+    val packInBox: String? = null,
+    val day: String? = null,
+    val month: String? = null,
+    val year: String? = null
 )

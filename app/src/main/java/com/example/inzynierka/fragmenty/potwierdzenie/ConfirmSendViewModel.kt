@@ -38,6 +38,12 @@ class ConfirmSendViewModel : ViewModel() {
 //        _numerBoxu.postValue(id)
 //    }
 //
+
+    fun addDate(day:String,month:String,year:String,packID:String)
+    {
+        repository.addDate(day,month,year,packID)
+    }
+
     fun getUser(uid: String): LiveData<User> {
     infoUser = repository.infoUser(uid) as MutableLiveData<User>
     return infoUser

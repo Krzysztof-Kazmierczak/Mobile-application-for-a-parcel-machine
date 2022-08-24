@@ -15,6 +15,9 @@ import com.example.inzynierka.R
 import com.example.inzynierka.data.Pack
 import com.example.inzynierka.fragmenty.Send.SendDirections
 import com.example.inzynierka.fragmenty.TakePack.TakepackFragmentDirections
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 //class MyPacksAdapter(private val listener: OnPackItemLongClick, val onPackClicked: (Int) -> Unit) :
 class MyPacksAdapter(val onPackClicked: (Int) -> Unit) :
@@ -49,13 +52,21 @@ class MyPacksAdapter(val onPackClicked: (Int) -> Unit) :
             val id_pack = findViewById<TextView>(R.id.MP_ID_pack)
             val size_pack = findViewById<TextView>(R.id.MP_rozmiar_paczki)
             val id_box = findViewById<TextView>(R.id.MP_id_box)
+            val pickup_time = findViewById<TextView>(R.id.MP_czas_odbioru)
 
             // val take_pack = holder.itemView.findViewById<Button>(R.id.MP_b_odbierzPaczke)
-
+            val cal = Calendar.getInstance()
+            cal.time
             mypacksList[holder.adapterPosition].apply {
                 id_pack.text = packID
                 size_pack.text = Size
                 id_box.text = Id_box
+                cal[Calendar.DAY_OF_MONTH] = day?.toInt()!!
+                cal[Calendar.MONTH] = month?.toInt()!! - 1
+                cal[Calendar.YEAR] = year?.toInt()!!
+
+                val wyswietlanieDaty = SimpleDateFormat("dd-MM-yyyy", Locale.UK).format(cal.time)
+                pickup_time.text = wyswietlanieDaty //day + " - " + month + " - " + year
             }
 
             // take_pack.setOnClickListener {
