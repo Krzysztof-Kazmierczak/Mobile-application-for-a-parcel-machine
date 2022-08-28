@@ -12,11 +12,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.inzynierka.R
+import com.example.inzynierka.data.BoxS
+import com.example.inzynierka.data.Pack
 import com.example.inzynierka.databinding.PickupPackFragmentBinding
 import com.example.inzynierka.fragmenty.TakePack.TakepackFragmentDirections
 import com.example.inzynierka.fragmenty.TakePack.boxIdTF
 import com.example.inzynierka.fragmenty.TakePack.numerPaczkiGLTF
 import com.example.inzynierka.fragmenty.home.MyPacksAdapter
+import com.example.inzynierka.fragmenty.home.PickupPacksAdapter
 
 class PickupPackFragment : Fragment() {
     private val PROFILE_DEBUG = "PROFILE_DEBUG"
@@ -24,12 +27,7 @@ class PickupPackFragment : Fragment() {
     private val binding get() = _binding!!
     private val PickupPackVm by viewModels<PickupPackViewModel>()
 
-    //private lateinit var adapter: MyPickupPackAdapter
-    companion object {
-        fun newInstance() = PickupPackFragment()
-    }
-
-    private lateinit var viewModel: PickupPackViewModel
+    private lateinit var adapter: PickupPacksAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,18 +46,20 @@ class PickupPackFragment : Fragment() {
         var networkInfo = connect.activeNetworkInfo
         binding.recyclerViewPickuppack.layoutManager = LinearLayoutManager(requireContext())
 
-        //adapter = MyPacksAdapter { position ->
+        adapter = PickupPacksAdapter { position ->
 
-           // boxIdTF = TakepackVm.mypacks.value?.get(position)?.Id_box.toString()
-           // numerPaczkiGLTF = TakepackVm.mypacks.value?.get(position)?.packID.toString()
+            val cos1 = PickupPackVm.endTimeBoxS.value?.get(position)?.ID_Box.toString()
+            val cos2 = PickupPackVm.endTimeBoxS.value?.get(position)?.ID.toString()
             if(networkInfo != null && networkInfo.isConnected) {
-                findNavController()
-                    .navigate(TakepackFragmentDirections.actionTakepackFragmentToConfirmTake())
+
+                //todo OPEN BOX! i zmiana fragmentu
+              //  findNavController()
+               //     .navigate(TakepackFragmentDirections.actionTakepackFragmentToConfirmTake())
             }
 
-       // }
+        }
 
-        //binding.recyclerViewTakepack.adapter = adapter
+        binding.recyclerViewPickuppack.adapter = adapter
     }
 
     private fun networkConnectioCheck(){
@@ -79,9 +79,23 @@ class PickupPackFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(PickupPackViewModel::class.java)
-        // TODO: Use the ViewModel
+
+        PickupPackVm.endTimeBoxs()
+        PickupPackVm.endTimeBoxS.observe(viewLifecycleOwner, { listEndTimePack ->
+
+            if(listEndTimePack.isNotEmpty()){
+                networkConnectioCheck()
+                binding.PUPBrakPaczek.visibility = View.INVISIBLE
+
+                    adapter.setEndTimePacks(listEndTimePack as ArrayList<BoxS>)
+            }
+            else{
+                networkConnectioCheck()
+            }
+        })
     }
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

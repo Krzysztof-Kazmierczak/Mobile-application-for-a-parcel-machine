@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.inzynierka.R
+import com.example.inzynierka.data.BoxS
 import com.example.inzynierka.data.Pack
 import java.text.SimpleDateFormat
 import java.util.*
@@ -17,9 +18,9 @@ class PickupPacksAdapter(val onPackClicked: (Int) -> Unit) :
     RecyclerView.Adapter<PickupPacksAdapter.PickupPacksViewHolder>() {
 
 
-    private val pickuppacksList = ArrayList<Pack>()
+    private val pickuppacksList = ArrayList<BoxS>()
 
-    fun setMyPacks(list: ArrayList<Pack>) {
+    fun setEndTimePacks(list: ArrayList<BoxS>) {
         pickuppacksList.clear()
         pickuppacksList.addAll(list)
         notifyDataSetChanged()
@@ -27,7 +28,7 @@ class PickupPacksAdapter(val onPackClicked: (Int) -> Unit) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PickupPacksViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.mypacks_row, parent, false)
+        val view = inflater.inflate(R.layout.packstotake_row, parent, false)
         return PickupPacksViewHolder(view)
     }
 
@@ -51,9 +52,9 @@ class PickupPacksAdapter(val onPackClicked: (Int) -> Unit) :
             val cal = Calendar.getInstance()
             cal.time
             pickuppacksList[holder.adapterPosition].apply {
-                id_pack.text = packID
+                id_pack.text = ID
                 size_pack.text = Size
-                id_box.text = Id_box
+                id_box.text = ID_Box
                 cal[Calendar.DAY_OF_MONTH] = day?.toInt()!!
                 cal[Calendar.MONTH] = month?.toInt()!! - 1
                 cal[Calendar.YEAR] = year?.toInt()!!

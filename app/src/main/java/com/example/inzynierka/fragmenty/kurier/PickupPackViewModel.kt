@@ -3,6 +3,7 @@ package com.example.inzynierka.fragmenty.kurier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.inzynierka.data.BoxS
 import com.example.inzynierka.data.Pack
 import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 
@@ -11,6 +12,7 @@ class PickupPackViewModel : ViewModel() {
     var idPackToMe = MutableLiveData<String>()
     var cloudResult = MutableLiveData<Pack>()
     val idPacksToMe = repository.packsToMe()
+    var endTimeBoxS = MutableLiveData<List<BoxS>>()
 
     fun packData(id: String): LiveData<Pack> {
         cloudResult = repository.PutPack(id) as MutableLiveData<Pack>
@@ -19,5 +21,10 @@ class PickupPackViewModel : ViewModel() {
 
     fun getUserData(){
         repository.getUserData()
+    }
+
+    fun endTimeBoxs(){//}: MutableLiveData<List<Pack>> {
+        endTimeBoxS = repository.getEndTimePacks() as MutableLiveData<List<BoxS>>
+        // return mypacks
     }
 }

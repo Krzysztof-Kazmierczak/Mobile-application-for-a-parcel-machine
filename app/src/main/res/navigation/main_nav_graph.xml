@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homeFragment_to_send"
             app:destination="@id/send" />
+        <action
+            android:id="@+id/action_homeFragment_to_pickupPackFragment"
+            app:destination="@id/pickupPackFragment" />
     </fragment>
     <fragment
         android:id="@+id/takepackFragment"
@@ -51,6 +54,15 @@
         tools:layout="@layout/confirm_take_fragment">
         <action
             android:id="@+id/action_confirmTake_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pickupPackFragment"
+        android:name="com.example.inzynierka.fragmenty.kurier.PickupPackFragment"
+        android:label="pickup_pack_fragment"
+        tools:layout="@layout/pickup_pack_fragment" >
+        <action
+            android:id="@+id/action_pickupPackFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

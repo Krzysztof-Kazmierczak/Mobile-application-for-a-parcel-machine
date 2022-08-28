@@ -9,6 +9,8 @@ import com.example.inzynierka.data.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import java.util.*
+import kotlin.collections.ArrayList
 
 class FirebaseRepository {
 
@@ -37,13 +39,26 @@ class FirebaseRepository {
         return cloudResult
     }
 
-    fun addDate(day:String,month:String,year:String, packID:String)
+    fun addDatePack(day:String,month:String,year:String, packID:String)
     {
         cloud.collection("pack")
             .document(packID)
             .update("day",day,"month",month,"year",year)
             .addOnSuccessListener {
-                Log.d("Zaktualzowano token ", day)
+                Log.d("Zaktualzowano info PACK ", day)
+            }
+            .addOnFailureListener {
+                Log.d(REPO_DEBUG,it.message.toString())
+            }
+    }
+
+    fun addDateBox(day:String,month:String,year:String, boxID:String)
+    {
+        cloud.collection("box")
+            .document(boxID)
+            .update("day",day,"month",month,"year",year)
+            .addOnSuccessListener {
+                Log.d("Zaktualzowano info BOX ", day)
             }
             .addOnFailureListener {
                 Log.d(REPO_DEBUG,it.message.toString())
@@ -168,6 +183,114 @@ class FirebaseRepository {
         }
         return cloudResult
     }
+
+    fun getEndTimePacks(): LiveData<List<BoxS>> {
+        val cloudResult = MutableLiveData<List<BoxS>>()
+
+       // val liczbaPaczek = (mojePaczki.size) - 1
+        var tworzycliste = ArrayList<BoxS>()
+
+        val cal = Calendar.getInstance()
+        cal.time
+        cal[Calendar.DAY_OF_MONTH]
+
+        cloud.collection("box")
+            .document(1.toString())
+            .get()
+            .addOnSuccessListener {
+                val box = it.toObject(BoxS::class.java)
+                if (box != null) {
+                    if (box.day == cal[Calendar.DAY_OF_MONTH].toString()) {
+                        Log.d(1.toString() + " skrytka jest po terminie", box.day.toString())
+                        tworzycliste.add(box)
+                        cloudResult.postValue(tworzycliste)
+                    } else {
+                        Log.d(1.toString() + " jest czas na odebranie ", box.day.toString())
+                        //liczbaPelnych = liczbaPelnych + 1
+                        //if (liczbaPelnych == 5){zwrotEmptyBox.setValue(null)}
+                    }
+                }
+
+            }
+        cloud.collection("box")
+            .document(2.toString())
+            .get()
+            .addOnSuccessListener {
+                val box = it.toObject(BoxS::class.java)
+                if (box != null) {
+                    if (box.day == cal[Calendar.DAY_OF_MONTH].toString()) {
+                        Log.d(2.toString() + " skrytka jest po terminie", box.day.toString())
+                        tworzycliste.add(box)
+                        cloudResult.postValue(tworzycliste)
+                    } else {
+                        Log.d(2.toString() + " jest czas na odebranie ", box.day.toString())
+                        //liczbaPelnych = liczbaPelnych + 1
+                        //if (liczbaPelnych == 5){zwrotEmptyBox.setValue(null)}
+                    }
+                }
+
+            }
+
+        cloud.collection("box")
+            .document(3.toString())
+            .get()
+            .addOnSuccessListener {
+                val box = it.toObject(BoxS::class.java)
+                if (box != null) {
+                    if (box.day == cal[Calendar.DAY_OF_MONTH].toString()) {
+                        Log.d(3.toString() + " skrytka jest po terminie", box.day.toString())
+                        tworzycliste.add(box)
+                        cloudResult.postValue(tworzycliste)
+                    } else {
+                        Log.d(3.toString() + " jest czas na odebranie ", box.day.toString())
+                        //liczbaPelnych = liczbaPelnych + 1
+                        //if (liczbaPelnych == 5){zwrotEmptyBox.setValue(null)}
+                    }
+                }
+
+            }
+
+        cloud.collection("box")
+            .document(4.toString())
+            .get()
+            .addOnSuccessListener {
+                val box = it.toObject(BoxS::class.java)
+                if (box != null) {
+                    if (box.day == cal[Calendar.DAY_OF_MONTH].toString()) {
+                        Log.d(4.toString() + " skrytka jest po terminie", box.day.toString())
+                        tworzycliste.add(box)
+                        cloudResult.postValue(tworzycliste)
+                    } else {
+                        Log.d(4.toString() + " jest czas na odebranie ", box.day.toString())
+                        //liczbaPelnych = liczbaPelnych + 1
+                        //if (liczbaPelnych == 5){zwrotEmptyBox.setValue(null)}
+                    }
+                }
+
+            }
+
+        cloud.collection("box")
+            .document(5.toString())
+            .get()
+            .addOnSuccessListener {
+                val box = it.toObject(BoxS::class.java)
+                if (box != null) {
+                    if (box.day == cal[Calendar.DAY_OF_MONTH].toString()) {
+                        Log.d(5.toString() + " skrytka jest po terminie", box.day.toString())
+                        tworzycliste.add(box)
+                        cloudResult.postValue(tworzycliste)
+                    } else {
+                        Log.d(5.toString() + " jest czas na odebranie ", box.day.toString())
+                        //liczbaPelnych = liczbaPelnych + 1
+                        //if (liczbaPelnych == 5){zwrotEmptyBox.setValue(null)}
+                    }
+                }
+
+            }
+
+        return cloudResult
+    }
+
 
     fun packsToMe(): LiveData<List<String>> {
         val uid = auth.currentUser?.uid

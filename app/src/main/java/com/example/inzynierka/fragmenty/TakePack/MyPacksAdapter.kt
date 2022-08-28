@@ -42,12 +42,12 @@ class MyPacksAdapter(val onPackClicked: (Int) -> Unit) :
     private fun bindData(holder: MyPacksViewHolder) {
 
         holder.itemView.apply {
-            val id_pack = findViewById<TextView>(R.id.PUP_ID_pack)
-            val size_pack = findViewById<TextView>(R.id.PUP_rozmiar_paczki)
-            val id_box = findViewById<TextView>(R.id.PUP_id_box)
-            val pickup_time = findViewById<TextView>(R.id.PUP_czas_odbioru)
+            val id_pack = findViewById<TextView>(R.id.MP_ID_pack)
+            val size_pack = findViewById<TextView>(R.id.MP_rozmiar_paczki)
+            val id_box = findViewById<TextView>(R.id.MP_id_box)
+            val pickup_time = findViewById<TextView>(R.id.MP_czas_odbioru)
 
-            // val take_pack = holder.itemView.findViewById<Button>(R.id.MP_b_odbierzPaczke)
+            val take_pack = holder.itemView.findViewById<Button>(R.id.MP_b_odbierzPaczke)
             val cal = Calendar.getInstance()
             cal.time
             mypacksList[holder.adapterPosition].apply {

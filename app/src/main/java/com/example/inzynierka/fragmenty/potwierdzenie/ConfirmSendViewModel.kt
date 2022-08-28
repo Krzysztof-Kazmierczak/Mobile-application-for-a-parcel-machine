@@ -39,9 +39,14 @@ class ConfirmSendViewModel : ViewModel() {
 //    }
 //
 
-    fun addDate(day:String,month:String,year:String,packID:String)
+    fun addDatePack(day:String,month:String,year:String,packID:String)
     {
-        repository.addDate(day,month,year,packID)
+        repository.addDatePack(day,month,year,packID)
+    }
+
+    fun addDateBox(day:String,month:String,year:String,boxID:String)
+    {
+        repository.addDateBox(day,month,year,boxID)
     }
 
     fun getUser(uid: String): LiveData<User> {

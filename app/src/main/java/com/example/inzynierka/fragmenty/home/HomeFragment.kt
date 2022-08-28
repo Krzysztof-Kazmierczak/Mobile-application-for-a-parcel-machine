@@ -45,6 +45,7 @@ class HomeFragment : Fragment() {
         setupLogoutClick()
         networkConnectioCheck()
         homeFragmentScreen()
+        setupPickUpPackClick()
 
        // havePack()
       //  token()
@@ -119,10 +120,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupSendClick() {
-        Log.i("Powtorzenie", "1")
         binding.Send.setOnClickListener {
             findNavController()
                 .navigate(HomeFragmentDirections.actionHomeFragmentToSend().actionId)
+        }
+    }
+
+    private fun setupPickUpPackClick() {
+        binding.PickupPack.setOnClickListener {
+            findNavController()
+                .navigate(HomeFragmentDirections.actionHomeFragmentToPickupPackFragment().actionId)
         }
     }
 

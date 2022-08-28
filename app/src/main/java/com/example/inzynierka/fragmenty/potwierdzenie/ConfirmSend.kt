@@ -104,7 +104,9 @@ class ConfirmSend : Fragment() {
             var day = cal.get(Calendar.DAY_OF_MONTH)
             var month = cal.get(Calendar.MONTH)
             var year = cal.get(Calendar.YEAR)
-            ConfirmSendVm.addDate(day.toString(),(month+1).toString(),year.toString(),numerIdPack)
+
+            ConfirmSendVm.addDatePack(day.toString(),(month+1).toString(),year.toString(),numerIdPack)
+            ConfirmSendVm.addDateBox(day.toString(),(month+1).toString(),year.toString(),numerIdBox)
 
             ConfirmSendVm.getPackData(numerIdPack.toString().trim())
             ConfirmSendVm.packSend.observe(viewLifecycleOwner, {packListData ->
