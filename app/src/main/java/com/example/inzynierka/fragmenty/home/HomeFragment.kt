@@ -89,7 +89,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun networkConnectioCheck(){
-        Log.i("Powtorzenie", "1")
+        Log.i("Powtorzenie", "2")
         val connect =
             requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         var networkInfo = connect.activeNetworkInfo
@@ -105,7 +105,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupTakePackClick() {
-        Log.i("Powtorzenie", "1")
+        Log.i("Powtorzenie", "3")
         binding.TakePack.setOnClickListener {
             findNavController()
                 .navigate(HomeFragmentDirections.actionHomeFragmentToTakepackFragment().actionId)
@@ -134,7 +134,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupLogoutClick() {
-        Log.i("Powtorzenie", "1")
+        Log.i("Powtorzenie", "4")
         binding.LogOut.setOnClickListener {
                 fbAuth.signOut()
                 val AktywnoscPierwszeOkno: Intent = Intent(context, RegistrationActivity::class.java)
@@ -144,7 +144,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.i("Powtorzenie", "1")
+        Log.i("Powtorzenie", "5")
         _binding = null
     }
 

@@ -8,14 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.inzynierka.R
 import com.example.inzynierka.data.BoxS
-import com.example.inzynierka.data.Pack
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-//class MyPacksAdapter(private val listener: OnPackItemLongClick, val onPackClicked: (Int) -> Unit) :
-class PickupPacksAdapter(val onPackClicked: (Int) -> Unit) :
-    RecyclerView.Adapter<PickupPacksAdapter.PickupPacksViewHolder>() {
+class PickupPacksAdapter(val onPackClicked: (Int) -> Unit) : RecyclerView.Adapter<PickupPacksAdapter.PickupPacksViewHolder>() {
 
 
     private val pickuppacksList = ArrayList<BoxS>()
@@ -55,6 +52,7 @@ class PickupPacksAdapter(val onPackClicked: (Int) -> Unit) :
                 id_pack.text = ID
                 size_pack.text = Size
                 id_box.text = ID_Box
+
                 cal[Calendar.DAY_OF_MONTH] = day?.toInt()!!
                 cal[Calendar.MONTH] = month?.toInt()!! - 1
                 cal[Calendar.YEAR] = year?.toInt()!!

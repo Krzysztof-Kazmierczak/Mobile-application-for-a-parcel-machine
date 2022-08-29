@@ -12,9 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-//class MyPacksAdapter(private val listener: OnPackItemLongClick, val onPackClicked: (Int) -> Unit) :
-class MyPacksAdapter(val onPackClicked: (Int) -> Unit) :
-    RecyclerView.Adapter<MyPacksAdapter.MyPacksViewHolder>() {
+class MyPacksAdapter(val onPackClicked: (Int) -> Unit) : RecyclerView.Adapter<MyPacksAdapter.MyPacksViewHolder>() {
 
 
     private val mypacksList = ArrayList<Pack>()
@@ -47,7 +45,6 @@ class MyPacksAdapter(val onPackClicked: (Int) -> Unit) :
             val id_box = findViewById<TextView>(R.id.MP_id_box)
             val pickup_time = findViewById<TextView>(R.id.MP_czas_odbioru)
 
-            val take_pack = holder.itemView.findViewById<Button>(R.id.MP_b_odbierzPaczke)
             val cal = Calendar.getInstance()
             cal.time
             mypacksList[holder.adapterPosition].apply {

@@ -80,10 +80,10 @@ class TakepackFragment : Fragment(){//, OnPackItemLongClick {
             if(listMyPack.isNotEmpty()){
                 networkConnectioCheck()
                 binding.TPBrakPaczek.visibility = View.INVISIBLE
-            TakepackVm.packData(listMyPack)
-            TakepackVm.mypacks.observe(viewLifecycleOwner, { list ->
-                adapter.setMyPacks(list as ArrayList<Pack>)
-            })}
+                TakepackVm.packData(listMyPack)
+                TakepackVm.mypacks.observe(viewLifecycleOwner, { list ->
+                    adapter.setMyPacks(list as ArrayList<Pack>)
+                })}
             else{
                 networkConnectioCheck()
             }
