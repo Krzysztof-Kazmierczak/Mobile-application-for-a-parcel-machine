@@ -17,14 +17,14 @@ class PickupPackViewModel : ViewModel() {
 
     var userInfo = MutableLiveData<User>()
     var packInfo = MutableLiveData<Pack>()
+    val endTimeBoxS = repository.getEndTimePacks()
+   // var endTimeBoxS = MutableLiveData<BoxS>()
 
-    var endTimeBoxS = MutableLiveData<BoxS>()
 
-
-    fun oneBoxInfo(name: String): LiveData<BoxS> {
-        endTimeBoxS = repository.getOneBoxInfo(name) as MutableLiveData<BoxS>
-        return endTimeBoxS
-    }
+    //fun oneBoxInfo(name: String): LiveData<BoxS> {
+   //     endTimeBoxS = repository.getOneBoxInfo(name) as MutableLiveData<BoxS>
+    //    return endTimeBoxS
+   // }
 
     fun packData(id: String): LiveData<Pack> {
         cloudResult = repository.PutPack(id) as MutableLiveData<Pack>

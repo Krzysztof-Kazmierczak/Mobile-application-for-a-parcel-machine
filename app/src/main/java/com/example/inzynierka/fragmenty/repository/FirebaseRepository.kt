@@ -184,7 +184,113 @@ class FirebaseRepository {
         }
         return cloudResult
     }
+    fun getEndTimePacks(): LiveData<List<BoxS>> {
+        val cloudResult = MutableLiveData<List<BoxS>>()
 
+        // val liczbaPaczek = (mojePaczki.size) - 1
+        var tworzycliste = ArrayList<BoxS>()
+
+        val cal = Calendar.getInstance()
+        cal.time
+        cal[Calendar.DAY_OF_MONTH]
+
+        cloud.collection("box")
+            .document(1.toString())
+            .get()
+            .addOnSuccessListener {
+                val box = it.toObject(BoxS::class.java)
+                if (box != null) {
+                    if (box.day == cal[Calendar.DAY_OF_MONTH].toString()) {
+                        Log.d(1.toString() + " skrytka jest po terminie", box.day.toString())
+                        tworzycliste.add(box)
+                        cloudResult.postValue(tworzycliste)
+                    } else {
+                        Log.d(1.toString() + " jest czas na odebranie ", box.day.toString())
+                        //liczbaPelnych = liczbaPelnych + 1
+                        //if (liczbaPelnych == 5){zwrotEmptyBox.setValue(null)}
+                    }
+                }
+
+            }
+        cloud.collection("box")
+            .document(2.toString())
+            .get()
+            .addOnSuccessListener {
+                val box = it.toObject(BoxS::class.java)
+                if (box != null) {
+                    if (box.day == cal[Calendar.DAY_OF_MONTH].toString()) {
+                        Log.d(2.toString() + " skrytka jest po terminie", box.day.toString())
+                        tworzycliste.add(box)
+                        cloudResult.postValue(tworzycliste)
+                    } else {
+                        Log.d(2.toString() + " jest czas na odebranie ", box.day.toString())
+                        //liczbaPelnych = liczbaPelnych + 1
+                        //if (liczbaPelnych == 5){zwrotEmptyBox.setValue(null)}
+                    }
+                }
+
+            }
+
+        cloud.collection("box")
+            .document(3.toString())
+            .get()
+            .addOnSuccessListener {
+                val box = it.toObject(BoxS::class.java)
+                if (box != null) {
+                    if (box.day == cal[Calendar.DAY_OF_MONTH].toString()) {
+                        Log.d(3.toString() + " skrytka jest po terminie", box.day.toString())
+                        tworzycliste.add(box)
+                        cloudResult.postValue(tworzycliste)
+                    } else {
+                        Log.d(3.toString() + " jest czas na odebranie ", box.day.toString())
+                        //liczbaPelnych = liczbaPelnych + 1
+                        //if (liczbaPelnych == 5){zwrotEmptyBox.setValue(null)}
+                    }
+                }
+
+            }
+
+        cloud.collection("box")
+            .document(4.toString())
+            .get()
+            .addOnSuccessListener {
+                val box = it.toObject(BoxS::class.java)
+                if (box != null) {
+                    if (box.day == cal[Calendar.DAY_OF_MONTH].toString()) {
+                        Log.d(4.toString() + " skrytka jest po terminie", box.day.toString())
+                        tworzycliste.add(box)
+                        cloudResult.postValue(tworzycliste)
+                    } else {
+                        Log.d(4.toString() + " jest czas na odebranie ", box.day.toString())
+                        //liczbaPelnych = liczbaPelnych + 1
+                        //if (liczbaPelnych == 5){zwrotEmptyBox.setValue(null)}
+                    }
+                }
+
+            }
+
+        cloud.collection("box")
+            .document(5.toString())
+            .get()
+            .addOnSuccessListener {
+                val box = it.toObject(BoxS::class.java)
+                if (box != null) {
+                    if (box.day == cal[Calendar.DAY_OF_MONTH].toString()) {
+                        Log.d(5.toString() + " skrytka jest po terminie", box.day.toString())
+                        tworzycliste.add(box)
+                        cloudResult.postValue(tworzycliste)
+                    } else {
+                        Log.d(5.toString() + " jest czas na odebranie ", box.day.toString())
+                        //liczbaPelnych = liczbaPelnych + 1
+                        //if (liczbaPelnych == 5){zwrotEmptyBox.setValue(null)}
+                    }
+                }
+
+            }
+
+        return cloudResult
+    }
+/*
     fun getEndTimePacks(): LiveData<List<BoxS>> {
         val cloudResult = MutableLiveData<List<BoxS>>()
 
@@ -320,6 +426,7 @@ class FirebaseRepository {
 
         return cloudResult
     }
+*/
 
     fun getOneBoxInfo(nazwa:String): LiveData<BoxS> {
         val cloudResult = MutableLiveData<BoxS>()

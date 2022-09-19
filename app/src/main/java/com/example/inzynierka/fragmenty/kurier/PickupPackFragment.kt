@@ -158,10 +158,10 @@ class PickupPackFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
 
-        for (i in 1..5){
-            val boxInfo = PickupPackVm.oneBoxInfo(i.toString())
+     //   for (i in 1..5){
+     //       val boxInfo = PickupPackVm.oneBoxInfo(i.toString())
 
-        }
+    //    }
 
 
         PickupPackVm.endTimeBoxS.observe(viewLifecycleOwner, { listEndTimePack ->
