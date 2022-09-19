@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "30670870019",
-    "project_id": "nowe130822",
-    "storage_bucket": "nowe130822.appspot.com"
+    "project_number": "322466952849",
+    "project_id": "nowe190922",
+    "storage_bucket": "nowe190922.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:30670870019:android:1638a20e6f9184613c6036",
+        "mobilesdk_app_id": "1:322466952849:android:128b94e26c3fbcfb1ab130",
         "android_client_info": {
           "package_name": "com.example.inzynierka"
         }
       },
       "oauth_client": [
         {
-          "client_id": "30670870019-3sb4gfrhl9dpv2vcetoimjp18clokj4k.apps.googleusercontent.com",
+          "client_id": "322466952849-41uck48prmmqdet3hboa769knd6caist.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBcWeyLzgYPeFBjzdlPKfDJ9loS-lL72ws"
+          "current_key": "AIzaSyAlDPgnE4vu87PZ-CxtwfhWYRs8e9vLjOI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "30670870019-3sb4gfrhl9dpv2vcetoimjp18clokj4k.apps.googleusercontent.com",
+              "client_id": "322466952849-41uck48prmmqdet3hboa769knd6caist.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.inzynierka.R
@@ -155,6 +156,13 @@ class PickupPackFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+
+        for (i in 1..5){
+            val boxInfo = PickupPackVm.oneBoxInfo(i.toString())
+
+        }
+
 
         PickupPackVm.endTimeBoxS.observe(viewLifecycleOwner, { listEndTimePack ->
 

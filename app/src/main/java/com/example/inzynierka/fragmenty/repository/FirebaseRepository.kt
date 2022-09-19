@@ -192,26 +192,28 @@ class FirebaseRepository {
 
        // val liczbaPaczek = (mojePaczki.size) - 1
         var tworzycliste = ArrayList<BoxS>()
-
         val cal = Calendar.getInstance()
         cal.time
         cal[Calendar.DAY_OF_MONTH]
 
+        val day = cal[Calendar.DAY_OF_MONTH].toString()
+        val month = cal[Calendar.MONTH].toString() + 1
+        val year = cal[Calendar.YEAR].toString()
+
+
         cloud.collection("box")
             .document(1.toString())
             .get()
+
             .addOnSuccessListener {
                 val box = it.toObject(BoxS::class.java)
                 if (box != null) {
-                    if (box.day!! <= cal[Calendar.DAY_OF_MONTH].toString()) {
+                    if (box.day!! <= day) {
 
-                        if (box.month!! <= (cal[Calendar.MONTH] + 1).toString()) {
+                        if (box.month!! <= month) {
 
-                            if (box.year!! <= cal[Calendar.YEAR].toString()) {
-                                Log.d(
-                                    1.toString() + " skrytka jest po terminie",
-                                    box.day.toString()
-                                )
+                            if (box.year!! <= year) {
+                                Log.d(1.toString() + " skrytka jest po terminie", box.day.toString())
                                 tworzycliste.add(box)
                                 cloudResult.postValue(tworzycliste)
                             } else {
@@ -224,22 +226,23 @@ class FirebaseRepository {
                 }
 
             }
-           /* cloud.collection("box")
+
+        cloud.collection("box")
             .document(2.toString())
             .get()
             .addOnSuccessListener {
-                val box = it.toObject(BoxS::class.java)
-                if (box != null) {
-                    if (box.day!! <= cal[Calendar.DAY_OF_MONTH].toString()) {
+                val box1 = it.toObject(BoxS::class.java)
+                if (box1 != null) {
+                    if (box1.day!! <= day) {
 
-                        if (box.month!! <= (cal[Calendar.MONTH] + 1).toString()) {
+                        if (box1.month!! <= month) {
 
-                            if (box.year!! <= cal[Calendar.YEAR].toString()) {
-                        Log.d(2.toString() + " skrytka jest po terminie", box.day.toString())
-                        tworzycliste.add(box)
+                            if (box1.year!! <= year) {
+                        Log.d(2.toString() + " skrytka jest po terminie", box1.day.toString())
+                        tworzycliste.add(box1)
                         cloudResult.postValue(tworzycliste)
                     } else {
-                        Log.d(2.toString() + " jest czas na odebranie ", box.day.toString())
+                        Log.d(2.toString() + " jest czas na odebranie ", box1.day.toString())
                                 liczbaSkrytek = liczbaSkrytek + 1
                                 if (liczbaSkrytek == 5){cloudResult.setValue(null)}
                     }}}
@@ -248,16 +251,15 @@ class FirebaseRepository {
             }
 
         cloud.collection("box")
-            .document(3.toString())
             .get()
             .addOnSuccessListener {
                 val box = it.toObject(BoxS::class.java)
                 if (box != null) {
-                    if (box.day!! <= cal[Calendar.DAY_OF_MONTH].toString()) {
+                    if (box.day!! <= day) {
 
-                        if (box.month!! <= (cal[Calendar.MONTH] + 1).toString()) {
+                        if (box.month!! <= month) {
 
-                            if (box.year!! <= cal[Calendar.YEAR].toString()) {
+                            if (box.year!! <= year) {
                         Log.d(3.toString() + " skrytka jest po terminie", box.day.toString())
                         tworzycliste.add(box)
                         cloudResult.postValue(tworzycliste)
@@ -276,11 +278,11 @@ class FirebaseRepository {
             .addOnSuccessListener {
                 val box = it.toObject(BoxS::class.java)
                 if (box != null) {
-                    if (box.day!! <= cal[Calendar.DAY_OF_MONTH].toString()) {
+                    if (box.day!! <= day) {
 
-                        if (box.month!! <= (cal[Calendar.MONTH] + 1).toString()) {
+                        if (box.month!! <= month) {
 
-                            if (box.year!! <= cal[Calendar.YEAR].toString()) {
+                            if (box.year!! <= year) {
                         Log.d(4.toString() + " skrytka jest po terminie", box.day.toString())
                         tworzycliste.add(box)
                         cloudResult.postValue(tworzycliste)
@@ -299,11 +301,11 @@ class FirebaseRepository {
             .addOnSuccessListener {
                 val box = it.toObject(BoxS::class.java)
                 if (box != null) {
-                    if (box.day!! <= cal[Calendar.DAY_OF_MONTH].toString()) {
+                    if (box.day!! <= day) {
 
-                        if (box.month!! <= (cal[Calendar.MONTH] + 1).toString()) {
+                        if (box.month!! <= month) {
 
-                            if (box.year!! <= cal[Calendar.YEAR].toString()) {
+                            if (box.year!! <= year) {
                         Log.d(5.toString() + " skrytka jest po terminie", box.day.toString())
                         tworzycliste.add(box)
                         cloudResult.postValue(tworzycliste)
@@ -314,11 +316,53 @@ class FirebaseRepository {
                     }}}
                 }
 
-            }*/
+            }
 
         return cloudResult
     }
 
+    fun getOneBoxInfo(nazwa:String): LiveData<BoxS> {
+        val cloudResult = MutableLiveData<BoxS>()
+        val cal = Calendar.getInstance()
+        cal.time
+        cal[Calendar.DAY_OF_MONTH]
+        val day = cal[Calendar.DAY_OF_MONTH].toString()
+        val month = cal[Calendar.MONTH].toString() + 1
+        val year = cal[Calendar.YEAR].toString()
+
+        cloud.collection("box")
+            .document(nazwa)
+            .get()
+            .addOnSuccessListener {
+                val box = it.toObject(BoxS::class.java)
+                if (box != null) {
+                    if (box.day!! <= day) {
+
+                        if (box.month!! <= month) {
+
+                            if (box.year!! <= year) {
+                                Log.d(nazwa.toString() + " skrytka jest po terminie", box.day.toString())
+                                cloudResult.postValue(box)
+                            } else {
+                                Log.d(nazwa + " jest jeszcze termin ", "TERMIN")
+                                cloudResult.setValue(null)
+                            }
+                        }
+                    }
+                }
+            }
+        return cloudResult
+    }
+
+   /* fun getEndTimePacks2(): LiveData<List<BoxS>>{
+        val cloudResult = MutableLiveData<List<BoxS>>()
+        var paczkaPoTerminie = LiveData<BoxS>()
+        for(i in 1..5){
+            paczkaPoTerminie = getOneBoxInfo(i.toString())
+            cloudResult.postValue(paczkaPoTerminie)
+        }
+        return cloudResult
+    }*/
 
     fun packsToMe(): LiveData<List<String>> {
         val uid = auth.currentUser?.uid

@@ -9,6 +9,7 @@ import com.example.inzynierka.data.User
 import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 
 class PickupPackViewModel : ViewModel() {
+
     private val repository = FirebaseRepository()
     var idPackToMe = MutableLiveData<String>()
     var cloudResult = MutableLiveData<Pack>()
@@ -17,7 +18,13 @@ class PickupPackViewModel : ViewModel() {
     var userInfo = MutableLiveData<User>()
     var packInfo = MutableLiveData<Pack>()
 
-    val endTimeBoxS = repository.getEndTimePacks()
+    var endTimeBoxS = MutableLiveData<BoxS>()
+
+
+    fun oneBoxInfo(name: String): LiveData<BoxS> {
+        endTimeBoxS = repository.getOneBoxInfo(name) as MutableLiveData<BoxS>
+        return endTimeBoxS
+    }
 
     fun packData(id: String): LiveData<Pack> {
         cloudResult = repository.PutPack(id) as MutableLiveData<Pack>
