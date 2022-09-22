@@ -157,16 +157,73 @@ class PickupPackFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        var boxAfterTime = ArrayList<BoxS>()
+        var ileSkrytek = 0
 
-     //   for (i in 1..5){
-     //       val boxInfo = PickupPackVm.oneBoxInfo(i.toString())
+        PickupPackVm.oneBoxInfo(1.toString())
+        PickupPackVm.endTimeBox.observe(viewLifecycleOwner, { boxInfo01 ->
+            if (boxInfo01 != null)
+            {
+                boxAfterTime.add(boxInfo01)
+               // boxInfo01 = null
+            }
+            PickupPackVm.oneBoxInfo(2.toString())
+            PickupPackVm.endTimeBox.observe(viewLifecycleOwner, { boxInfo02 ->
+                if (boxInfo02 != null)
+                {
+                    boxAfterTime.add(boxInfo02)
+                }
+            PickupPackVm.oneBoxInfo(3.toString())
+                PickupPackVm.endTimeBox.observe(viewLifecycleOwner, { boxInfo03 ->
+                    if (boxInfo03 != null)
+                    {
+                        boxAfterTime.add(boxInfo03)
+                    }
+            PickupPackVm.oneBoxInfo(4.toString())
+                    PickupPackVm.endTimeBox.observe(viewLifecycleOwner, { boxInfo04 ->
+                        if (boxInfo04 != null)
+                        {
+                            boxAfterTime.add(boxInfo04)
+                        }
 
-    //    }
+            PickupPackVm.oneBoxInfo(5.toString())
+                        PickupPackVm.endTimeBox.observe(viewLifecycleOwner, { boxInfo05 ->
+                            if (boxInfo05 != null)
+                            {
+                                boxAfterTime.add(boxInfo05)
+                                if (boxAfterTime.isNotEmpty()) {
+                                    networkConnectioCheck()
+                                    binding.PUPBrakPaczek.visibility = View.INVISIBLE
 
+                                    adapter.setEndTimePacks(boxAfterTime)
+                                } else {
+                                    networkConnectioCheck()
+                                }
+                            }else {
+                                if (boxAfterTime.isNotEmpty()) {
+                                    networkConnectioCheck()
+                                    binding.PUPBrakPaczek.visibility = View.INVISIBLE
 
-        PickupPackVm.endTimeBoxS.observe(viewLifecycleOwner, { listEndTimePack ->
+                                    adapter.setEndTimePacks(boxAfterTime)
+                                } else {
+                                    networkConnectioCheck()
+                                }
+                            }
+        })})})})})
 
-            if(listEndTimePack.isNotEmpty()){
+      /*  if(boxAfterTime.isNotEmpty()){
+            networkConnectioCheck()
+            binding.PUPBrakPaczek.visibility = View.INVISIBLE
+
+            adapter.setEndTimePacks(boxAfterTime)
+        }
+        else{
+            networkConnectioCheck()
+        }*/
+
+       // PickupPackVm.endTimeBoxS.observe(viewLifecycleOwner, { listEndTimePack ->
+
+            /*if(boxAfterTime.isNotEmpty()){
                 networkConnectioCheck()
                 binding.PUPBrakPaczek.visibility = View.INVISIBLE
 
@@ -174,8 +231,8 @@ class PickupPackFragment : Fragment() {
             }
             else{
                 networkConnectioCheck()
-            }
-        })
+            }*/
+        //})
     }
 
 

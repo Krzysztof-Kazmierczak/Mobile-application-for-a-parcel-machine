@@ -58,7 +58,7 @@ class RegisterFragment : BaseFragment() {
                                 authRes.user!!.uid,
                                 "",
                                 "",
-                                arrayListOf(""),
+                                arrayListOf(),
                                 authRes.user!!.email,
                                 "",
                                 phoneNumber,
