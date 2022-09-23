@@ -506,6 +506,26 @@ class FirebaseRepository {
         return cloudResult
     }
 
+    fun packsToUser(UID: String): LiveData<List<String>> {
+        val cloudResult = MutableLiveData<List<String>>()
+        var listaPaczek: ArrayList<String>? = null
+        cloud.collection("user")
+            .document(UID)
+            .get()
+            .addOnSuccessListener {
+                val pack = it.toObject(User::class.java)
+                //if (pack?.paczki?.size!! > 1 || pack.paczki.get(0) != "") {
+                if (pack?.paczki != null){
+                    listaPaczek = pack.paczki
+                }
+                cloudResult.postValue(listaPaczek)
+            }
+            .addOnFailureListener {
+                Log.d(REPO_DEBUG, it.message.toString())
+            }
+        return cloudResult
+    }
+
     //Funkcja do której dostarczamy id paczki
     //Po id paczki funkcja wyszukuje jej pozostałe dane i zwracamy (później z tych danych wyciągamy rozmiar paczki)
     fun PutPack(id: String): LiveData<Pack> {
@@ -726,9 +746,9 @@ class FirebaseRepository {
 
     fun openBox(size: String, id: String) {
         var rozmiar = String()
-        if (size == 1.toString()) {
+       // if (size == 1.toString()) {
             rozmiar = "box"
-        }
+       // }
         cloud.collection(rozmiar)
 
             .document(id)

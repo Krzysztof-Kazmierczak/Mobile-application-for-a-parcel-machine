@@ -65,6 +65,7 @@ class PickupPackFragment : Fragment() {
                 PickupPackVm.packInfo.observe(viewLifecycleOwner, { packDataInfo ->
                     PickupPackVm.infoUser(packDataInfo.uid.toString())
                     PickupPackVm.userInfo.observe(viewLifecycleOwner, { userDataInfo ->
+                        PickupPackVm.infoUserPacks(userDataInfo.uid.toString())
                         PickupPackVm.idPacksToUser.observe(viewLifecycleOwner, { listUserPacks ->
                             var nowaListaPaczekUzytkownika = ArrayList<String>()
 
@@ -78,7 +79,7 @@ class PickupPackFragment : Fragment() {
                                 }
                             }
                             PickupPackVm.upDataUser(nowaListaPaczekUzytkownika)
-                        })
+
 
                         PickupPackVm.boxEmpty("box", boxID)
 
@@ -86,12 +87,12 @@ class PickupPackFragment : Fragment() {
 
                         PickupPackVm.closeBox("box", boxID)
 
-                        sendSMS(userDataInfo.phone.toString(),packID,boxID)
+                        //sendSMS(userDataInfo.phone.toString(),packID,boxID)
                         notyfiactionFunctionSend(packID,boxID,userDataInfo.token.toString())
 
                         findNavController()
                             .navigate(PickupPackFragmentDirections.actionPickupPackFragmentToHomeFragment())
-
+                        })
                     })
                 })
             }

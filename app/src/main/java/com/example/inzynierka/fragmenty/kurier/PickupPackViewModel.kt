@@ -13,13 +13,16 @@ class PickupPackViewModel : ViewModel() {
     private val repository = FirebaseRepository()
     var idPackToMe = MutableLiveData<String>()
     var cloudResult = MutableLiveData<Pack>()
-    val idPacksToUser = repository.packsToMe()
-
+    var idPacksToUser = MutableLiveData<List<String>>()
     var userInfo = MutableLiveData<User>()
     var packInfo = MutableLiveData<Pack>()
     val endTimeBoxS = repository.getEndTimePacks()
     var endTimeBox = MutableLiveData<BoxS>()
 
+    fun infoUserPacks(UID: String): LiveData<List<String>> {
+        idPacksToUser = repository.packsToUser(UID) as MutableLiveData<List<String>>
+        return idPacksToUser
+    }
 
     fun oneBoxInfo(name: String): LiveData<BoxS> {
         endTimeBox = repository.getOneBoxInfo(name) as MutableLiveData<BoxS>
