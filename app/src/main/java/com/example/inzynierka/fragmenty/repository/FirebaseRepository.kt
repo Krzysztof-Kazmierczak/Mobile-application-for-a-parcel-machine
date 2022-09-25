@@ -745,10 +745,8 @@ class FirebaseRepository {
     }
 
     fun openBox(size: String, id: String) {
-        var rozmiar = String()
-       // if (size == 1.toString()) {
-            rozmiar = "box"
-       // }
+        var rozmiar = "box"
+
         cloud.collection(rozmiar)
 
             .document(id)

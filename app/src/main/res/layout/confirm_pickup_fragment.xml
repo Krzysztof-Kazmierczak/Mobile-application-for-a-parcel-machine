@@ -9,30 +9,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:text="@string/CSP_Umiesciles_paczke"
+            android:text="@string/CPUF_Paczka_Po_Terminie"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/CSF_Tak"
+            app:layout_constraintBottom_toTopOf="@+id/CPUF_Tak"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/CSF_Tak"
+            android:id="@+id/CPUF_Tak"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/CSP_Tak_Zakoncz"
+            android:text="@string/CPUF_Tak_Zakoncz"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/CSF_Nie"
+            android:id="@+id/CPUF_Nie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="@string/CSP_Nie_Otworz"
+            android:text="@string/CPUF_Nie_Otworz"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/CSF_Tak" />
+            app:layout_constraintTop_toBottomOf="@+id/CPUF_Tak" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

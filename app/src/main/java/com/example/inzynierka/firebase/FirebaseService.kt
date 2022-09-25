@@ -31,9 +31,6 @@ class FirebaseService: FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-       // var zmienna = "asd"
-        //zmienna = token
-
     }
 
     override fun onMessageReceived(message: RemoteMessage) {

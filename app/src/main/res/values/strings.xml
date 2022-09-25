@@ -16,12 +16,12 @@
     <string name="Nadaj_Paczke">Nadaj paczkę</string>
     <string name="Numer_Paczki">Wpisz numer paczki</string>
     <string name="Umiesc_Paczke">Umieść paczkę</string>
-    <string name="Umiesciles_paczke">Paczka została umieszczona w skrzynce?</string>
-    <string name="Tak_Zakoncz">Tak, zakończ umieszczanie paczki</string>
-    <string name="Nie_Otworz">Nie, otwórz skrzynkę ponownie</string>
-    <string name="Odebrales_paczke">Paczka została odebrana ze skrzynki?</string>
-    <string name="Tak_Zakoncz_TP">Tak, zakończ odbieranie paczki</string>
-    <string name="Nie_Otworz_TP">Nie, otwórz skrzynkę ponownie</string>
+    <string name="CSP_Umiesciles_paczke">Paczka została umieszczona w skrzynce?</string>
+    <string name="CSP_Tak_Zakoncz">Tak, zakończ umieszczanie paczki</string>
+    <string name="CSP_Nie_Otworz">Nie, otwórz skrzynkę ponownie</string>
+    <string name="CTP_Odebrales_paczke">Paczka została odebrana ze skrzynki?</string>
+    <string name="CTP_Tak_Zakoncz">Tak, zakończ odbieranie paczki</string>
+    <string name="CTP_Nie_Otworz">Nie, otwórz skrzynkę ponownie</string>
     <string name="CzyNaPewno">Czy na pewno chcesz teraz otworzyć swoją skrytkę</string>
     <string name="TakChce">Tak, otwórz moją skrytkę</string>
     <string name="MP_packID">ID paczki</string>
@@ -36,4 +36,7 @@
     <string name="PUP_BrakPaczek">Nie masz żadnych paczek do wyciągnięcia</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Po_terminie">Paczki po terminie</string>
+    <string name="CPUF_Paczka_Po_Terminie">Paczka po terminie została wyjęta?</string>
+    <string name="CPUF_Tak_Zakoncz">Tak, zakończ wyjmowanie paczki</string>
+    <string name="CPUF_Nie_Otworz">Nie, otwórz skrzynkę ponownie</string>
 </resources>

@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.inzynierka.R
@@ -27,6 +26,8 @@ import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
+var PUP_boxId = String()
 
 class PickupPackFragment : Fragment() {
     private val PROFILE_DEBUG = "PROFILE_DEBUG"
@@ -82,7 +83,7 @@ class PickupPackFragment : Fragment() {
 
 
                         PickupPackVm.boxEmpty("box", boxID)
-
+                        PUP_boxId = boxID
                         PickupPackVm.upDataPack(packID)
 
                         PickupPackVm.closeBox("box", boxID)
@@ -91,7 +92,7 @@ class PickupPackFragment : Fragment() {
                         notyfiactionFunctionSend(packID,boxID,userDataInfo.token.toString())
 
                         findNavController()
-                            .navigate(PickupPackFragmentDirections.actionPickupPackFragmentToHomeFragment())
+                            .navigate(PickupPackFragmentDirections.actionPickupPackFragmentToConfirmPickupPack())
                         })
                     })
                 })
@@ -234,6 +235,12 @@ class PickupPackFragment : Fragment() {
                 networkConnectioCheck()
             }*/
         //})
+    }
+
+
+    fun getPUPIdBox(): String{
+        Log.d("To zwracam", PUP_boxId)
+        return PUP_boxId
     }
 
 

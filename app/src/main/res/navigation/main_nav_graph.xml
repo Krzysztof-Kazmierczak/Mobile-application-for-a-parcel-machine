@@ -62,7 +62,16 @@
         android:label="pickup_pack_fragment"
         tools:layout="@layout/pickup_pack_fragment" >
         <action
-            android:id="@+id/action_pickupPackFragment_to_homeFragment"
+            android:id="@+id/action_pickupPackFragment_to_confirmPickupPack"
+            app:destination="@id/confirmPickupPack" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmPickupPack"
+        android:name="com.example.inzynierka.fragmenty.kurier.ConfirmPickupPack"
+        android:label="ConfirmPickupPack"
+        tools:layout="@layout/confirm_take_fragment">
+        <action
+            android:id="@+id/action_confirmPickupPack_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

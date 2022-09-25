@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.inzynierka.aktywnosci.RegistrationActivity
 import com.example.inzynierka.databinding.HomeFragmentBinding
+import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -23,6 +24,7 @@ class HomeFragment : Fragment() {
 
     private val homeVm by viewModels<HomeViewModel>()
     private val fbAuth = FirebaseAuth.getInstance()
+    private val repository = FirebaseRepository()
     private val fbCloud = FirebaseMessaging.getInstance()
     private var _binding: HomeFragmentBinding? = null
     private val binding get() = _binding!!
@@ -46,6 +48,7 @@ class HomeFragment : Fragment() {
         networkConnectioCheck()
         homeFragmentScreen()
         setupPickUpPackClick()
+        pushNewToken()
 
        // havePack()
       //  token()
@@ -88,7 +91,34 @@ class HomeFragment : Fragment() {
             })
     }
 
+    private fun pushNewToken()
+    {
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener(object : OnCompleteListener<String?> {
+                override fun onComplete(@NonNull task: Task<String?>) {
+                    if (!task.isSuccessful()) {
+                        println("Fetching FCM registration token failed")
+                        return
+                    }
+
+                    // Get new FCM registration token
+                    val token: String? = task.getResult()
+
+                    // Log and toast
+                    token?.let { Log.d("moj token ", it) }
+
+                    /*Toast.makeText(
+                        this@MainActivity,
+                        "Your device registration token is$token",
+                        Toast.LENGTH_SHORT
+                    ).show()*/
+                    repository.pushToken(token.toString())
+                }
+            })
+    }
+
     private fun networkConnectioCheck(){
+
         Log.i("Powtorzenie", "2")
         val connect =
             requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

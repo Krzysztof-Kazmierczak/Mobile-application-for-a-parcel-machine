@@ -28,7 +28,7 @@ class SendViewModel : ViewModel() {
         return cloudResultBoxS
     }
 
-    fun editBoxData(size: String,id: String, packID: String)
+    fun editBoxData(size: String,id: String,packID:String)
     {
         repository.editBoxData(size, id, packID)
     }
