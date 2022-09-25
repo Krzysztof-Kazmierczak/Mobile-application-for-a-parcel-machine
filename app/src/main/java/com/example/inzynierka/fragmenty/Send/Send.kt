@@ -1,6 +1,5 @@
 package com.example.inzynierka.fragmenty.Send
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,22 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.inzynierka.R
-import com.example.inzynierka.aktywnosci.MainActivity
-import com.example.inzynierka.data.Box
 import com.example.inzynierka.data.Pack
-import com.example.inzynierka.data.User
 import com.example.inzynierka.databinding.SendFragmentBinding
-import com.example.inzynierka.databinding.TakepackFragmentBinding
-import com.example.inzynierka.fragmenty.TakePack.TakepackViewModel
-import com.example.inzynierka.fragmenty.home.HomeFragmentDirections
-import com.example.inzynierka.fragmenty.repository.BaseFragment
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.delay
 
 
 // wspólny viewModel, datastore/sharePrefereces, callback, navargs / intent.bundle (putString())

@@ -72,4 +72,8 @@ class PickupPackViewModel : ViewModel() {
         }
     }
 
+    fun noteToPack(idPack:String){
+        repository.notePack(idPack)
+    }
+
 }

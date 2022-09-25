@@ -1,10 +1,8 @@
 package com.example.inzynierka.fragmenty.Send
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.inzynierka.data.Box
 import com.example.inzynierka.data.Pack
 import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 

@@ -759,6 +759,18 @@ class FirebaseRepository {
             }
     }
 
+    fun notePack(id:String) {
+        cloud.collection("pack")
+            .document(id)
+            .update("note", "E01 - Paczka wyjeta, minal czas na odbior")
+            .addOnSuccessListener {
+                Log.d("Zaktualizowano dane skrytki ", id)
+            }
+            .addOnFailureListener {
+                Log.d(REPO_DEBUG, it.message.toString())
+            }
+    }
+
     //Funkcja zmieniająca w bazie danych informację użytkownikowi że odstał paczkę o danym numerze ID
     fun sendInfoToUser(Id_pack: String, uid: String) {
         cloud.collection("user")

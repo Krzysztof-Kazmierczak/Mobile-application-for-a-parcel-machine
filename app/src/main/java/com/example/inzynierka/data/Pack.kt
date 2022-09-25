@@ -9,5 +9,6 @@ data class Pack(
     val packInBox: String? = null,
     val day: String? = null,
     val month: String? = null,
-    val year: String? = null
+    val year: String? = null,
+    val note: String? = null
 )

@@ -60,6 +60,8 @@ class PickupPackFragment : Fragment() {
             val packID = PickupPackVm.endTimeBoxS.value?.get(position)?.ID.toString()
             val size = PickupPackVm.endTimeBoxS.value?.get(position)?.Size.toString()
 
+            PickupPackVm.noteToPack(packID)
+
             if(networkInfo != null && networkInfo.isConnected) {
                 PickupPackVm.openBox(PickupPackVm.endTimeBoxS.value?.get(position)?.Size.toString(),boxID)
                 PickupPackVm.infoPack(packID)
