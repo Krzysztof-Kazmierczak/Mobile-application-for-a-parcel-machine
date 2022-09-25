@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.inzynierka.R
 import com.example.inzynierka.data.Pack
-import com.example.inzynierka.databinding.TakepackFragmentBinding
+import com.example.inzynierka.databinding.TakeFragmentBinding
 import com.example.inzynierka.fragmenty.home.MyPacksAdapter
 
 var boxIdTF = String()
@@ -22,7 +22,7 @@ var numerPaczkiGLTF = String()
 class TakepackFragment : Fragment(){//, OnPackItemLongClick {
 
     private val PROFILE_DEBUG = "PROFILE_DEBUG"
-    private var _binding: TakepackFragmentBinding? = null
+    private var _binding: TakeFragmentBinding? = null
     private val binding get() = _binding!!
     private val TakepackVm by viewModels<TakepackViewModel>()
 
@@ -33,9 +33,9 @@ class TakepackFragment : Fragment(){//, OnPackItemLongClick {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = TakepackFragmentBinding.inflate(layoutInflater, container, false)
+        _binding = TakeFragmentBinding.inflate(layoutInflater, container, false)
         return binding.root
-        return inflater.inflate(R.layout.takepack_fragment, container, false)
+        return inflater.inflate(R.layout.take_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

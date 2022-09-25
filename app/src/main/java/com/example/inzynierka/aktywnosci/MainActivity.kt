@@ -30,6 +30,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+
     private lateinit var binding: ActivityMainBinding
     val REQUEST_ID_MULTIPLE_PERMISSIONS = 1
 

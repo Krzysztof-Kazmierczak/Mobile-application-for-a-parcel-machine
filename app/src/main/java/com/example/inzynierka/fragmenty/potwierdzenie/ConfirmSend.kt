@@ -115,7 +115,7 @@ class ConfirmSend : Fragment() {
                 val numberIDBox = packListData.Id_box.toString().trim()
                 val numerUID = packListData.uid.toString().trim()
 
-                sendSMS(numberToSendInfo,numberIDPack,numberIDBox,wyswietlanieDaty)
+                //sendSMS(numberToSendInfo,numberIDPack,numberIDBox,wyswietlanieDaty)
 
                 ConfirmSendVm.getUser(numerUID)
                 ConfirmSendVm.infoUser.observe(viewLifecycleOwner, { user ->

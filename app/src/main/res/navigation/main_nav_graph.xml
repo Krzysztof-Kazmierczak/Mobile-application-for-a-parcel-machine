@@ -23,8 +23,8 @@
     <fragment
         android:id="@+id/takepackFragment"
         android:name="com.example.inzynierka.fragmenty.TakePack.TakepackFragment"
-        android:label="takepack_fragment"
-        tools:layout="@layout/takepack_fragment" >
+        android:label="take_fragment"
+        tools:layout="@layout/take_fragment" >
         <action
             android:id="@+id/action_takepackFragment_to_confirmTake"
             app:destination="@id/confirmTake" />
