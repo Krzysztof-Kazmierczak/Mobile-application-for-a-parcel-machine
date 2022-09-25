@@ -41,7 +41,8 @@
         android:layout_marginTop="400dp"
         android:foregroundGravity="center"
         android:gravity="center"
-        android:text="@string/Po_terminie" />
+        android:text="@string/Po_terminie"
+        android:visibility="invisible"/>
 
     <TextView
         android:id="@+id/networkConnection"

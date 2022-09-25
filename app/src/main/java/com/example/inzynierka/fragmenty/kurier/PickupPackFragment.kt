@@ -90,7 +90,7 @@ class PickupPackFragment : Fragment() {
 
                         PickupPackVm.closeBox("box", boxID)
 
-                        //sendSMS(userDataInfo.phone.toString(),packID,boxID)
+                        sendSMS(userDataInfo.phone.toString(),packID,boxID)
                         notyfiactionFunctionSend(packID,boxID,userDataInfo.token.toString())
 
                         findNavController()

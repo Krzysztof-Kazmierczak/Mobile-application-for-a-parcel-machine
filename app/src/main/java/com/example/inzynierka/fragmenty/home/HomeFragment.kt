@@ -49,6 +49,7 @@ class HomeFragment : Fragment() {
         homeFragmentScreen()
         setupPickUpPackClick()
         pushNewToken()
+        visibleDeliverButton()
 
        // havePack()
       //  token()
@@ -132,6 +133,20 @@ class HomeFragment : Fragment() {
             binding.networkConnection.visibility = View.VISIBLE
         }
        // networkConnectioCheck()
+    }
+
+    private fun visibleDeliverButton(){
+        homeVm.getUserData()
+        homeVm.userData.observe(viewLifecycleOwner, { user ->
+            val accesLVL = user.access
+            if(accesLVL == 1)
+            {
+                binding.PickupPack.visibility = View.VISIBLE
+            }else
+            {
+                binding.PickupPack.visibility = View.INVISIBLE
+            }
+        })
     }
 
     private fun setupTakePackClick() {
