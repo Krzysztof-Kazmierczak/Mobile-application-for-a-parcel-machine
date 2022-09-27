@@ -3,6 +3,7 @@ package com.example.inzynierka.aktywnosci
 import android.Manifest
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -11,15 +12,19 @@ import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import com.example.inzynierka.R
 import com.example.inzynierka.constants.Constants.Companion.TOPIC
 import com.example.inzynierka.databinding.ActivityMainBinding
 import com.example.inzynierka.firebase.NotificationData
 import com.example.inzynierka.firebase.PushNotification
 import com.example.inzynierka.firebase.RetrofitInstance
 import com.example.inzynierka.fragmenty.Send.Send
+import com.example.inzynierka.fragmenty.TakePack.TakepackFragment
 import com.example.inzynierka.fragmenty.home.HomeFragment
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
@@ -32,6 +37,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private lateinit var binding: ActivityMainBinding
+    private val fbAuth = FirebaseAuth.getInstance()
     val REQUEST_ID_MULTIPLE_PERMISSIONS = 1
 
 
@@ -47,10 +53,40 @@ class MainActivity : AppCompatActivity() {
 
         Log.i("Powtorzenie", "1")
 
-        intent.extras?.getString("title")?.let{ title ->
+        intent.extras?.getString("title")?.let { title ->
             Log.i("MyTag", "FROM notification $title")
         }
+
+        replaceFragment(HomeFragment())
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.home -> replaceFragment(HomeFragment())
+                R.id.takePack -> replaceFragment(TakepackFragment())
+                R.id.sendPack -> replaceFragment(Send())
+                R.id.logout -> logout()
+                else -> {
+                }
+            }
+            true
+        }
     }
+
+    private fun replaceFragment(fragment: Fragment){
+
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frame_layout, fragment)
+        fragmentTransaction.commit()
+
+    }
+
+    private fun logout(){
+        fbAuth.signOut()
+        val AktywnoscPierwszeOkno: Intent = Intent(applicationContext, RegistrationActivity::class.java)
+        startActivity(AktywnoscPierwszeOkno)
+    }
+
+
 
     private fun checkAndRequestPermissions(): Boolean {
         Log.i("Powtorzenie", "1")

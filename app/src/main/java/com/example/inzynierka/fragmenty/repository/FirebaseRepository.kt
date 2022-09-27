@@ -564,7 +564,7 @@ class FirebaseRepository {
                         Log.d(1.toString() + " skrytka jest wolna", skrytka.FE.toString())
 
                         if (emptyBox == null.toString()) {
-                            zwrotEmptyBox.setValue(1.toString())
+                            zwrotEmptyBox.value = 1.toString()
                             emptyBox = 1.toString()
                         }
 

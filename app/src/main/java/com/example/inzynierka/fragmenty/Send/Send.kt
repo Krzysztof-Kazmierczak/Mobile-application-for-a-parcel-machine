@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.inzynierka.R
 import com.example.inzynierka.data.Pack
 import com.example.inzynierka.databinding.SendFragmentBinding
+import com.example.inzynierka.fragmenty.potwierdzenie.ConfirmSend
 
 
 // wspólny viewModel, datastore/sharePrefereces, callback, navargs / intent.bundle (putString())
@@ -66,10 +67,13 @@ class Send : Fragment() {
 
                                     //SendVm.editUserData(pack.uid.toString(), numerPaczki)
 
+                                    //val fragmentManager = supportFragmentManager
+                                    val fragmentTransaction = fragmentManager?.beginTransaction()
+                                    fragmentTransaction?.replace(R.id.frame_layout, ConfirmSend())
+                                    fragmentTransaction?.commit()
 
-
-                                    findNavController()
-                                        .navigate(SendDirections.actionSendToConfirmSend().actionId)
+                                    //findNavController()
+                                        //.navigate(SendDirections.actionSendToConfirmSend().actionId)
                                 } else {
                                     Toast.makeText(
                                         requireContext(),
