@@ -12,8 +12,13 @@ import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.inzynierka.R
 import com.example.inzynierka.aktywnosci.RegistrationActivity
 import com.example.inzynierka.databinding.HomeFragmentBinding
+import com.example.inzynierka.fragmenty.Send.Send
+import com.example.inzynierka.fragmenty.TakePack.TakepackFragment
+import com.example.inzynierka.fragmenty.kurier.PickupPackFragment
+import com.example.inzynierka.fragmenty.potwierdzenie.ConfirmSend
 import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -152,8 +157,12 @@ class HomeFragment : Fragment() {
     private fun setupTakePackClick() {
         Log.i("Powtorzenie", "3")
         binding.TakePack.setOnClickListener {
-            findNavController()
-                .navigate(HomeFragmentDirections.actionHomeFragmentToTakepackFragment().actionId)
+            val fragmentTransaction = fragmentManager?.beginTransaction()
+            fragmentTransaction?.replace(R.id.frame_layout, TakepackFragment())
+            fragmentTransaction?.commit()
+
+           // findNavController()
+            //    .navigate(HomeFragmentDirections.actionHomeFragmentToTakepackFragment().actionId)
 
         }
     }
@@ -166,15 +175,21 @@ class HomeFragment : Fragment() {
 
     private fun setupSendClick() {
         binding.Send.setOnClickListener {
-            findNavController()
-                .navigate(HomeFragmentDirections.actionHomeFragmentToSend().actionId)
+            val fragmentTransaction = fragmentManager?.beginTransaction()
+            fragmentTransaction?.replace(R.id.frame_layout, Send())
+            fragmentTransaction?.commit()
+        // findNavController()
+             //   .navigate(HomeFragmentDirections.actionHomeFragmentToSend().actionId)
         }
     }
 
     private fun setupPickUpPackClick() {
         binding.PickupPack.setOnClickListener {
-            findNavController()
-                .navigate(HomeFragmentDirections.actionHomeFragmentToPickupPackFragment().actionId)
+            val fragmentTransaction = fragmentManager?.beginTransaction()
+            fragmentTransaction?.replace(R.id.frame_layout, PickupPackFragment())
+            fragmentTransaction?.commit()
+        //findNavController()
+              //  .navigate(HomeFragmentDirections.actionHomeFragmentToPickupPackFragment().actionId)
         }
     }
 

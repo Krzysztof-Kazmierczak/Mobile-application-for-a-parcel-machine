@@ -16,6 +16,8 @@ import com.example.inzynierka.databinding.ConfirmSendFragmentBinding
 import com.example.inzynierka.firebase.NotificationData
 import com.example.inzynierka.firebase.PushNotification
 import com.example.inzynierka.firebase.RetrofitInstance
+import com.example.inzynierka.fragmenty.Send.Send
+import com.example.inzynierka.fragmenty.home.HomeFragment
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.google.type.Date
@@ -128,9 +130,13 @@ class ConfirmSend : Fragment() {
                     notyfiactionFunctionSend(numberIDPack,numberIDBox,user.token.toString(),wyswietlanieDaty)
 
 
+                    val fragmentTransaction = fragmentManager?.beginTransaction()
+                    fragmentTransaction?.replace(R.id.frame_layout, Send())
+                    fragmentTransaction?.commit()
 
-                    findNavController()
-                        .navigate(ConfirmSendDirections.actionConfirmSendToHomeFragment().actionId)
+
+                   // findNavController()
+                   //     .navigate(ConfirmSendDirections.actionConfirmSendToHomeFragment().actionId)
                 })
             })
         }

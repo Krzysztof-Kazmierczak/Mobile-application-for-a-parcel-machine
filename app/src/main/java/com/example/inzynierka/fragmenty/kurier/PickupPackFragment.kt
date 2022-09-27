@@ -20,7 +20,9 @@ import com.example.inzynierka.databinding.PickupPackFragmentBinding
 import com.example.inzynierka.firebase.NotificationData
 import com.example.inzynierka.firebase.PushNotification
 import com.example.inzynierka.firebase.RetrofitInstance
+import com.example.inzynierka.fragmenty.home.HomeFragment
 import com.example.inzynierka.fragmenty.home.PickupPacksAdapter
+import com.example.inzynierka.fragmenty.potwierdzenie.ConfirmSend
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
@@ -93,8 +95,12 @@ class PickupPackFragment : Fragment() {
                         sendSMS(userDataInfo.phone.toString(),packID,boxID)
                         notyfiactionFunctionSend(packID,boxID,userDataInfo.token.toString())
 
-                        findNavController()
-                            .navigate(PickupPackFragmentDirections.actionPickupPackFragmentToConfirmPickupPack())
+
+                            val fragmentTransaction = fragmentManager?.beginTransaction()
+                            fragmentTransaction?.replace(R.id.frame_layout, HomeFragment())
+                            fragmentTransaction?.commit()
+                       // findNavController()
+                       //     .navigate(PickupPackFragmentDirections.actionPickupPackFragmentToConfirmPickupPack())
                         })
                     })
                 })

@@ -14,6 +14,7 @@ import com.example.inzynierka.R
 import com.example.inzynierka.data.Pack
 import com.example.inzynierka.databinding.ConfirmSendFragmentBinding
 import com.example.inzynierka.databinding.ConfirmTakeFragmentBinding
+import com.example.inzynierka.fragmenty.TakePack.TakepackFragment
 
 class ConfirmTake : Fragment() {
 
@@ -90,8 +91,11 @@ class ConfirmTake : Fragment() {
             ConfirmTakeVm.upDataPack(numerIdPaczki)
 
             ConfirmTakeVm.closeBox(size, numerIdBox)
-            findNavController()
-                .navigate(ConfirmTakeDirections.actionConfirmTakeToHomeFragment().actionId)
+            val fragmentTransaction = fragmentManager?.beginTransaction()
+            fragmentTransaction?.replace(R.id.frame_layout, TakepackFragment())
+            fragmentTransaction?.commit()
+           // findNavController()
+           //     .navigate(ConfirmTakeDirections.actionConfirmTakeToHomeFragment().actionId)
         }
     }
 }

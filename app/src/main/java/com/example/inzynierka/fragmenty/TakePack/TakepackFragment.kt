@@ -15,6 +15,8 @@ import com.example.inzynierka.R
 import com.example.inzynierka.data.Pack
 import com.example.inzynierka.databinding.TakeFragmentBinding
 import com.example.inzynierka.fragmenty.home.MyPacksAdapter
+import com.example.inzynierka.fragmenty.potwierdzenie.ConfirmSend
+import com.example.inzynierka.fragmenty.potwierdzenie.ConfirmTake
 
 var boxIdTF = String()
 var numerPaczkiGLTF = String()
@@ -57,9 +59,11 @@ class TakepackFragment : Fragment(){//, OnPackItemLongClick {
                         boxIdTF
                     )
 
-
-                    findNavController()
-                        .navigate(TakepackFragmentDirections.actionTakepackFragmentToConfirmTake())
+                    val fragmentTransaction = fragmentManager?.beginTransaction()
+                    fragmentTransaction?.replace(R.id.frame_layout, ConfirmTake())
+                    fragmentTransaction?.commit()
+                 //   findNavController()
+                 //       .navigate(TakepackFragmentDirections.actionTakepackFragmentToConfirmTake())
                 }
 
             }
