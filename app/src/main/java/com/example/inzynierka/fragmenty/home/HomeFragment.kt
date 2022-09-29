@@ -40,8 +40,6 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = HomeFragmentBinding.inflate(layoutInflater, container, false)
         return binding.root
-       // networkConnectioCheck()
-        Log.i("Powtorzenie", "1")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,10 +52,10 @@ class HomeFragment : Fragment() {
         homeFragmentScreen()
         setupPickUpPackClick()
         pushNewToken()
-        visibleDeliverButton()
+        //visibleDeliverButton()
 
-       // havePack()
-      //  token()
+        // havePack()
+        //  token()
     }
 
     private fun token(){
@@ -87,14 +85,14 @@ class HomeFragment : Fragment() {
 
     private fun havePack(){
 
-            homeVm.getPackData("0001") //to 0001 wiem ze jest 0001 bo to wpisuje kurier i przychodzi z powiadomieniem
-            homeVm.pack.observe(viewLifecycleOwner, { pack ->
-               if (pack.packInBox.toString() == 1.toString()) {
+        homeVm.getPackData("0001") //to 0001 wiem ze jest 0001 bo to wpisuje kurier i przychodzi z powiadomieniem
+        homeVm.pack.observe(viewLifecycleOwner, { pack ->
+            if (pack.packInBox.toString() == 1.toString()) {
 
-                    val uidUser = pack.uid.toString()
-                    homeVm.sendInfotoUser("0001",uidUser)
-               }
-            })
+                val uidUser = pack.uid.toString()
+                homeVm.sendInfotoUser("0001",uidUser)
+            }
+        })
     }
 
     private fun pushNewToken()
@@ -118,7 +116,8 @@ class HomeFragment : Fragment() {
                         "Your device registration token is$token",
                         Toast.LENGTH_SHORT
                     ).show()*/
-                    repository.pushToken(token.toString())
+                    //TODO odkomentowac
+                    //repository.pushToken(token.toString())
                 }
             })
     }
@@ -137,7 +136,7 @@ class HomeFragment : Fragment() {
         {
             binding.networkConnection.visibility = View.VISIBLE
         }
-       // networkConnectioCheck()
+        // networkConnectioCheck()
     }
 
     private fun visibleDeliverButton(){
@@ -161,7 +160,7 @@ class HomeFragment : Fragment() {
             fragmentTransaction?.replace(R.id.frame_layout, TakepackFragment())
             fragmentTransaction?.commit()
 
-           // findNavController()
+            // findNavController()
             //    .navigate(HomeFragmentDirections.actionHomeFragmentToTakepackFragment().actionId)
 
         }
@@ -178,8 +177,8 @@ class HomeFragment : Fragment() {
             val fragmentTransaction = fragmentManager?.beginTransaction()
             fragmentTransaction?.replace(R.id.frame_layout, Send())
             fragmentTransaction?.commit()
-        // findNavController()
-             //   .navigate(HomeFragmentDirections.actionHomeFragmentToSend().actionId)
+            // findNavController()
+            //   .navigate(HomeFragmentDirections.actionHomeFragmentToSend().actionId)
         }
     }
 
@@ -188,24 +187,22 @@ class HomeFragment : Fragment() {
             val fragmentTransaction = fragmentManager?.beginTransaction()
             fragmentTransaction?.replace(R.id.frame_layout, PickupPackFragment())
             fragmentTransaction?.commit()
-        //findNavController()
-              //  .navigate(HomeFragmentDirections.actionHomeFragmentToPickupPackFragment().actionId)
+            //findNavController()
+            //  .navigate(HomeFragmentDirections.actionHomeFragmentToPickupPackFragment().actionId)
         }
     }
 
     private fun setupLogoutClick() {
         Log.i("Powtorzenie", "4")
         binding.LogOut.setOnClickListener {
-                fbAuth.signOut()
-                val AktywnoscPierwszeOkno: Intent = Intent(context, RegistrationActivity::class.java)
-                startActivity(AktywnoscPierwszeOkno)
+            fbAuth.signOut()
+            val AktywnoscPierwszeOkno: Intent = Intent(context, RegistrationActivity::class.java)
+            startActivity(AktywnoscPierwszeOkno)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.i("Powtorzenie", "5")
         _binding = null
     }
-
 }

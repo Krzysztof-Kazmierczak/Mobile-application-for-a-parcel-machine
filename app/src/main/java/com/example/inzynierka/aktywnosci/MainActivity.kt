@@ -7,14 +7,17 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import com.example.inzynierka.R
 import com.example.inzynierka.constants.Constants.Companion.TOPIC
+import com.example.inzynierka.data.User
 import com.example.inzynierka.databinding.ActivityMainBinding
 import com.example.inzynierka.firebase.NotificationData
 import com.example.inzynierka.firebase.PushNotification
@@ -22,6 +25,8 @@ import com.example.inzynierka.firebase.RetrofitInstance
 import com.example.inzynierka.fragmenty.Send.Send
 import com.example.inzynierka.fragmenty.TakePack.TakepackFragment
 import com.example.inzynierka.fragmenty.home.HomeFragment
+import com.example.inzynierka.fragmenty.kurier.PickupPackFragment
+import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -38,20 +43,16 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val fbAuth = FirebaseAuth.getInstance()
+    private val repository = FirebaseRepository()
+
+    var userDataMainActivity = MutableLiveData<User>()
+
     val REQUEST_ID_MULTIPLE_PERMISSIONS = 1
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val fm = supportFragmentManager
-        val fragmentSend = Send()
-        val HomeFragment = HomeFragment()
-
-        Log.i("Powtorzenie", "1")
 
         intent.extras?.getString("title")?.let { title ->
             Log.i("MyTag", "FROM notification $title")
@@ -69,6 +70,19 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
+        binding.bottomNavigationViewDeliwer.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.home -> replaceFragment(HomeFragment())
+                R.id.pickup -> replaceFragment(PickupPackFragment())
+                R.id.takePack -> replaceFragment(TakepackFragment())
+                R.id.sendPack -> replaceFragment(Send())
+                R.id.logout -> logout()
+                else -> {
+                }
+            }
+            true
+        }
     }
 
     private fun replaceFragment(fragment: Fragment){
@@ -77,7 +91,17 @@ class MainActivity : AppCompatActivity() {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_layout, fragment)
         fragmentTransaction.commit()
-
+        //ToDo odkomentowac
+        //userDataMainActivity = repository.getUserData() as MutableLiveData<User>
+        if (userDataMainActivity.value?.access?.toInt() == 1)
+        {
+            binding.bottomNavigationViewDeliwer.visibility = View.VISIBLE
+            binding.bottomNavigationView.visibility = View.INVISIBLE
+        }else
+        {
+            binding.bottomNavigationViewDeliwer.visibility = View.INVISIBLE
+            binding.bottomNavigationView.visibility = View.VISIBLE
+        }
     }
 
     private fun logout(){
@@ -89,7 +113,6 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun checkAndRequestPermissions(): Boolean {
-        Log.i("Powtorzenie", "1")
         val permissionSendMessage = ContextCompat.checkSelfPermission(
             this,
             Manifest.permission.SEND_SMS
@@ -199,49 +222,6 @@ class MainActivity : AppCompatActivity() {
             .setNegativeButton("Cancel", okListener)
             .create()
             .show()
-        Log.i("Powtorzenie", "1")
     }
-
-
-    private fun sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch {
-        try {
-            val response = RetrofitInstance.api.postNotification(notification)
-            if(response.isSuccessful){
-                Log.i("MyTag", "Response ${Gson().toJson(response)}")
-            } else{
-                Log.i("MyTag", "Response ELSE ${response.message()}")
-            }
-        } catch (e: Exception){
-            Log.i("MyTag", "Response Exception ${e.message}")
-        }
-    }
-
-   /* private fun checkPermission(permission:String,requestcode:Int) {
-        if (ContextCompat.checkSelfPermission(this,permission) == PackageManager.PERMISSION_DENIED){
-            //Take Permision
-            ActivityCompat.requestPermissions(this,arrayOf(permission),requestcode)
-            }else
-        {
-            Toast.makeText(this,"Permission alredy",Toast.LENGTH_SHORT).show()
-        }
-    }*/
-
-  /*  override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if(requestCode == SMS_SEND_PERMISSION){
-            if(grantResults.isNotEmpty() && grantResults[0]==PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(this,"Send correty",Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(this,"Send wrong",Toast.LENGTH_SHORT).show()
-            }
-        }
-    }*/
-
-
 }
 
