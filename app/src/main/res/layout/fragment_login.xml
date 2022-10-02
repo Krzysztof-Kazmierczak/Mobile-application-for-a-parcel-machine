@@ -16,7 +16,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_margin="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:boxBackgroundColor="#3603A9F4">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/LogMail"
             android:layout_width="match_parent"
@@ -28,6 +29,7 @@
         android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:boxBackgroundColor="#3603A9F4"
         app:passwordToggleEnabled="true">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/LogPass"
@@ -39,10 +41,10 @@
 
     <Button
         android:id="@+id/LoginButton"
-        android:layout_marginVertical="10dp"
-        android:minHeight="56dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:minHeight="56dp"
         android:text="@string/Logowanie" />
     <Button
         android:id="@+id/RegisterButton2"
