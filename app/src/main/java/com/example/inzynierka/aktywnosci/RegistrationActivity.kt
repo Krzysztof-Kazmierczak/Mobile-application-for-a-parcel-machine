@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentManager
 import com.example.inzynierka.R
 import com.example.inzynierka.databinding.ActivityMainBinding
 import com.example.inzynierka.databinding.ActivityRegistrationBinding
-import com.example.inzynierka.fragmenty.registration.RegisterFragment
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider

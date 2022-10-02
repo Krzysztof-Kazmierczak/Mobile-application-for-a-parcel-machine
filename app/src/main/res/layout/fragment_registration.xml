@@ -1,82 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    tools:context=".aktywnosci.MainActivity">
-    <LinearLayout
-        android:padding ="16dp"
-        android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".aktywnosci.RegistrationActivity">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/RegMail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        app:errorEnabled="true">
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:boxBackgroundColor="#3603A9F4">
+            android:hint="@string/W_Maila"
+            android:inputType="textEmailAddress" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/RegMail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/W_Maila" />
-        </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/RegNumPhon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:counterEnabled="true"
+        app:counterMaxLength="15"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:boxBackgroundColor="#3603A9F4">
+            android:hint="@string/W_Tel"
+            android:inputType="text" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/RegNumPhon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/W_Tel" />
-        </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/RegPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:errorEnabled="true"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:boxBackgroundColor="#3603A9F4"
-            app:passwordToggleEnabled="true">
+            android:hint="Password"
+            android:inputType="textPassword" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/RegPass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/W_Haslo"
-                android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:boxBackgroundColor="#3603A9F4"
-            app:passwordToggleEnabled="true">
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/RegPassRep"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/PWH_Haslo"
-                android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
+        android:text="Confirm"/>
 
-        <Button
-            android:id="@+id/CreateAccButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:minHeight="56dp"
-            android:text="@string/Zarejestruj" />
-    </LinearLayout>
-</ScrollView>
-
+</LinearLayout>
