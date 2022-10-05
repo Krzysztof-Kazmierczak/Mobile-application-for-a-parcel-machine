@@ -42,4 +42,6 @@
     <string name="CPUF_Tak_Zakoncz">Tak, zakończ wyjmowanie paczki</string>
     <string name="CPUF_Nie_Otworz">Nie, otwórz skrzynkę ponownie</string>
     <string name="Reg_Fragment_Wrong_Phone_Number">"Please enter a valid phone number"</string>
+    <string name="Reg_Fragment_Wrong_Mail"><b>Please enter a valid email address</b></string>
+
 </resources>

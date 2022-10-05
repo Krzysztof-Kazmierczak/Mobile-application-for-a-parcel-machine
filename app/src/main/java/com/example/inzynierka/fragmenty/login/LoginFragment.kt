@@ -49,9 +49,9 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun setupRegistrationClick() {
-       binding.RegisterButton2.setOnClickListener {
-           findNavController()
-            .navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment().actionId)
+        binding.RegisterButton2.setOnClickListener {
+            findNavController()
+                .navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment().actionId)
         }
     }
 
