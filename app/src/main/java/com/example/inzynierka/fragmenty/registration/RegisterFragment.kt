@@ -12,8 +12,21 @@ import com.example.inzynierka.databinding.FragmentRegistrationBinding
 import com.example.inzynierka.fragmenty.repository.BaseFragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import java.util.regex.Pattern
 
 class RegisterFragment : BaseFragment() {
+
+    private val PASSWORD_PATTERN: Pattern = Pattern.compile(
+        "^" +  "(?=.*[0-9])" +         //at least 1 digit
+                //"(?=.*[a-z])" +         //at least 1 lower case letter
+                "(?=.*[A-Z])" +         //at least 1 upper case letter
+                "(?=.*[a-zA-Z])" +  //any letter
+                //"(?=.*[@#$%^&+=])" +  //at least 1 special character
+                "(?=\\S+$)" +  //no white spaces
+                ".{5,}" +  //at least 4 characters
+                "$"
+    )
+
     private val REG_DEBUG = "REG_DEBUG"
     private var _binding: FragmentRegistrationBinding? = null
     private val binding get() = _binding!!
@@ -88,23 +101,9 @@ class RegisterFragment : BaseFragment() {
         }
     }
 
-    private fun validateEmail(): Boolean {
-
-       return if (binding.RegMail.editText.toString() != 1.toString()) {
-           binding.RegMail.helperText = "Field can't be empty"
-            false
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.RegMail.toString()).matches()) {
-           binding.RegMail.helperText = "Please enter a valid email address"
-            false
-        } else {
-           binding.RegMail.helperText = null
-            true
-        }
-    }
-
     fun confirmInput() {
         binding.buttonCreate.setOnClickListener {
-            if (!validateEmail() /*or !validatePhone() or !validatePassword() or !validatePasswordRepeat()*/) {
+            if (!validateEmail() or !validatePhone() or !validatePassword() or !validatePasswordRepeat()) {
                 return@setOnClickListener
             }
             var input = "Email: " + binding.RegMail?.getEditText()?.getText().toString()
@@ -118,58 +117,59 @@ class RegisterFragment : BaseFragment() {
         }
     }
 
-    /*private fun validatePhone(): Boolean {
-        val phoneInput = textInputPhoneNumber!!.editText!!.text.toString().trim { it <= ' ' }
-        return if (phoneInput.isEmpty()) {
-            textInputPhoneNumber!!.error = "Field can't be empty"
+    private fun validateEmail(): Boolean {
+       return if (binding.RegMail.editText!!.text.toString().trim().isEmpty()) {
+           binding.RegMail.helperText = "Field can't be empty"
             false
-        } else if (phoneInput.length != 9) {
-            textInputPhoneNumber!!.error = "Please enter a valid phone number"
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.RegMail.editText!!.text.toString().trim()).matches()) {
+           binding.RegMail.helperText = "Please enter a valid email address"
             false
         } else {
-            textInputPhoneNumber!!.error = null
+           binding.RegMail.helperText = null
+            true
+        }
+    }
+
+    private fun validatePhone(): Boolean {
+        return if (binding.RegNumPhon?.editText!!.text.toString().trim().isEmpty()) {
+            binding.RegNumPhon.helperText = "Field can't be empty"
+            false
+        } else if (binding.RegNumPhon?.editText!!.text.toString().trim().length != 9) {
+            binding.RegNumPhon.helperText = "Please enter a valid phone number"
+            false
+        } else {
+            binding.RegNumPhon.helperText = null
             true
         }
     }
 
     private fun validatePassword(): Boolean {
-        val passwordInput = textInputPassword!!.editText!!.text.toString().trim { it <= ' ' }
+        val passwordInput = binding.RegPass?.editText!!.text.toString().trim()
         return if (passwordInput.isEmpty()) {
-            textInputPassword!!.error = "Field can't be empty"
+            binding.RegPass.helperText = "Field can't be empty"
             false
         } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            textInputPassword!!.error = "Password too weak. Use: 1 lower letter, 1 upper letter, 1 digit, at least 5 characters, no spaces"
+            binding.RegPass.helperText = "Password too weak. Use: 1 lower letter, 1 upper letter, 1 digit, at least 5 characters, no spaces"
             false
         } else {
-            textInputPassword!!.error = null
+            binding.RegPass.helperText = null
             true
         }
     }
 
     private fun validatePasswordRepeat(): Boolean {
-        val passwordRepeatInput = textInputPasswordRepeat!!.editText!!.text.toString().trim { it <= ' ' }
-        val passwordInput = textInputPassword!!.editText!!.text.toString().trim { it <= ' ' }
+        val passwordRepeatInput = binding.RegPass?.editText!!.text.toString().trim()
+        val passwordInput = binding.RegPassRep?.editText!!.text.toString().trim()
 
-        return if (passwordInput != passwordRepeatInput) {
-            textInputPasswordRepeat!!.error = "The passwords entered do not match"
+        return if (passwordInput.isEmpty()){
+            binding.RegPassRep.helperText = "Field can't be empty"
+            false
+        } else if (passwordInput != passwordRepeatInput) {
+            binding.RegPassRep.helperText = "The passwords entered do not match"
             false
         } else {
-            textInputPasswordRepeat!!.error = null
+            binding.RegPassRep.helperText = null
             true
         }
     }
-
-    fun confirmInput(v: View?) {
-        if (!validateEmail() or !validatePhone() or !validatePassword() or !validatePasswordRepeat()) {
-            return
-        }
-        var input = "Email: " + textInputEmail?.getEditText()?.getText().toString()
-        input += "\n"
-        input += "Phone Number: " + textInputPhoneNumber?.getEditText()?.getText().toString()
-        // input += "\n"
-        //  input += "Password: " + textInputPassword?.getEditText()?.getText().toString()
-        // input += "\n"
-        // input += "Password Repeat: " + textInputPasswordRepeat?.getEditText()?.getText().toString()
-        Toast.makeText(this, input, Toast.LENGTH_SHORT).show()
-    }*/
 }
