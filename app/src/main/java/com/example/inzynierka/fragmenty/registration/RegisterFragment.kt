@@ -23,7 +23,7 @@ class RegisterFragment : BaseFragment() {
                 "(?=.*[a-zA-Z])" +  //any letter
                 //"(?=.*[@#$%^&+=])" +  //at least 1 special character
                 "(?=\\S+$)" +  //no white spaces
-                ".{5,}" +  //at least 4 characters
+                ".{6,}" +  //at least 6 characters
                 "$"
     )
 
@@ -43,7 +43,6 @@ class RegisterFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       // setupSignUpClick()
         confirmInput()
     }
 
@@ -53,52 +52,35 @@ class RegisterFragment : BaseFragment() {
     }
 
     private fun setupSignUpClick() {
-
-        binding.buttonCreate.setOnClickListener {
-
-            val email = binding.RegMail.toString()
-            val pass = binding.RegPass.toString()
-            val repeatPass = binding.RegPassRep.toString()
-            val phoneNumber = binding.RegNumPhon.toString()
-            if (phoneNumber != "")
-            {
-                if(pass==repeatPass) {
-                    fbAuth.createUserWithEmailAndPassword(email, pass)
-                        .addOnSuccessListener { authRes ->
-                            if (authRes.user != null) {
-                                val user = com.example.inzynierka.data.User(
-                                    authRes.user!!.uid,
-                                    "",
-                                    "",
-                                    arrayListOf(""),
-                                    authRes.user!!.email,
-                                    "",
-                                    phoneNumber,
-                                    0
-                                )
-                                regVm.createNewUser(user)
-                                startApp()
-                            }
-                        }
-                        .addOnFailureListener { exc ->
-                            Snackbar.make(
-                                requireView(),
-                                "Upss...Something went wrong...",
-                                Snackbar.LENGTH_SHORT
-                            )
-                                .show()
-                            Log.d(REG_DEBUG, exc.message.toString())
-                        }
+        val email = binding.RegMail.editText!!.text.toString().trim()
+        val pass = binding.RegPass.editText!!.text.toString().trim()
+        val phoneNumber = binding.RegNumPhon.editText!!.text.toString().trim()
+        fbAuth.createUserWithEmailAndPassword(email, pass)
+            .addOnSuccessListener { authRes ->
+                if (authRes.user != null) {
+                    val user = com.example.inzynierka.data.User(
+                        authRes.user!!.uid,
+                        "",
+                        "",
+                        arrayListOf(""),
+                        authRes.user!!.email,
+                        "",
+                        phoneNumber,
+                        0
+                    )
+                    regVm.createNewUser(user)
+                    startApp()
                 }
-            }else{
+            }
+            .addOnFailureListener { exc ->
                 Snackbar.make(
                     requireView(),
-                    "Upss...Must pass phone number...",
+                    "Upss...Something went wrong...",
                     Snackbar.LENGTH_SHORT
                 )
                     .show()
+                Log.d(REG_DEBUG, exc.message.toString())
             }
-        }
     }
 
     fun confirmInput() {
@@ -109,11 +91,8 @@ class RegisterFragment : BaseFragment() {
             var input = "Email: " + binding.RegMail?.getEditText()?.getText().toString()
             input += "\n"
             input += "Phone Number: " + binding.RegNumPhon?.getEditText()?.getText().toString()
-            // input += "\n"
-            //  input += "Password: " + textInputPassword?.getEditText()?.getText().toString()
-            // input += "\n"
-            // input += "Password Repeat: " + textInputPasswordRepeat?.getEditText()?.getText().toString()
             Toast.makeText(requireContext(), input, Toast.LENGTH_SHORT).show()
+            setupSignUpClick()
         }
     }
 
@@ -149,7 +128,7 @@ class RegisterFragment : BaseFragment() {
             binding.RegPass.helperText = "Field can't be empty"
             false
         } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            binding.RegPass.helperText = "Password too weak. Use: 1 lower letter, 1 upper letter, 1 digit, at least 5 characters, no spaces"
+            binding.RegPass.helperText = "Password too weak. Use: 1 lower letter, 1 upper letter, 1 digit, at least 6 characters, no spaces"
             false
         } else {
             binding.RegPass.helperText = null
