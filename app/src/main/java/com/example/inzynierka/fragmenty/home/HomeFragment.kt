@@ -54,7 +54,6 @@ class HomeFragment : Fragment() {
         pushNewToken()
         //visibleDeliverButton()
 
-        // havePack()
         //  token()
     }
 
@@ -81,18 +80,6 @@ class HomeFragment : Fragment() {
 
                 }
             })
-    }
-
-    private fun havePack(){
-
-        homeVm.getPackData("0001") //to 0001 wiem ze jest 0001 bo to wpisuje kurier i przychodzi z powiadomieniem
-        homeVm.pack.observe(viewLifecycleOwner, { pack ->
-            if (pack.packInBox.toString() == 1.toString()) {
-
-                val uidUser = pack.uid.toString()
-                homeVm.sendInfotoUser("0001",uidUser)
-            }
-        })
     }
 
     private fun pushNewToken()
