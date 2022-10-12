@@ -551,7 +551,6 @@ class FirebaseRepository {
         var zwrotEmptyBox = MutableLiveData<String>()
         var liczbaPelnych = 0
 
-        Log.d("Jestem TUTAJ", size.toString())
         cloud.collection(size)
             .document(1.toString())
             .get()

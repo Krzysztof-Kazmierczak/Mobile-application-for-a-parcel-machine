@@ -55,8 +55,19 @@ class RegisterFragment : BaseFragment() {
         val email = binding.RegMail.editText!!.text.toString().trim()
         val pass = binding.RegPass.editText!!.text.toString().trim()
         val phoneNumber = binding.RegNumPhon.editText!!.text.toString().trim()
+
+
         fbAuth.createUserWithEmailAndPassword(email, pass)
             .addOnSuccessListener { authRes ->
+
+               //NOWY UZYTKOWNIK Z POTWIERDZENIEM NA MAILA!
+               /* var userMail = fbAuth.currentUser
+                userMail?.sendEmailVerification()
+                    ?.addOnSuccessListener {
+                        //Toast.makeText(requireContext(), "Potwierdz adres Email", Toast.LENGTH_SHORT).show()
+                }*/
+
+
                 if (authRes.user != null) {
                     val user = com.example.inzynierka.data.User(
                         authRes.user!!.uid,
@@ -66,7 +77,8 @@ class RegisterFragment : BaseFragment() {
                         authRes.user!!.email,
                         "",
                         phoneNumber,
-                        0
+                        0,
+                        0,
                     )
                     regVm.createNewUser(user)
                     startApp()
