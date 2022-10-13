@@ -19,16 +19,12 @@ import com.example.inzynierka.fragmenty.potwierdzenie.ConfirmSend
 var boxId = String()
 var numerPaczkiGL = String()
 
-//TODO SendFragment
+
 class Send : Fragment() {
 
-    //TODO CONSTANT ALL_CAPS
-    private val Send_DEBUG = "Send_DEBUG"
     private var _binding: SendFragmentBinding? = null
     private val binding get() = _binding!!
     private val SendVm by viewModels<SendViewModel>()
-//    private var boxId = ""
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,7 +57,7 @@ class Send : Fragment() {
                                 if (idBoxS != null) {
                                     Toast.makeText(requireContext(), idBoxS, Toast.LENGTH_SHORT)
                                         .show()
-                                    boxId = idBoxS.toString() // TODO to remove
+                                    boxId = idBoxS.toString()
 //                                SendVm.setNumberId(idBoxS.toString())
                                     SendVm.editBoxData("box", idBoxS, numerPaczki)
 

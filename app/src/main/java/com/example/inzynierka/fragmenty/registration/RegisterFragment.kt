@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.core.view.isEmpty
 import androidx.fragment.app.viewModels
 import com.example.inzynierka.databinding.FragmentRegistrationBinding
+import com.example.inzynierka.fragmenty.home.HomeFragment
 import com.example.inzynierka.fragmenty.repository.BaseFragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -73,14 +74,15 @@ class RegisterFragment : BaseFragment() {
                         authRes.user!!.uid,
                         "",
                         "",
-                        arrayListOf(""),
                         authRes.user!!.email,
                         "",
                         phoneNumber,
                         0,
                         0,
+                        arrayListOf(),
                     )
                     regVm.createNewUser(user)
+                    token()
                     startApp()
                 }
             }

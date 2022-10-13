@@ -3,17 +3,44 @@ package com.example.inzynierka.fragmenty.repository
 import android.content.Intent
 import android.os.Bundle
 import android.transition.TransitionInflater
+import android.util.Log
+import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import com.example.inzynierka.R
 import com.example.inzynierka.aktywnosci.MainActivity
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.messaging.FirebaseMessaging
 
 abstract class BaseFragment: Fragment() {
+
+    private val repository = FirebaseRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val transInflater = TransitionInflater.from(requireContext())
         //enterTransition = transInflater.inflateTransition(R.transition.slide_right)
         //exitTransition = transInflater.inflateTransition(R.transition.fade_out)
+    }
+
+    protected fun token(){
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener(object : OnCompleteListener<String?> {
+                override fun onComplete(@NonNull task: Task<String?>) {
+                    if (!task.isSuccessful()) {
+                        println("Fetching FCM registration token failed")
+                        return
+                    }
+
+                    // Get new FCM registration token
+                    val token: String? = task.getResult()
+
+                    // Log and toast
+                    token?.let { Log.d("moj token ", it) }
+
+                    repository.pushToken(token.toString())
+                }
+            })
     }
 
     protected fun startApp(){

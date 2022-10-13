@@ -54,7 +54,7 @@ class HomeFragment : Fragment() {
         pushNewToken()
         //visibleDeliverButton()
 
-        //  token()
+        //token()
     }
 
     private fun token(){
@@ -97,13 +97,7 @@ class HomeFragment : Fragment() {
 
                     // Log and toast
                     token?.let { Log.d("moj token ", it) }
-
-                    /*Toast.makeText(
-                        this@MainActivity,
-                        "Your device registration token is$token",
-                        Toast.LENGTH_SHORT
-                    ).show()*/
-                    //TODO odkomentowac
+//TODO odkomentowac
                     //repository.pushToken(token.toString())
                 }
             })
