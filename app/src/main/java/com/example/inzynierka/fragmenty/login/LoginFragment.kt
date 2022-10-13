@@ -65,7 +65,7 @@ class LoginFragment : BaseFragment() {
                     if(authRes.user != null) startApp()
                 }
                 .addOnFailureListener{ exc ->
-                    Snackbar.make(requireView(), "Upss...Something went wrong...", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(requireView(), "Błędny login lub hasło", Snackbar.LENGTH_SHORT)
                         .show()
                     Log.d(LOG_DEUBG, exc.message.toString())
                 }
