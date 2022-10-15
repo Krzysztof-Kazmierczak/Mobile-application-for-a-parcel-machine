@@ -105,13 +105,13 @@ class Send : Fragment() {
     }
 
     // Funkcja udostepniajaca do innych fragmentow numer paczki który został wpisany w polu "numer paczki"
-    fun getIdPack(numerPaczki: String): String{
-        return numerPaczki
+    fun getIdPack(): String{
+        return numerPaczkiGL
     }
 
     // Funkcja udostepniajaca do innych fragmentow w jakim boxie bedzie paczka
-    fun getIdBox(numerBoxu: String): String{
-        return numerBoxu
+    fun getIdBox(): String{
+        return boxId
     }
 
     override fun onDestroyView() {
