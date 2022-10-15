@@ -12,103 +12,67 @@ import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 class ConfirmSendViewModel : ViewModel() {
     private val repository = FirebaseRepository()
     private val send = Send()
-
-    //val user = repository.getUserData()
     var cloudResult = MutableLiveData<Pack>()
-    //var cloudResultBox = MutableLiveData<String>()
     var cloudResultBoxS = MutableLiveData<String>()
     var numerPaczki = String()
     var numerBoxu = String()
     var packSend = MutableLiveData<Pack>()
     var infoUser = MutableLiveData<User>()
-   // val idPacksToMe =
-    //var isPack = MutableLiveData<Int>()
 
-    //fun ConfirmButton(): LiveData<Pack> {
-
-      //  cloudResult = repository.PutPack() as MutableLiveData<Pack>
-     //   return cloudResult
-   // }
-
-
-//    private var _numerBoxu = MutableLiveData<String>()
-//    val numerBoxu: LiveData<String> = _numerBoxu
-//
-//    fun setNumberId(id: String){
-//        _numerBoxu.postValue(id)
-//    }
-//
-
+    //Dodanie paczki do listy w bazie danych użytkownika
     fun addDatePack(day:String,month:String,year:String,packID:String)
     {
         repository.addDatePack(day,month,year,packID)
     }
-
+    //Zaktualiowanie danych boxu
     fun addDateBox(day:String,month:String,year:String,boxID:String)
     {
         repository.addDateBox(day,month,year,boxID)
     }
-
+    //Pobranie informacji o użytkowniku
     fun getUser(uid: String): LiveData<User> {
     infoUser = repository.infoUser(uid) as MutableLiveData<User>
     return infoUser
     }
-
-
-    fun numberPack(): String {
-        numerPaczki = send.getIdPack()
-
-        return numerPaczki
-    }
-
+    //Zaktualizowanie danych użytkownika
     fun editUserData(uid: String, paczki: ArrayList<String>)
     {
         repository.editUserData(uid, paczki)
     }
-
-
+    //Pobranie informacji o ID paczki
+    fun numberPack(): String {
+        numerPaczki = send.getIdPack()
+        return numerPaczki
+    }
+    //Pobranie informacji o numerze boxu
     fun boxId(): String? {
         numerBoxu = send.getIdBox()
-//        _numerBoxu.value = send.getIdBox()
         return numerBoxu
-//        return _numerBoxu.value
     }
-
-
-
+    //Pobranie informacji o paczce
     fun getPackData(Id_pack: String): LiveData<Pack>
     {
         packSend = repository.getPackData(Id_pack) as MutableLiveData<Pack>
-
         return packSend
     }
-
+    //Zaktualizowanie informacji o boxie
     fun editBoxData(size: String, id: String, idPack: String)
     {
         repository.editBoxData(size, id, idPack)
     }
-
+    //Zaktualizowanie informacji o paczce
     fun editPackData(numerIdPack: String, numerIdBox: String)
     {
         repository.editPackData(numerIdPack,numerIdBox)
     }
-
+    //"Zamknięcie" boxu
     fun closeBox(size: String,id: String)
     {
         repository.closeBox(size, id)
     }
-
+    //Zaktualizowanie informacji boxu że jest zapełniony
     fun boxFull(size: String,id: String)
     {
         repository.editBoxFullData(size, id)
     }
-
-    fun findEmptyBoxS(size: String): LiveData<String> {
-
-        cloudResultBoxS = repository.findEmptyBoxS(size) as MutableLiveData<String>
-
-        return cloudResultBoxS
-    }
-
-
 }

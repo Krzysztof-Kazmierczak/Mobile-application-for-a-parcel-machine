@@ -47,32 +47,34 @@ class PickupPackFragment : Fragment() {
         return inflater.inflate(R.layout.pickup_pack_fragment, container, false)
     }
 
-//TODO SKOMENTOWAC TO
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        //Sprawdzanie który "kafelek" wybraliśmy
         val connect =
             requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         var networkInfo = connect.activeNetworkInfo
         binding.recyclerViewPickuppack.layoutManager = LinearLayoutManager(requireContext())
 
         adapter = PickupPacksAdapter { position ->
-
+        //Pobieramy informacje z wybranego "kafelka"
             val boxID = PickupPackVm.endTimeBoxS.value?.get(position)?.ID_Box.toString()
             val packID = PickupPackVm.endTimeBoxS.value?.get(position)?.ID.toString()
-            val size = PickupPackVm.endTimeBoxS.value?.get(position)?.Size.toString()
-
+            //Adnotacja w bazie danych że paczka została wyjęta przez opóźnienie w odebraniu
             PickupPackVm.noteToPack(packID)
-
             if(networkInfo != null && networkInfo.isConnected) {
+                //Otwarcie wybranego boxu z paczka po terminie
                 PickupPackVm.openBox(PickupPackVm.endTimeBoxS.value?.get(position)?.Size.toString(),boxID)
+                //Pobranie informacji o paczce
                 PickupPackVm.infoPack(packID)
                 PickupPackVm.packInfo.observe(viewLifecycleOwner, { packDataInfo ->
+                    //Pobranie informacji o uzytkowniku (odbiorcy paczki)
                     PickupPackVm.infoUser(packDataInfo.uid.toString())
                     PickupPackVm.userInfo.observe(viewLifecycleOwner, { userDataInfo ->
+                        //Pobranie informacji o paczkach uzytkownika
+                        //TODO SPRAWDZIC czy to kolejne pogranie informacji jest niezbedne
                         PickupPackVm.infoUserPacks(userDataInfo.uid.toString())
                         PickupPackVm.idPacksToUser.observe(viewLifecycleOwner, { listUserPacks ->
+                            //Stworzenie i umieszczenie w bazie danych nowej listy paczek uzytkownika (usunięcie tej którą wyjęliśmy)
                             var nowaListaPaczekUzytkownika = ArrayList<String>()
-
                             val liczbaPaczek = (listUserPacks.size) - 1
                             var idPaczek = listUserPacks.get(0)
                             for (i in 0..liczbaPaczek) {
@@ -84,12 +86,16 @@ class PickupPackFragment : Fragment() {
                             }
                             PickupPackVm.upDataUser(nowaListaPaczekUzytkownika)
 
-
+                        //Ustawienie w bazie danych że box jest już dostępny/pusty
                         PickupPackVm.boxEmpty("box", boxID)
                         PUP_boxId = boxID
+                        //Zaktualizowanie informacji paczki. TODO połaczyć z funkcją note!
                         PickupPackVm.upDataPack(packID)
+                        //"Zamkniecie" box
                         PickupPackVm.closeBox("box", boxID)
+                        //Wywołanie funkcji wysyłającej SMS`a
                         sendSMS(userDataInfo.phone.toString(),packID,boxID)
+                        //Wywołanie Funkcji wyświetlającą notyfikację na tel odbiorcy paczki
                         notyfiactionFunctionSend(packID,boxID,userDataInfo.token.toString())
 
 
