@@ -39,11 +39,13 @@ class Send : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         PutPack()
     }
-
-
+    // Funkcja szukajaca wolnej skrytki do ktorej mozemy umiescic wysylaną paczkę
     private fun PutPack(){
+        //Sprawdzenie czy użytkownik klikną przycisk "wyslij paczkę"
         binding.SendUmiesPaczke.setOnClickListener {
+            //Pobranie wpisanego tekstu przez uzytkownika
             val numerPaczki = binding.SendWpiszNumer.text?.trim().toString()
+            //Sprawdzamy czy zostalo cos wpisane
             if (numerPaczki != "") {
                 numerPaczkiGL = numerPaczki
                 SendVm.putPack(numerPaczki)
@@ -51,8 +53,9 @@ class Send : Fragment() {
                     if (pack != null) {
                         bindPackInfo(pack)
                         if (pack.Size == 1.toString()) {
-                            Log.d("To jest mała paczka", pack.Size)
+
                             SendVm.findEmptyBoxS("box")
+
                             SendVm.cloudResultBoxS.observe(viewLifecycleOwner, { idBoxS ->
                                 if (idBoxS != null) {
                                     Toast.makeText(requireContext(), idBoxS, Toast.LENGTH_SHORT)
@@ -94,23 +97,22 @@ class Send : Fragment() {
         }
     }
 
-//Funkcja wyswietlajaca  dane naszej paczki oraz osobno jeszcze jej rozmiar
+    //Funkcja wyswietlajaca  dane naszej paczki oraz osobno jeszcze jej rozmiar
     private fun bindPackInfo(pack: Pack) {
 
         Log.d("Informacje o naszej paczce", pack.toString())
         Log.d("Rozmiar naszej paczki",pack.Size.toString())
     }
 
-    fun getIdPack(): String{
-        val numerPaczki = numerPaczkiGL
+    // Funkcja udostepniajaca do innych fragmentow numer paczki który został wpisany w polu "numer paczki"
+    fun getIdPack(numerPaczki: String): String{
         return numerPaczki
     }
 
-    fun getIdBox(): String{
-        Log.d("To zwracam",boxId)
-        return boxId
+    // Funkcja udostepniajaca do innych fragmentow w jakim boxie bedzie paczka
+    fun getIdBox(numerBoxu: String): String{
+        return numerBoxu
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

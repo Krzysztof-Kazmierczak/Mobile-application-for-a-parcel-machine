@@ -32,7 +32,6 @@ import kotlinx.coroutines.launch
 var PUP_boxId = String()
 
 class PickupPackFragment : Fragment() {
-    private val PROFILE_DEBUG = "PROFILE_DEBUG"
     private var _binding: PickupPackFragmentBinding? = null
     private val binding get() = _binding!!
     private val PickupPackVm by viewModels<PickupPackViewModel>()
@@ -48,7 +47,7 @@ class PickupPackFragment : Fragment() {
         return inflater.inflate(R.layout.pickup_pack_fragment, container, false)
     }
 
-
+//TODO SKOMENTOWAC TO
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         val connect =
@@ -89,9 +88,7 @@ class PickupPackFragment : Fragment() {
                         PickupPackVm.boxEmpty("box", boxID)
                         PUP_boxId = boxID
                         PickupPackVm.upDataPack(packID)
-
                         PickupPackVm.closeBox("box", boxID)
-
                         sendSMS(userDataInfo.phone.toString(),packID,boxID)
                         notyfiactionFunctionSend(packID,boxID,userDataInfo.token.toString())
 
@@ -99,8 +96,6 @@ class PickupPackFragment : Fragment() {
                             val fragmentTransaction = fragmentManager?.beginTransaction()
                             fragmentTransaction?.replace(R.id.frame_layout, HomeFragment())
                             fragmentTransaction?.commit()
-                       // findNavController()
-                       //     .navigate(PickupPackFragmentDirections.actionPickupPackFragmentToConfirmPickupPack())
                         })
                     })
                 })
@@ -110,19 +105,18 @@ class PickupPackFragment : Fragment() {
         binding.recyclerViewPickuppack.adapter = adapter
     }
 
+    //Wyslanie SMS do użytkownika że paczka została wyjęta
     private fun sendSMS(numberPH:String,numberPack:String,numberBox:String) {
         val tresc1 = "Twoja paczka o numerze id "
         val tresc2 = " zostala wyjeta ze skrytki: "
         val tresc3 = " Minal Twoj czas na odbioru paczki."
-
+        //Tresc SMS`a
         val SMS = tresc1 + numberPack + tresc2 + numberBox + tresc3
-        //val SMS = numberPack.toString() + numberBox.toString()
         var smsManager = SmsManager.getDefault()
         smsManager.sendTextMessage(numberPH,null,SMS,null,null)
-        Log.d("To jest sms",SMS)
         Toast.makeText(requireContext(),"SMS został wysłany", Toast.LENGTH_SHORT).show()
     }
-
+    //Publikacja notyfikacji że wyciągamy paczkę
     private fun notyfiactionFunctionSend(numberPack:String,numberBox:String,tokenUser:String){
         val tresc1 = "Twoja paczka o numerze id "
         val tresc2 = " zostala wyjeta ze skrytki: "
@@ -135,7 +129,7 @@ class PickupPackFragment : Fragment() {
             to = tokenUser)
         sendNotification(notification)
     }
-
+    //Wysłanie notyfikacji że wyciągamy paczkę
     private fun sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch {
         try {
             val response = RetrofitInstance.api.postNotification(notification)
@@ -149,11 +143,11 @@ class PickupPackFragment : Fragment() {
         }
     }
 
+    //Sprawdzanie połączenie z internetem
     private fun networkConnectioCheck(){
         val connect =
             requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         var networkInfo = connect.activeNetworkInfo
-        // if(.isNotEmpty()){
         if(networkInfo != null && networkInfo.isConnected)
         {
             binding.networkConnection.visibility = View.INVISIBLE
@@ -166,10 +160,9 @@ class PickupPackFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        // Tworzenie listy box`ów które są po terminie
         var boxAfterTime = ArrayList<BoxS>()
-        var ileSkrytek = 0
-
+        // Pobranie Informacji o tym czy skrytka nie jest juz po terminie... TODO poprawic to!
         PickupPackVm.oneBoxInfo(1.toString())
         PickupPackVm.endTimeBox.observe(viewLifecycleOwner, { boxInfo01 ->
             if (boxInfo01 != null)
@@ -220,37 +213,12 @@ class PickupPackFragment : Fragment() {
                                 }
                             }
         })})})})})
-
-      /*  if(boxAfterTime.isNotEmpty()){
-            networkConnectioCheck()
-            binding.PUPBrakPaczek.visibility = View.INVISIBLE
-
-            adapter.setEndTimePacks(boxAfterTime)
-        }
-        else{
-            networkConnectioCheck()
-        }*/
-
-       // PickupPackVm.endTimeBoxS.observe(viewLifecycleOwner, { listEndTimePack ->
-
-            /*if(boxAfterTime.isNotEmpty()){
-                networkConnectioCheck()
-                binding.PUPBrakPaczek.visibility = View.INVISIBLE
-
-                    adapter.setEndTimePacks(listEndTimePack as ArrayList<BoxS>)
-            }
-            else{
-                networkConnectioCheck()
-            }*/
-        //})
     }
 
-
+    //Id boxu to wyciagniecia paczki po terminie
     fun getPUPIdBox(): String{
-        Log.d("To zwracam", PUP_boxId)
         return PUP_boxId
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

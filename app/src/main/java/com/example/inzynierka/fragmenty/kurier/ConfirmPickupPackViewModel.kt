@@ -10,68 +10,34 @@ import com.example.inzynierka.fragmenty.Send.Send
 import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 
 class ConfirmPickupPackViewModel : ViewModel() {
-    private val repository = FirebaseRepository()
 
-    //val user = repository.getUserData()
+    private val repository = FirebaseRepository()
     var cloudResult = MutableLiveData<Pack>()
-    //var cloudResultBox = MutableLiveData<String>()
     private val pickupPackFragment = PickupPackFragment()
-    var cloudResultBoxS = MutableLiveData<String>()
     var numerPaczki = String()
     var numerBoxuPUP = String()
     var packSend = MutableLiveData<Pack>()
     var infoUser = MutableLiveData<User>()
 
-    fun addDatePack(day:String,month:String,year:String,packID:String)
-    {
-        repository.addDatePack(day,month,year,packID)
-    }
-
-    fun addDateBox(day:String,month:String,year:String,boxID:String)
-    {
-        repository.addDateBox(day,month,year,boxID)
-    }
-
-    fun getUser(uid: String): LiveData<User> {
-    infoUser = repository.infoUser(uid) as MutableLiveData<User>
-    return infoUser
-    }
-
-    fun editUserData(uid: String, paczki: ArrayList<String>)
-    {
-        repository.editUserData(uid, paczki)
-    }
-
-
+    //Pobranie ID box`u
     fun boxId(): String? {
         numerBoxuPUP = pickupPackFragment.getPUPIdBox()
         return numerBoxuPUP
     }
-
+    //Pobranie informacji o paczce
     fun getPackData(Id_pack: String): LiveData<Pack>
     {
         packSend = repository.getPackData(Id_pack) as MutableLiveData<Pack>
-
         return packSend
     }
-
-    fun editPackData(numerIdPack: String, numerIdBox: String)
-    {
-        repository.editPackData(numerIdPack,numerIdBox)
-    }
-
+    //Zamknięcie Boxu (Zmiana stanu w bazie danych "OC" na "0"
     fun closeBox(size: String,id: String)
     {
         repository.closeBox(size, id)
     }
-
+    //Wyslanie informacji do bazy dancyh że chcemy dany box otworzyć
     fun openBox(size: String,id: String)
     {
         repository.openBox(size, id)
-    }
-
-    fun boxFull(size: String,id: String)
-    {
-        repository.editBoxFullData(size, id)
     }
 }

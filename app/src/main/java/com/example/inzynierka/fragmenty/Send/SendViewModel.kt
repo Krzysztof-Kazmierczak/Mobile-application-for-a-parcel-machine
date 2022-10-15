@@ -8,9 +8,7 @@ import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 
 class SendViewModel : ViewModel() {
     private val repository = FirebaseRepository()
-    //val user = repository.getUserData()
     var cloudResult = MutableLiveData<Pack>()
-    //var cloudResultBox = MutableLiveData<String>()
     var cloudResultBoxS = MutableLiveData<String>()
 
     //Funkcja wywołująca funkcję z FirebaseReository która zwraca informacje o danej przesyłce
@@ -30,10 +28,4 @@ class SendViewModel : ViewModel() {
     {
         repository.editBoxData(size, id, packID)
     }
-
-   // fun editUserData(Uid: String, packID: String)
-   // {
-        //repository.editUserData(Uid, packID)
-    //}
-
 }

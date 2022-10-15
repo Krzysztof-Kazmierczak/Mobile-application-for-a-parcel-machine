@@ -1,5 +1,5 @@
 package com.example.inzynierka.firebase
-
+//Klasa wyglądu notyfikacji
 data class NotificationData(
     val title: String,
     val message: String,

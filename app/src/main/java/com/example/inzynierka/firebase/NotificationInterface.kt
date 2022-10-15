@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
-
+//Wysyłanie notyfikacji
 interface NotificationInterface {
 
     @Headers("Authorization: key=$FB_TOKEN", "Content-Type:$CONTENT_TYPE")

@@ -10,10 +10,6 @@ class RegistrationActivity : AppCompatActivity() {
 
     private val fbAuth = FirebaseAuth.getInstance()
 
-    // lateinit var storedVerificationId:String
-    //  lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
-    // private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)

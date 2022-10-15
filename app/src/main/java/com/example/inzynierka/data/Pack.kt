@@ -1,5 +1,5 @@
 package com.example.inzynierka.data
-
+//Klasa przetrzymująca wygląd kolekcji "pack" w FB
 data class Pack(
     val Id_box: String? = null,
     val Size: String? = null,
@@ -10,5 +10,4 @@ data class Pack(
     val day: String? = null,
     val month: String? = null,
     val year: String? = null,
-    val note: String? = null
-)
+    val note: String? = null)

@@ -29,8 +29,6 @@ class HomeFragment : Fragment() {
 
     private val homeVm by viewModels<HomeViewModel>()
     private val fbAuth = FirebaseAuth.getInstance()
-    private val repository = FirebaseRepository()
-    private val fbCloud = FirebaseMessaging.getInstance()
     private var _binding: HomeFragmentBinding? = null
     private val binding get() = _binding!!
 
@@ -53,10 +51,10 @@ class HomeFragment : Fragment() {
         setupPickUpPackClick()
         pushNewToken()
         //visibleDeliverButton()
-
         //token()
     }
 
+    //Aktualizacja Tokena uzytkownika
     private fun token(){
         FirebaseMessaging.getInstance().token
             .addOnCompleteListener(object : OnCompleteListener<String?> {
@@ -71,17 +69,11 @@ class HomeFragment : Fragment() {
 
                     // Log and toast
                     token?.let { Log.d("moj token ", it) }
-
-                    /*Toast.makeText(
-                        this@MainActivity,
-                        "Your device registration token is$token",
-                        Toast.LENGTH_SHORT
-                    ).show()*/
-
                 }
             })
     }
 
+    //Wpisanie do bazy danych zaktualizowanego tokenu uzytkownika
     private fun pushNewToken()
     {
         FirebaseMessaging.getInstance().token
@@ -103,13 +95,11 @@ class HomeFragment : Fragment() {
             })
     }
 
+    //Sprawdzanie polaczenia z internetem uzytkownika
     private fun networkConnectioCheck(){
-
-        Log.i("Powtorzenie", "2")
         val connect =
             requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         var networkInfo = connect.activeNetworkInfo
-        // if(.isNotEmpty()){
         if(networkInfo != null && networkInfo.isConnected)
         {
             binding.networkConnection.visibility = View.INVISIBLE
@@ -117,10 +107,11 @@ class HomeFragment : Fragment() {
         {
             binding.networkConnection.visibility = View.VISIBLE
         }
-        // networkConnectioCheck()
     }
 
+    //Sprawdzanie czy uzytkownik ma dostęp do opcji kuriera
     private fun visibleDeliverButton(){
+        //Pobranie informacji o zalogowanym uzytkowniku
         homeVm.getUserData()
         homeVm.userData.observe(viewLifecycleOwner, { user ->
             val accesLVL = user.access
@@ -133,48 +124,38 @@ class HomeFragment : Fragment() {
             }
         })
     }
-
+    //Przejscie do fragmentu "moje paczki"
     private fun setupTakePackClick() {
-        Log.i("Powtorzenie", "3")
         binding.TakePack.setOnClickListener {
             val fragmentTransaction = fragmentManager?.beginTransaction()
             fragmentTransaction?.replace(R.id.frame_layout, TakepackFragment())
             fragmentTransaction?.commit()
-
-            // findNavController()
-            //    .navigate(HomeFragmentDirections.actionHomeFragmentToTakepackFragment().actionId)
-
         }
     }
-
+    //Przejście do fragmentu home fragment (aktualizacja tokenu)
     private fun homeFragmentScreen() {
         binding.homeFragmentScreen.setOnClickListener {
             networkConnectioCheck()
         }
     }
-
+    //Przejście do fragmentu "wyślij paczkę"
     private fun setupSendClick() {
         binding.Send.setOnClickListener {
             val fragmentTransaction = fragmentManager?.beginTransaction()
             fragmentTransaction?.replace(R.id.frame_layout, Send())
             fragmentTransaction?.commit()
-            // findNavController()
-            //   .navigate(HomeFragmentDirections.actionHomeFragmentToSend().actionId)
         }
     }
-
+    //Przejście do fragmentu "wyjmij paczkę" (KURIER)
     private fun setupPickUpPackClick() {
         binding.PickupPack.setOnClickListener {
             val fragmentTransaction = fragmentManager?.beginTransaction()
             fragmentTransaction?.replace(R.id.frame_layout, PickupPackFragment())
             fragmentTransaction?.commit()
-            //findNavController()
-            //  .navigate(HomeFragmentDirections.actionHomeFragmentToPickupPackFragment().actionId)
         }
     }
-
+    //Wylogowanie uzytkownika
     private fun setupLogoutClick() {
-        Log.i("Powtorzenie", "4")
         binding.LogOut.setOnClickListener {
             fbAuth.signOut()
             val AktywnoscPierwszeOkno: Intent = Intent(context, RegistrationActivity::class.java)

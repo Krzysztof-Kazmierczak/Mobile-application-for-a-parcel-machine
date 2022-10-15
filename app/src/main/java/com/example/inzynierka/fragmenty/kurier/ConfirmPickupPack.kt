@@ -31,10 +31,7 @@ import java.time.LocalDateTime
 import java.util.*
 import java.util.Calendar.getInstance
 
-
 class ConfirmPickupPack : Fragment() {
-
-    private val Send_DEBUG = "Send_DEBUG"
     private var _binding:  ConfirmSendFragmentBinding? = null
     private val binding get() = _binding!!
     private val ConfirmPickupPackVm: ConfirmPickupPackViewModel by viewModels()
@@ -52,89 +49,50 @@ class ConfirmPickupPack : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         var size = "box"
         var numerIdBox = String()
-
         ConfirmPickupPackVm.boxId()
-
         numerIdBox = ConfirmPickupPackVm.numerBoxuPUP
 
+        //Ponowne otworzenie skrytki
         binding.CSFNie.setOnClickListener {
             ConfirmPickupPackVm.openBox(size, numerIdBox)
             Toast.makeText(requireContext(), "Otwarto ponownie box " + numerIdBox, Toast.LENGTH_SHORT).show()
         }
 
+        //Aktualizacja informacji o skrytce w ktorej byla paczka
         binding.CSFTak.setOnClickListener {
-
             ConfirmPickupPackVm.closeBox(size, numerIdBox)
-
             findNavController()
                         .navigate(ConfirmPickupPackDirections.actionConfirmPickupPackToHomeFragment().actionId)
-/*
-            val cal = getInstance()
-            cal.time
-            cal[Calendar.DAY_OF_YEAR] = cal[Calendar.DAY_OF_YEAR] + 3
-            val wyswietlanieDaty = SimpleDateFormat("dd-MM-yyyy",Locale.UK).format(cal.time)
-            var day = cal.get(Calendar.DAY_OF_MONTH)
-            var month = cal.get(Calendar.MONTH)
-            var year = cal.get(Calendar.YEAR)
-
-            ConfirmPickupPackVm.addDatePack(day.toString(),(month+1).toString(),year.toString(),numerIdPack)
-            ConfirmPickupPackVm.addDateBox(day.toString(),(month+1).toString(),year.toString(),numerIdBox)
-
-            ConfirmPickupPackVm.getPackData(numerIdPack.toString().trim())
-            ConfirmPickupPackVm.packSend.observe(viewLifecycleOwner, {packListData ->
-                val numberToSendInfo = packListData.phoneNumber.toString().trim()
-                val numberIDPack = packListData.packID.toString().trim()
-                val numberIDBox = packListData.Id_box.toString().trim()
-                val numerUID = packListData.uid.toString().trim()
-
-              //  sendSMS(numberToSendInfo,numberIDPack,numberIDBox,wyswietlanieDaty)
-
-                ConfirmPickupPackVm.getUser(numerUID)
-                ConfirmPickupPackVm.infoUser.observe(viewLifecycleOwner, { user ->
-
-                    var paczkiUser = user.paczki
-                    paczkiUser?.add(numberIDPack.toString())
-
-                    ConfirmPickupPackVm.editUserData(numerUID, paczkiUser!!)
-
-                    notyfiactionFunctionSend(numberIDPack,numberIDBox,user.token.toString(),wyswietlanieDaty)
-
-
-
-              //      findNavController()
-            //            .navigate(ConfirmSendDirections.actionConfirmSendToHomeFragment().actionId)
-                })
-            })*/
         }
     }
-
+    //Wyslanie sms do uzytkownika ze jego paczka zostala wyciagnieta z box`u
     private fun sendSMS(numberPH:String,numberPack:String,numberBox:String,dataOdbioru:String) {
         val tresc1 = "Twoja paczka o numerze id "
         val tresc2 = " znajduje sie w skrytce: "
         val tresc3 = " Czas na odebranie paczki: "
-
+        //Tresc sms do uzytkownika (BRAK POLSKI ZNAKÓW!)
         val SMS = tresc1 + numberPack + tresc2 + numberBox + tresc3 + dataOdbioru
-        //val SMS = numberPack.toString() + numberBox.toString()
+        // Wysłanie SMS`a
         var smsManager = SmsManager.getDefault()
         smsManager.sendTextMessage(numberPH,null,SMS,null,null)
-        Log.d("To jest sms",SMS)
+        //Potwierdzenie na ekranie ze wysłaliśmy pomyślnie SMS`a
         Toast.makeText(requireContext(),"SMS został wysłany",Toast.LENGTH_SHORT).show()
     }
-
+    //Notyfikacja na telefonie uzytkownika że jego paczka zostala wyciagnieta z box`u
     private fun notyfiactionFunctionSend(numberPack:String,numberBox:String,tokenUser:String,dataOdbioru:String){
         val tresc1 = "Twoja paczka o numerze id "
         val tresc2 = " znajduje sie w skrytce: "
         val tresc3 = " Czas na odebranie paczki: "
-
+        //Treść wiadomości na notyfikacji
         val mess = tresc1 + numberPack + tresc2 + numberBox + tresc3 + dataOdbioru
         FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC)
         val notification = PushNotification(
             data = NotificationData("Otrzymano Paczkę", mess, 10, false),
             to = tokenUser)
-            //to = "eH3xSnpRR1qbBN2G1mDbo_:APA91bEWhrCAxRdOBuQAUr6_2fgdjuNe_NIYziPCBt8dqfFQ4zbQiv_dpbwlYEmib9fqg-Rjb7NBDKbxjVZavmU_B8Kj8wDBtoQfLi-MPu2v5sW5udZRuLXcvwOP0xyPz723HRZk7CxR")//TOPIC)
+        //Publikacja notyfikacji
         sendNotification(notification)
     }
-
+    //Wysłanie Notyfikacji
     private fun sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch {
         try {
             val response = RetrofitInstance.api.postNotification(notification)

@@ -37,13 +37,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
-
 class MainActivity : AppCompatActivity() {
-
-
     private lateinit var binding: ActivityMainBinding
     private val fbAuth = FirebaseAuth.getInstance()
-    private val repository = FirebaseRepository()
 
     var userDataMainActivity = MutableLiveData<User>()
 
@@ -110,8 +106,6 @@ class MainActivity : AppCompatActivity() {
         startActivity(AktywnoscPierwszeOkno)
     }
 
-
-
     private fun checkAndRequestPermissions(): Boolean {
         val permissionSendMessage = ContextCompat.checkSelfPermission(
             this,
@@ -152,7 +146,6 @@ class MainActivity : AppCompatActivity() {
                 perms[Manifest.permission.SEND_SMS] = PackageManager.PERMISSION_GRANTED
                 perms[Manifest.permission.RECEIVE_SMS] = PackageManager.PERMISSION_GRANTED
 
-
                 // Fill with actual results from user
                 if (grantResults.size > 0) {
                     var i = 0
@@ -160,7 +153,6 @@ class MainActivity : AppCompatActivity() {
                         perms[permissions[i]] = grantResults[i]
                         i++
                     }
-
 
                     // Check for both permissions
                     if (perms[Manifest.permission.SEND_SMS] == PackageManager.PERMISSION_GRANTED

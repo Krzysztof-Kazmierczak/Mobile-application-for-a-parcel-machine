@@ -29,16 +29,15 @@ import kotlin.random.Random
 class FirebaseService: FirebaseMessagingService() {
     private val repository = FirebaseRepository()
 
+    // Aktualizacja Tokena uzytkownika
     override fun onNewToken(token: String) {
         super.onNewToken(token)
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
+        //Aktualizacja Tokena uzytkownika
         pushNewToken()
-
-        Log.i("MyTag", "onMessageReceived ${Gson().toJson(message)}")
-
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("title", message.data["title"])
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
