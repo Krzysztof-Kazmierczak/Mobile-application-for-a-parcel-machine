@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.inzynierka.R
 import com.example.inzynierka.constants.Constants
@@ -22,7 +21,6 @@ import com.example.inzynierka.firebase.PushNotification
 import com.example.inzynierka.firebase.RetrofitInstance
 import com.example.inzynierka.fragmenty.home.HomeFragment
 import com.example.inzynierka.fragmenty.home.PickupPacksAdapter
-import com.example.inzynierka.fragmenty.potwierdzenie.ConfirmSend
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
@@ -32,6 +30,7 @@ import kotlinx.coroutines.launch
 var PUP_boxId = String()
 
 class PickupPackFragment : Fragment() {
+
     private var _binding: PickupPackFragmentBinding? = null
     private val binding get() = _binding!!
     private val PickupPackVm by viewModels<PickupPackViewModel>()
@@ -107,7 +106,6 @@ class PickupPackFragment : Fragment() {
                 })
             }
         }
-
         binding.recyclerViewPickuppack.adapter = adapter
     }
 

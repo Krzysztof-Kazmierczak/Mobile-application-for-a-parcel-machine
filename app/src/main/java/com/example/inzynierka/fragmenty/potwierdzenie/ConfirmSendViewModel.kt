@@ -1,6 +1,5 @@
 package com.example.inzynierka.fragmenty.potwierdzenie
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +9,7 @@ import com.example.inzynierka.fragmenty.Send.Send
 import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 
 class ConfirmSendViewModel : ViewModel() {
+
     private val repository = FirebaseRepository()
     private val send = Send()
     var cloudResult = MutableLiveData<Pack>()

@@ -1,6 +1,5 @@
 package com.example.inzynierka.fragmenty.potwierdzenie
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,16 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.inzynierka.R
-import com.example.inzynierka.data.Pack
-import com.example.inzynierka.databinding.ConfirmSendFragmentBinding
 import com.example.inzynierka.databinding.ConfirmTakeFragmentBinding
 import com.example.inzynierka.fragmenty.TakePack.TakepackFragment
 
 class ConfirmTake : Fragment() {
-
-    private val Take_DEBUG = "Take_DEBUG"
+    //Fragment potwierdzajacy wyciagniecie naszej paczki z boxu
     private var _binding:  ConfirmTakeFragmentBinding? = null
     private val binding get() = _binding!!
     private val ConfirmTakeVm by viewModels<ConfirmTakeViewModel>()
@@ -37,12 +32,12 @@ class ConfirmTake : Fragment() {
         var size = String()
         var numerIdBox = String()
         var numerIdPaczki = String()
-
+        //Pobranie i przypisanie do zmiennych informacji o tym w jakim boxie jest paczka o naszym numerze
         ConfirmTakeVm.boxId()
         ConfirmTakeVm.packId()
-
         numerIdBox = ConfirmTakeVm.numerBoxu
         numerIdPaczki = ConfirmTakeVm.numerPaczki
+        //Sprawdzenie jakiego rozmiaru jest paczka (NIEUŻYWANE)
         if(numerIdBox.toInt()<6)
         {
             size = "box"
@@ -58,44 +53,40 @@ class ConfirmTake : Fragment() {
                 size = "boxsL"
             }
         }
-
+        //Wykrycie użycia przycisku "otwórz ponownie". Funkcja ponownie otwiera nasz box
         binding.CTFNie.setOnClickListener {
             ConfirmTakeVm.openBoxCT(size, numerIdBox)
             Toast.makeText(requireContext(), "Otwarto ponownie box " + numerIdBox, Toast.LENGTH_SHORT).show()
         }
-
+        //Wykrycie użycia przycisku potwierdzającego zakończenie odbierania paczki
         binding.CTFTak.setOnClickListener {
-            Log.d("To jest rozmiar paczki",size.toString())
-            Log.d("To jest rozmiar paczki",numerIdBox.toString())
-
+            //Pobranie informacji o paczkach użytkownika (Lista)
             ConfirmTakeVm.idPacksToMe.observe(viewLifecycleOwner, { listMyPack ->
                 var nowaListaPaczekUzytkownika = ArrayList<String>()
-
-
+                //Sprawdzenie ile paczek znajduje się na naszej liście i odjęcie tej którą użytkownik właśnie wyciągnął
                 val liczbaPaczek = (listMyPack.size) - 1
                 var idPaczek = listMyPack.get(0)
                 for (i in 0..liczbaPaczek) {
+                        //Szukanie paczki którą wyciągneliśmy
                         idPaczek = listMyPack.get(i)
                         if(numerIdPaczki != idPaczek)
                         {
+                            //Tworzenie nowej listy bez paczki którą użytkownik właśnie wyciągnął
                             nowaListaPaczekUzytkownika.add(idPaczek)
                         }
                 }
+                //Zaktualizowanie w bazie danych listy paczek użytkownika
                 ConfirmTakeVm.upDataUser(nowaListaPaczekUzytkownika)
                 })
-
+            //Zaktualizowanie informacji boxu że jest wolny/pusty
             ConfirmTakeVm.boxEmpty(size, numerIdBox)
-
-
-
+            //Zaktualizowanie informacji paczki, że została wyjęta z boxu
             ConfirmTakeVm.upDataPack(numerIdPaczki)
-
+            //"Zamknięcie" boxu
             ConfirmTakeVm.closeBox(size, numerIdBox)
             val fragmentTransaction = fragmentManager?.beginTransaction()
             fragmentTransaction?.replace(R.id.frame_layout, TakepackFragment())
             fragmentTransaction?.commit()
-           // findNavController()
-           //     .navigate(ConfirmTakeDirections.actionConfirmTakeToHomeFragment().actionId)
         }
     }
 }

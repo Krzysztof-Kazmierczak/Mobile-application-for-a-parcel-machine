@@ -1,12 +1,10 @@
 package com.example.inzynierka.fragmenty.kurier
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.inzynierka.data.Pack
 import com.example.inzynierka.data.User
-import com.example.inzynierka.fragmenty.Send.Send
 import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 
 class ConfirmPickupPackViewModel : ViewModel() {

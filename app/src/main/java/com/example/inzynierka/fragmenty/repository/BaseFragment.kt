@@ -6,7 +6,6 @@ import android.transition.TransitionInflater
 import android.util.Log
 import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
-import com.example.inzynierka.R
 import com.example.inzynierka.aktywnosci.MainActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -19,10 +18,8 @@ abstract class BaseFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val transInflater = TransitionInflater.from(requireContext())
-        //enterTransition = transInflater.inflateTransition(R.transition.slide_right)
-        //exitTransition = transInflater.inflateTransition(R.transition.fade_out)
     }
-
+    //Sprawdzenie jaki jest token użytkownika i zaktualizowanie go w bazie danych
     protected fun token(){
         FirebaseMessaging.getInstance().token
             .addOnCompleteListener(object : OnCompleteListener<String?> {
@@ -37,17 +34,16 @@ abstract class BaseFragment: Fragment() {
 
                     // Log and toast
                     token?.let { Log.d("moj token ", it) }
-
+                    //Aktualizacja tokena
                     repository.pushToken(token.toString())
                 }
             })
     }
-
+    //Jeżeli jesteśmy zalogowani przechodzimy do home fragmentu/main activity todo naprawić
     protected fun startApp(){
         val intent = Intent(requireContext(), MainActivity::class.java).apply {
             flags = (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         }
         startActivity(intent)
     }
-
 }

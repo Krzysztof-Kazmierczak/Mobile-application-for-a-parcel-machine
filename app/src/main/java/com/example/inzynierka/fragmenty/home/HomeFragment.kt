@@ -11,15 +11,12 @@ import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.inzynierka.R
 import com.example.inzynierka.aktywnosci.RegistrationActivity
 import com.example.inzynierka.databinding.HomeFragmentBinding
 import com.example.inzynierka.fragmenty.Send.Send
 import com.example.inzynierka.fragmenty.TakePack.TakepackFragment
 import com.example.inzynierka.fragmenty.kurier.PickupPackFragment
-import com.example.inzynierka.fragmenty.potwierdzenie.ConfirmSend
-import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth

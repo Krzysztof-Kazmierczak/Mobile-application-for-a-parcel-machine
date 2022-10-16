@@ -7,35 +7,22 @@ import com.example.inzynierka.data.Pack
 import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 
 class TakepackViewModel : ViewModel() {
-    private val repository = FirebaseRepository()
 
-    var idPackToMe = MutableLiveData<String>()
-    //var idPacksToMe = MutableLiveData<ArrayList<String>>()
+    private val repository = FirebaseRepository()
     var cloudResult = MutableLiveData<Pack>()
     var mypacks = MutableLiveData<List<Pack>>()
-    //val user = repository.getUserData()
-
     val idPacksToMe = repository.packsToMe()
 
-
-    fun packData(mojePaczki: List<String>){//}: MutableLiveData<List<Pack>> {
+    //Zaktualizowanie listy paczek użytkownika
+    fun packData(mojePaczki: List<String>){
         mypacks = repository.getmyPacks(mojePaczki) as MutableLiveData<List<Pack>>
-       // return mypacks
     }
-
-   // fun packsToMe(): LiveData<ArrayList<String>>
-    //{
-      //  idPacksToMe = repository.packsToMe() as MutableLiveData<ArrayList<String>>
-
-        //return idPacksToMe
-    //}
-
-
+    //Pobranie z bazy dancyh informacji o paczkach
     fun packData(id: String): LiveData<Pack> {
         cloudResult = repository.PutPack(id) as MutableLiveData<Pack>
         return cloudResult
     }
-
+    //"Otwieramy" box
     fun openBox(size: String?, id: String?){
         size?.let{ it1 ->
             id?.let{ it2->
@@ -43,8 +30,4 @@ class TakepackViewModel : ViewModel() {
             }
         }
     }
-    fun getUserData(){
-        repository.getUserData()
-    }
-
 }

@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.inzynierka.R
 import com.example.inzynierka.constants.Constants
 import com.example.inzynierka.databinding.ConfirmSendFragmentBinding
@@ -17,18 +16,12 @@ import com.example.inzynierka.firebase.NotificationData
 import com.example.inzynierka.firebase.PushNotification
 import com.example.inzynierka.firebase.RetrofitInstance
 import com.example.inzynierka.fragmenty.Send.Send
-import com.example.inzynierka.fragmenty.home.HomeFragment
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
-import com.google.type.Date
-import com.google.type.DateTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.sql.Time
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.*
 import java.util.Calendar.getInstance
 

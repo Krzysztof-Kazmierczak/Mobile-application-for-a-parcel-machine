@@ -8,17 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.inzynierka.R
 import com.example.inzynierka.data.Pack
 import com.example.inzynierka.databinding.SendFragmentBinding
 import com.example.inzynierka.fragmenty.potwierdzenie.ConfirmSend
 
-
-// wspólny viewModel, datastore/sharePrefereces, callback, navargs / intent.bundle (putString())
+// wspólny viewModel, datastore/sharePrefereces, callback, navargs / intent.bundle (putString()) todo wytlumaczenie
 var boxId = String()
 var numerPaczkiGL = String()
-
 
 class Send : Fragment() {
 
@@ -47,68 +44,48 @@ class Send : Fragment() {
             val numerPaczki = binding.SendWpiszNumer.text?.trim().toString()
             //Sprawdzamy czy zostalo cos wpisane
             if (numerPaczki != "") {
+                //Przypisanie informacji do zmiennej globalnej (POPRAWIC TO!) todo
                 numerPaczkiGL = numerPaczki
+                //Pobranie informacji o naszej paczce
                 SendVm.putPack(numerPaczki)
                 SendVm.cloudResult.observe(viewLifecycleOwner, { pack ->
+                    //Sprawdzenie czy paczka istnieje
                     if (pack != null) {
-                        bindPackInfo(pack)
+                        //Sprawdzenie rozmiaru paczki. (NIEUŻYWANE)
                         if (pack.Size == 1.toString()) {
-
+                            //Szukamy wolnego boxu w bazie danych
                             SendVm.findEmptyBoxS("box")
-
                             SendVm.cloudResultBoxS.observe(viewLifecycleOwner, { idBoxS ->
+                                //Sprawdzamy czy został znaleziony wolny box
                                 if (idBoxS != null) {
-                                    Toast.makeText(requireContext(), idBoxS, Toast.LENGTH_SHORT)
-                                        .show()
+                                    //Wyświetlamy informacje użytkownikowi
+                                    Toast.makeText(requireContext(), idBoxS, Toast.LENGTH_SHORT).show()
+                                    //Przypisanie informacji do zmiennej globalnej (POPRAWI TO!) todo
                                     boxId = idBoxS.toString()
-//                                SendVm.setNumberId(idBoxS.toString())
+                                    //Zaktualizowanie informacji boxu
                                     SendVm.editBoxData("box", idBoxS, numerPaczki)
-
-                                    //SendVm.editUserData(pack.uid.toString(), numerPaczki)
-
-                                    //val fragmentManager = supportFragmentManager
+                                    //Zamiana fragmentu na potwierdzenie nadania paczki
                                     val fragmentTransaction = fragmentManager?.beginTransaction()
                                     fragmentTransaction?.replace(R.id.frame_layout, ConfirmSend())
                                     fragmentTransaction?.commit()
-
-                                    //findNavController()
-                                        //.navigate(SendDirections.actionSendToConfirmSend().actionId)
                                 } else {
-                                    Toast.makeText(
-                                        requireContext(),
-                                        "Wszystkie małe skrytki są zajęte!",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    //Jeżeli nie ma wolnych box`ów wyświetlamy komunikat użytkownikowi
+                                    Toast.makeText(requireContext(),"Wszystkie małe skrytki są zajęte!",Toast.LENGTH_SHORT).show()
                                 }
                             })
-                        } else {
-                            Log.d("To jest rozmiar paczki", pack.Size.toString())
-                        }
+                        } else {}
                     } else {
-                        Log.d("Ten numer paczki nie istnieje!", numerPaczki)
-                        Toast.makeText(
-                            requireContext(),
-                            "Nie ma takiej paczki w bazie danych",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        //Jeżeli użytkownik wpisał numer paczki której nie ma w bazie danych wyświetlamy komunikat
+                        Toast.makeText(requireContext(),"Nie ma takiej paczki w bazie danych",Toast.LENGTH_SHORT).show()
                     }
                 })
             }
         }
     }
-
-    //Funkcja wyswietlajaca  dane naszej paczki oraz osobno jeszcze jej rozmiar
-    private fun bindPackInfo(pack: Pack) {
-
-        Log.d("Informacje o naszej paczce", pack.toString())
-        Log.d("Rozmiar naszej paczki",pack.Size.toString())
-    }
-
     // Funkcja udostepniajaca do innych fragmentow numer paczki który został wpisany w polu "numer paczki"
     fun getIdPack(): String{
         return numerPaczkiGL
     }
-
     // Funkcja udostepniajaca do innych fragmentow w jakim boxie bedzie paczka
     fun getIdBox(): String{
         return boxId

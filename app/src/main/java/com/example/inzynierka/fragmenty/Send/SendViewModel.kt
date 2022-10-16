@@ -7,6 +7,7 @@ import com.example.inzynierka.data.Pack
 import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 
 class SendViewModel : ViewModel() {
+
     private val repository = FirebaseRepository()
     var cloudResult = MutableLiveData<Pack>()
     var cloudResultBoxS = MutableLiveData<String>()
@@ -16,14 +17,12 @@ class SendViewModel : ViewModel() {
         cloudResult = repository.PutPack(id) as MutableLiveData<Pack>
         return cloudResult
     }
-
+    //Funkacja szukająca wolnego boxu dla naszej przesyłki
     fun findEmptyBoxS(size: String): LiveData<String> {
-
         cloudResultBoxS = repository.findEmptyBoxS(size) as MutableLiveData<String>
-
         return cloudResultBoxS
     }
-
+    //Funkacja edytująca informacje boxu.
     fun editBoxData(size: String,id: String,packID:String)
     {
         repository.editBoxData(size, id, packID)

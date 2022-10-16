@@ -6,7 +6,7 @@ import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 
 class RegistrationViewModel: ViewModel() {
     private val repository = FirebaseRepository()
-
+    //Tworzenie w bazie dancyh nowego dokumentu dla użytkownika
     fun createNewUser(user: User){
         repository.createNewUser(user)
     }

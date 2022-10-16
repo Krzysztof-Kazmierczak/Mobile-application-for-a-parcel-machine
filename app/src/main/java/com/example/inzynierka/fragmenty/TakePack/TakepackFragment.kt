@@ -15,15 +15,13 @@ import com.example.inzynierka.R
 import com.example.inzynierka.data.Pack
 import com.example.inzynierka.databinding.TakeFragmentBinding
 import com.example.inzynierka.fragmenty.home.MyPacksAdapter
-import com.example.inzynierka.fragmenty.potwierdzenie.ConfirmSend
 import com.example.inzynierka.fragmenty.potwierdzenie.ConfirmTake
 
 var boxIdTF = String()
 var numerPaczkiGLTF = String()
 
-class TakepackFragment : Fragment(){//, OnPackItemLongClick {
+class TakepackFragment : Fragment(){
 
-    private val PROFILE_DEBUG = "PROFILE_DEBUG"
     private var _binding: TakeFragmentBinding? = null
     private val binding get() = _binding!!
     private val TakepackVm by viewModels<TakepackViewModel>()
@@ -42,151 +40,78 @@ class TakepackFragment : Fragment(){//, OnPackItemLongClick {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
+        //Sprawdzanie który "kafelek" wybraliśmy
         val connect =
             requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         var networkInfo = connect.activeNetworkInfo
             binding.recyclerViewTakepack.layoutManager = LinearLayoutManager(requireContext())
 
             adapter = MyPacksAdapter { position ->
-
+            //Pobieramy informacje z wybranego "kafelka" i przypisanie do zmiennych globalnych
                 boxIdTF = TakepackVm.mypacks.value?.get(position)?.Id_box.toString()
                 numerPaczkiGLTF = TakepackVm.mypacks.value?.get(position)?.packID.toString()
                 if(networkInfo != null && networkInfo.isConnected) {
-                    TakepackVm.openBox(
-                        TakepackVm.mypacks.value?.get(position)?.Size.toString(),
-                        boxIdTF
-                    )
-
+                    //Otwarcie boxu z paczką użytkownika
+                    TakepackVm.openBox(TakepackVm.mypacks.value?.get(position)?.Size.toString(),boxIdTF)
+                    //Przejście do fragmentu z potwierdzeniem wyciągnięcia paczki
                     val fragmentTransaction = fragmentManager?.beginTransaction()
                     fragmentTransaction?.replace(R.id.frame_layout, ConfirmTake())
                     fragmentTransaction?.commit()
-                 //   findNavController()
-                 //       .navigate(TakepackFragmentDirections.actionTakepackFragmentToConfirmTake())
                 }
-
             }
-
             binding.recyclerViewTakepack.adapter = adapter
-
-        //networkConnectioCheck()
-        // takePack()
     }
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        //Pobranie listy paczek użytkownika
         TakepackVm.idPacksToMe.observe(viewLifecycleOwner, { listMyPack ->
-
-            //var listPaczek = listMyPack
+            //Sprawdzamy czy lista nie jest pusta
             if(listMyPack.isNotEmpty()){
+                //Sprawdzamy połączenie internetowe
                 networkConnectioCheck()
+                //Jeżeli użytkownik ma paczki do odebrania "chowamy" komunikat o braku paczek
                 binding.TPBrakPaczek.visibility = View.INVISIBLE
+                //Pobieramy informacje o paczkach
                 TakepackVm.packData(listMyPack)
+                //Wyświetlamy za pomocą adaptera paczki w scrollview
                 TakepackVm.mypacks.observe(viewLifecycleOwner, { list ->
                     adapter.setMyPacks(list as ArrayList<Pack>)
                 })}
             else{
+                //Sprawdzamy połączenie internetowe
                 networkConnectioCheck()
             }
         })
     }
-
+    //Funkacja sprawdzająca połączenie internetowe i ewntualnie wyświetla komunikat o braku połączenia
     private fun networkConnectioCheck(){
         val connect =
             requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         var networkInfo = connect.activeNetworkInfo
-        // if(.isNotEmpty()){
+        //Jeżeli mamy połaczenie internetowe "chowamy" napis o braku połączenia
         if(networkInfo != null && networkInfo.isConnected)
         {
             binding.networkConnection.visibility = View.INVISIBLE
             binding.TPBrakPaczek.visibility = View.VISIBLE
         }else
+        //Jeżeli nie mamy połączenia wyświetlamy komunikat że nie ma połączenia z internetem
         {
             binding.networkConnection.visibility = View.VISIBLE
         }
     }
-
-
-    private fun takePack() {
-        binding.recyclerViewTakepack.setOnClickListener {
-            // binding.TakePack.setOnClickListener {
-            //Pobralem id paczki ktora chce odebrac
-            //TakepackVm.getUserData()
-
-            //   TakepackVm.packsToMe()
-            TakepackVm.idPackToMe.observe(viewLifecycleOwner, { idMyPacks ->
-                if (idMyPacks != "") {
-                    numerPaczkiGLTF = idMyPacks.toString()
-                    //Pobieram informacje o paczce
-                    TakepackVm.packData(idMyPacks)
-                    TakepackVm.cloudResult.observe(viewLifecycleOwner, { packInfo ->
-
-                        val sizePack = packInfo.Size
-                        val idBoxToOpen = packInfo.Id_box
-                        boxIdTF = packInfo.Id_box.toString()
-
-                        //Otwiera naszą skrytkę
-                        TakepackVm.openBox(sizePack.toString(), idBoxToOpen.toString())
-
-                        findNavController()
-                            .navigate(TakepackFragmentDirections.actionTakepackFragmentToConfirmTake().actionId)
-                    })
-                }
-            })
-
-
-            //TakepackVm.packToMe()
-            TakepackVm.idPackToMe.observe(viewLifecycleOwner, { idMyPack ->
-                if (idMyPack != "") {
-                    numerPaczkiGLTF = idMyPack.toString()
-                    //Pobieram informacje o paczce
-                    TakepackVm.packData(idMyPack)
-                    TakepackVm.cloudResult.observe(viewLifecycleOwner, { packInfo ->
-
-                        val sizePack = packInfo.Size
-                        val idBoxToOpen = packInfo.Id_box
-                        boxIdTF = packInfo.Id_box.toString()
-
-                        //Otwiera naszą skrytkę
-                        TakepackVm.openBox(sizePack.toString(), idBoxToOpen.toString())
-
-                        findNavController()
-                            .navigate(TakepackFragmentDirections.actionTakepackFragmentToConfirmTake().actionId)
-                    })
-                }
-            })
-        }
-    }
-
+    //Wpisujemy w zmiennej globalnej id boxu
     fun getIdBox(): String {
-        Log.d("To zwracam", boxIdTF)
         return boxIdTF
     }
-
+    //Wpisujemy w zmiennej globlanej numer paczki
     fun getIdPack(): String {
-        val numerPaczki = numerPaczkiGLTF
-        return numerPaczki
+        return numerPaczkiGLTF
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-    //override fun onMyPackLongClick(pack: Pack, position: Int) {
-    // Toast.makeText(requireContext(),pack.Id_box,Toast.LENGTH_SHORT).show()
-
-    //  TakepackVm.openBox(pack.Size.toString(),pack.Id_box.toString())
-    // }
-
-//    override fun onBoxOpenClick(pack: Pack, position: Int) {
-//        TakepackVm.openBox(pack.Size.toString(),pack.Id_box.toString())
-//
-//        findNavController()
-//            .navigate(TakepackFragmentDirections.actionTakepackFragmentToConfirmTake())
-//    }
 }

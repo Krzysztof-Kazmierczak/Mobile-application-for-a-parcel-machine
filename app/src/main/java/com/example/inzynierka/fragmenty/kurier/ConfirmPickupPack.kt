@@ -16,22 +16,14 @@ import com.example.inzynierka.databinding.ConfirmSendFragmentBinding
 import com.example.inzynierka.firebase.NotificationData
 import com.example.inzynierka.firebase.PushNotification
 import com.example.inzynierka.firebase.RetrofitInstance
-import com.example.inzynierka.fragmenty.Send.boxId
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
-import com.google.type.Date
-import com.google.type.DateTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.sql.Time
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.*
-import java.util.Calendar.getInstance
 
 class ConfirmPickupPack : Fragment() {
+
     private var _binding:  ConfirmSendFragmentBinding? = null
     private val binding get() = _binding!!
     private val ConfirmPickupPackVm: ConfirmPickupPackViewModel by viewModels()

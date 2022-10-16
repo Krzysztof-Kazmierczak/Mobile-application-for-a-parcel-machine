@@ -7,13 +7,10 @@ import android.app.PendingIntent.FLAG_ONE_SHOT
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.net.ConnectivityManager
 import android.os.Build
 import android.util.Log
-import android.view.View
 import androidx.annotation.NonNull
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.inzynierka.R
 import com.example.inzynierka.aktywnosci.App.Companion.CHANNEL_ID
 import com.example.inzynierka.aktywnosci.MainActivity
@@ -23,12 +20,11 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.google.gson.Gson
 import kotlin.random.Random
 
 class FirebaseService: FirebaseMessagingService() {
-    private val repository = FirebaseRepository()
 
+    private val repository = FirebaseRepository()
     // Aktualizacja Tokena uzytkownika
     override fun onNewToken(token: String) {
         super.onNewToken(token)

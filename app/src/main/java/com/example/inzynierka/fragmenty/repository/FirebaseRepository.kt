@@ -14,7 +14,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class FirebaseRepository {
-
+//todo posprzątać to xD
     private val REPO_DEBUG = "REPO_DEBUG"
 
     private val storage = FirebaseStorage.getInstance()
@@ -540,8 +540,6 @@ class FirebaseRepository {
             }
             .addOnFailureListener { exc ->
                 Log.d(REPO_DEBUG, exc.message.toString())
-
-                //Log.d(REPO_DEBUG, it.message.toString())
             }
         return cloudResult
     }

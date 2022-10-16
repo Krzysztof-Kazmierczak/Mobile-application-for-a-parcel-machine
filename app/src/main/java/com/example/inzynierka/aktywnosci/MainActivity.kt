@@ -8,41 +8,26 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.example.inzynierka.R
-import com.example.inzynierka.constants.Constants.Companion.TOPIC
 import com.example.inzynierka.data.User
 import com.example.inzynierka.databinding.ActivityMainBinding
-import com.example.inzynierka.firebase.NotificationData
-import com.example.inzynierka.firebase.PushNotification
-import com.example.inzynierka.firebase.RetrofitInstance
 import com.example.inzynierka.fragmenty.Send.Send
 import com.example.inzynierka.fragmenty.TakePack.TakepackFragment
 import com.example.inzynierka.fragmenty.home.HomeFragment
 import com.example.inzynierka.fragmenty.kurier.PickupPackFragment
-import com.example.inzynierka.fragmenty.repository.FirebaseRepository
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.gson.Gson
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityMainBinding
     private val fbAuth = FirebaseAuth.getInstance()
-
     var userDataMainActivity = MutableLiveData<User>()
-
     val REQUEST_ID_MULTIPLE_PERMISSIONS = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
