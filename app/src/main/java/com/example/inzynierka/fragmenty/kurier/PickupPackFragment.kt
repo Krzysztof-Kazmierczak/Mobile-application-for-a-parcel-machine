@@ -166,7 +166,7 @@ class PickupPackFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         // Tworzenie listy box`ów które są po terminie
         var boxAfterTime = ArrayList<BoxS>()
-        // Pobranie Informacji o tym czy skrytka nie jest juz po terminie... TODO poprawic to!
+        // Pobranie informacji o tym czy skrytka nie jest juz po terminie... TODO poprawic to!
         PickupPackVm.oneBoxInfo(1.toString())
         PickupPackVm.endTimeBox.observe(viewLifecycleOwner, { boxInfo01 ->
             if (boxInfo01 != null)

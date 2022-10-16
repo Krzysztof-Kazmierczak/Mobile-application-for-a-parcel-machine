@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/homeFragment_Screen"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
 
     <Button
@@ -51,7 +49,7 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="50dp"
         android:text="@string/Network"
-        android:textSize="25sp"
-        android:visibility="visible" />
-
+        android:visibility="gone"
+        android:textSize="25sp" />
+<!--    tools:visibility="visible"-->
 </FrameLayout>

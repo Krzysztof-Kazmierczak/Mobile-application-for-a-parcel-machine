@@ -20,6 +20,7 @@ import com.example.inzynierka.fragmenty.Send.Send
 import com.example.inzynierka.fragmenty.TakePack.TakepackFragment
 import com.example.inzynierka.fragmenty.home.HomeFragment
 import com.example.inzynierka.fragmenty.kurier.PickupPackFragment
+import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 import com.google.firebase.auth.FirebaseAuth
 import java.util.*
 
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val fbAuth = FirebaseAuth.getInstance()
+    private val repository = FirebaseRepository()
     var userDataMainActivity = MutableLiveData<User>()
     val REQUEST_ID_MULTIPLE_PERMISSIONS = 1
 
@@ -72,8 +74,7 @@ class MainActivity : AppCompatActivity() {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_layout, fragment)
         fragmentTransaction.commit()
-        //ToDo odkomentowac
-        //userDataMainActivity = repository.getUserData() as MutableLiveData<User>
+        userDataMainActivity = repository.getUserData() as MutableLiveData<User>
         if (userDataMainActivity.value?.access?.toInt() == 1)
         {
             binding.bottomNavigationViewDeliwer.visibility = View.VISIBLE

@@ -39,7 +39,7 @@ abstract class BaseFragment: Fragment() {
                 }
             })
     }
-    //Jeżeli jesteśmy zalogowani przechodzimy do home fragmentu/main activity todo naprawić
+    //Jeżeli jesteśmy zalogowani przechodzimy do home fragmentu/main activity
     protected fun startApp(){
         val intent = Intent(requireContext(), MainActivity::class.java).apply {
             flags = (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)

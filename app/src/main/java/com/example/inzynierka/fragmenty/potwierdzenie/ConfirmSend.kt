@@ -104,8 +104,7 @@ class ConfirmSend : Fragment() {
                 val numerUID = packListData.uid.toString().trim()
 
                 //Wysłanie SMS że paczka została do nas wysłana
-                //TODO odkomentować
-                //sendSMS(numberToSendInfo,numberIDPack,numberIDBox,wyswietlanieDaty)
+                sendSMS(numberToSendInfo,numberIDPack,numberIDBox,wyswietlanieDaty)
 
                 //Pobranie informacji o użytkowniku do którego wysłana jest paczka
                 ConfirmSendVm.getUser(numerUID)
@@ -128,7 +127,7 @@ class ConfirmSend : Fragment() {
     private fun sendSMS(numberPH:String,numberPack:String,numberBox:String,dataOdbioru:String) {
         val tresc1 = "Twoja paczka o numerze id "
         val tresc2 = " znajduje sie w skrytce: "
-        val tresc3 = " Czas na odebranie paczki: "
+        val tresc3 = " Czas na odebranie paczkio: "
         //Treść SMS do użytkownika
         val SMS = tresc1 + numberPack + tresc2 + numberBox + tresc3 + dataOdbioru
         //Wysłanie SMS`a

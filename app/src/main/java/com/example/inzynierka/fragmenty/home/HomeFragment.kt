@@ -1,5 +1,6 @@
 package com.example.inzynierka.fragmenty.home
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -17,6 +18,7 @@ import com.example.inzynierka.databinding.HomeFragmentBinding
 import com.example.inzynierka.fragmenty.Send.Send
 import com.example.inzynierka.fragmenty.TakePack.TakepackFragment
 import com.example.inzynierka.fragmenty.kurier.PickupPackFragment
+import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -26,15 +28,21 @@ class HomeFragment : Fragment() {
 
     private val homeVm by viewModels<HomeViewModel>()
     private val fbAuth = FirebaseAuth.getInstance()
+    private val repository = FirebaseRepository()
     private var _binding: HomeFragmentBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = HomeFragmentBinding.inflate(layoutInflater, container, false)
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        homeVm.checkInternetConnection(requireActivity().application)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,12 +51,22 @@ class HomeFragment : Fragment() {
         setupTakePackClick()
         setupSendClick()
         setupLogoutClick()
-        networkConnectioCheck()
+//        networkConnectioCheck()
         homeFragmentScreen()
         setupPickUpPackClick()
         pushNewToken()
-        //visibleDeliverButton()
-        //token()
+        visibleDeliverButton()
+        token()
+
+        observeInternetConnection()
+    }
+
+    private fun observeInternetConnection(){
+        homeVm.isConnectedToTheInternet.observe(viewLifecycleOwner){
+            it?.let{
+                binding.networkConnection.visibility = if(it) View.GONE else View.VISIBLE
+            }
+        }
     }
 
     //Aktualizacja Tokena uzytkownika
@@ -69,7 +87,6 @@ class HomeFragment : Fragment() {
                 }
             })
     }
-
     //Wpisanie do bazy danych zaktualizowanego tokenu uzytkownika
     private fun pushNewToken()
     {
@@ -86,18 +103,20 @@ class HomeFragment : Fragment() {
 
                     // Log and toast
                     token?.let { Log.d("moj token ", it) }
-//TODO odkomentowac
-                    //repository.pushToken(token.toString())
+
+                    repository.pushToken(token.toString())
                 }
             })
     }
-
     //Sprawdzanie polaczenia z internetem uzytkownika
+    @SuppressLint("MissingPermission")
     private fun networkConnectioCheck(){
-        val connect =
+        val connectivityManager =
             requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        var networkInfo = connect.activeNetworkInfo
-        if(networkInfo != null && networkInfo.isConnected)
+//        var networkInfo = connectivityManager.activeNetworkInfo
+        val networkCapabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork) != null
+//        if(networkInfo != null && networkInfo.isConnected)
+        if(networkCapabilities)
         {
             binding.networkConnection.visibility = View.INVISIBLE
         }else
@@ -105,7 +124,6 @@ class HomeFragment : Fragment() {
             binding.networkConnection.visibility = View.VISIBLE
         }
     }
-
     //Sprawdzanie czy uzytkownik ma dostęp do opcji kuriera
     private fun visibleDeliverButton(){
         //Pobranie informacji o zalogowanym uzytkowniku
@@ -132,7 +150,7 @@ class HomeFragment : Fragment() {
     //Przejście do fragmentu home fragment (aktualizacja tokenu)
     private fun homeFragmentScreen() {
         binding.homeFragmentScreen.setOnClickListener {
-            networkConnectioCheck()
+//            networkConnectioCheck()
         }
     }
     //Przejście do fragmentu "wyślij paczkę"
