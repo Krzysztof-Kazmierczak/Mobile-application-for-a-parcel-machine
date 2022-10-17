@@ -29,6 +29,15 @@ class RegistrationActivity : AppCompatActivity() {
         isCurrentUser()
     }
 
+    private fun isCurrentUser() {
+        fbAuth.currentUser?.let {auth ->
+            val intent = Intent(applicationContext, MainActivity::class.java).apply {
+                flags = (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            }
+            startActivity(intent)
+        }
+    }
+
     private fun checkAndRequestPermissions(): Boolean {
         val permissionSendMessage = ContextCompat.checkSelfPermission(
             this,
@@ -137,14 +146,5 @@ class RegistrationActivity : AppCompatActivity() {
             .setNegativeButton("Cancel", okListener)
             .create()
             .show()
-    }
-
-    private fun isCurrentUser() {
-        fbAuth.currentUser?.let {auth ->
-            val intent = Intent(applicationContext, MainActivity::class.java).apply {
-                flags = (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            }
-            startActivity(intent)
-        }
     }
 }

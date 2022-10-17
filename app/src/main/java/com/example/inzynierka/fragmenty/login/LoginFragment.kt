@@ -39,7 +39,7 @@ class LoginFragment : BaseFragment() {
     }
     //Przejście do fragmentu z tworzeniem nowego użytkownika
     private fun setupRegistrationClick() {
-        binding.RegisterButton2.setOnClickListener {
+        binding.RegisterButton.setOnClickListener {
             findNavController()
                 .navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment().actionId)
         }
@@ -48,20 +48,32 @@ class LoginFragment : BaseFragment() {
     private fun setupLoginClick() {
         binding.LoginButton.setOnClickListener {
             //Pobranie informacji z pól tekstowych
-            val email = binding.LogMail.text?.trim().toString()
-            val pass = binding.LogPass.text?.trim().toString()
-            //Wysłanie do bazy danych czy login i hasło są prawidłowe
-            fbAuth.signInWithEmailAndPassword(email, pass)
-                .addOnSuccessListener { authRes ->
-                    //Jeżeli wszystko się zgadza logujemy się do aplikacji
-                    if(authRes.user != null) startApp()
+            val email = binding.LogMail.editText!!.text.toString().trim()
+            val pass = binding.LogPass.editText!!.text.toString().trim()
+            if(email.isNotEmpty() and pass.isNotBlank())
+            {
+                //Wysłanie do bazy danych czy login i hasło są prawidłowe
+                fbAuth.signInWithEmailAndPassword(email, pass)
+                    .addOnSuccessListener { authRes ->
+                        //Jeżeli wszystko się zgadza logujemy się do aplikacji
+                        if(authRes.user != null) startApp()
+                    }
+                    .addOnFailureListener{ exc ->
+                        //Jeżeli występuje błąd wyświetlamy komunikat o błędzie użytkownikowi
+                        Snackbar.make(requireView(), "Błędny login lub hasło", Snackbar.LENGTH_SHORT)
+                            .show()
+                        Log.d(LOG_DEUBG, exc.message.toString())
+                    }
+            }
+            else{
+                if(email.isEmpty()){
+                    binding.LogMail.helperText = "Field can't be empty"
                 }
-                .addOnFailureListener{ exc ->
-                    //Jeżeli występuje błąd wyświetlamy komunikat o błędzie użytkownikowi
-                    Snackbar.make(requireView(), "Błędny login lub hasło", Snackbar.LENGTH_SHORT)
-                        .show()
-                    Log.d(LOG_DEUBG, exc.message.toString())
+                if(pass.isEmpty()){
+                    binding.LogPass.helperText = "Field can't be empty"
                 }
+            }
+
         }
     }
 }

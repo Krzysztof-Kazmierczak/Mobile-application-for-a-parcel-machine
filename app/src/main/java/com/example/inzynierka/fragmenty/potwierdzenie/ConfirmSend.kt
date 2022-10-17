@@ -132,7 +132,7 @@ class ConfirmSend : Fragment() {
         val SMS = tresc1 + numberPack + tresc2 + numberBox + tresc3 + dataOdbioru
         //Wysłanie SMS`a
         var smsManager = SmsManager.getDefault()
-        smsManager.sendTextMessage(numberPH,null,SMS,null,null)
+       // smsManager.sendTextMessage(numberPH,null,SMS,null,null)
        //Potwierdzenie na ekranie, że SMS został wysłany
         Toast.makeText(requireContext(),"SMS został wysłany",Toast.LENGTH_SHORT).show()
     }
