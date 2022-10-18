@@ -35,9 +35,9 @@ class ConfirmTakeViewModel : ViewModel() {
         return numerPaczki
     }
     //"Otwarcie" boxu
-    fun openBoxCT(size: String,id: String)
+    fun openBox(size: String,id: String)
     {
-        repository.openBoxCT(size, id)
+        repository.openBox(size, id)
     }
     //"Zamknięcie" boxu
     fun closeBox(size: String,id: String)

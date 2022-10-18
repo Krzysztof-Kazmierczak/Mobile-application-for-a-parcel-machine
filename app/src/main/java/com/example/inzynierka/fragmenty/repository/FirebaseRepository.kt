@@ -14,10 +14,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class FirebaseRepository {
-//todo posprzątać to xD
     private val REPO_DEBUG = "REPO_DEBUG"
 
-    private val storage = FirebaseStorage.getInstance()
     private val auth = FirebaseAuth.getInstance()
     private val cloud = FirebaseFirestore.getInstance()
 
@@ -39,9 +37,8 @@ class FirebaseRepository {
             }
         return cloudResult
     }
-
-    fun addDatePack(day:String,month:String,year:String, packID:String)
-    {
+    //Funkcja dodaje date do paczki
+    fun addDatePack(day:String,month:String,year:String, packID:String){
         cloud.collection("pack")
             .document(packID)
             .update("day",day,"month",month,"year",year)
@@ -52,9 +49,8 @@ class FirebaseRepository {
                 Log.d(REPO_DEBUG,it.message.toString())
             }
     }
-
-    fun addDateBox(day:String,month:String,year:String, boxID:String)
-    {
+    //Funkacja dodaje date do Box`u
+    fun addDateBox(day:String,month:String,year:String, boxID:String){
         cloud.collection("box")
             .document(boxID)
             .update("day",day,"month",month,"year",year)
@@ -65,11 +61,9 @@ class FirebaseRepository {
                 Log.d(REPO_DEBUG,it.message.toString())
             }
     }
-
+    //Funkcja aktualizujaca token użytkownika
     fun pushToken(token: String) {
-
         val uid = auth.currentUser?.uid
-
         cloud.collection("user")
             .document(uid!!)
             .update("token",token)
@@ -80,13 +74,13 @@ class FirebaseRepository {
                 Log.d(REPO_DEBUG,it.message.toString())
             }
     }
-
+    //Funkcja tworząca nowego użytkownika
     fun createNewUser(user: User) {
         cloud.collection("user")
             .document(user.uid!!)
             .set(user)
     }
-
+    //Funkcja pobierajaca informacje o paczce
     fun getPackData(id: String): LiveData<Pack> {
         val cloudResult = MutableLiveData<Pack>()
         cloud.collection("pack")
@@ -101,7 +95,7 @@ class FirebaseRepository {
             }
         return cloudResult
     }
-
+    //Funkcja pobierajaca informacje o użytkowniku
     fun infoUser(uid: String): LiveData<User> {
         val cloudResult = MutableLiveData<User>()
         cloud.collection("user")
@@ -117,7 +111,7 @@ class FirebaseRepository {
             }
         return cloudResult
     }
-
+    //Funkcja edytujaca informacje o użytkowniku - Aktualizacja listy paczek
     fun editUserData(Uid: String, packID: ArrayList<String>) {
 
         cloud.collection("user")
@@ -130,40 +124,13 @@ class FirebaseRepository {
                 Log.d(REPO_DEBUG, it.message.toString())
             }
     }
-
-
-    fun packToMe(): LiveData<String> {
-        val uid = auth.currentUser?.uid
-        val cloudResult = MutableLiveData<String>()
-        var Id_mypack = String()
-        var listaPaczek: ArrayList<String>? = null
-        cloud.collection("user")
-            .document(uid!!)
-            .get()
-            .addOnSuccessListener {
-                val pack = it.toObject(User::class.java)
-                if (pack != null) {
-                    Log.d(REPO_DEBUG, pack.toMePackID.toString())
-                    var cos = pack.paczki.toString()
-                    var jakasliczba = pack.paczki?.size
-                    listaPaczek = pack.paczki
-                    var jaksliczhba = cos.length
-                    Id_mypack = pack.toMePackID.toString()
-                }
-                cloudResult.postValue(Id_mypack)
-            }
-            .addOnFailureListener {
-                Log.d(REPO_DEBUG, it.message.toString())
-            }
-        return cloudResult
-    }
-
+    //Funkcja aktualizujaca liste paczek do użytkownika - Zwraca zaktualizowana listę
     fun getmyPacks(mojePaczki: List<String>): LiveData<List<Pack>> {
         val cloudResult = MutableLiveData<List<Pack>>()
-
         val liczbaPaczek = (mojePaczki.size) - 1
         var idPaczek = mojePaczki.get(0)
         var tworzycliste = ArrayList<Pack>(liczbaPaczek + 1)
+
         if (mojePaczki != null) {
             for (i in 0..liczbaPaczek) {
                 idPaczek = mojePaczki.get(i)
@@ -184,6 +151,7 @@ class FirebaseRepository {
         }
         return cloudResult
     }
+    //Funkcja zwraca boxy w ktorych jest paczka po terminie todo poprawic to...
     fun getEndTimePacks(): LiveData<List<BoxS>> {
         val cloudResult = MutableLiveData<List<BoxS>>()
 
@@ -290,144 +258,7 @@ class FirebaseRepository {
 
         return cloudResult
     }
-/*
-    fun getEndTimePacks(): LiveData<List<BoxS>> {
-        val cloudResult = MutableLiveData<List<BoxS>>()
-
-        var liczbaSkrytek = 0
-
-       // val liczbaPaczek = (mojePaczki.size) - 1
-        var tworzycliste = ArrayList<BoxS>()
-        val cal = Calendar.getInstance()
-        cal.time
-        cal[Calendar.DAY_OF_MONTH]
-
-        val day = cal[Calendar.DAY_OF_MONTH].toString()
-        val month = cal[Calendar.MONTH].toString() + 1
-        val year = cal[Calendar.YEAR].toString()
-
-
-        cloud.collection("box")
-            .document(1.toString())
-            .get()
-
-            .addOnSuccessListener {
-                val box = it.toObject(BoxS::class.java)
-                if (box != null) {
-                    if (box.day!! <= day) {
-
-                        if (box.month!! <= month) {
-
-                            if (box.year!! <= year) {
-                                Log.d(1.toString() + " skrytka jest po terminie", box.day.toString())
-                                tworzycliste.add(box)
-                                cloudResult.postValue(tworzycliste)
-                            } else {
-                                Log.d(1.toString() + " jest czas na odebranie ", box.day.toString())
-                                liczbaSkrytek = liczbaSkrytek + 1
-                                if (liczbaSkrytek == 5){cloudResult.setValue(null)}
-                            }
-                        }
-                    }
-                }
-
-            }
-
-        cloud.collection("box")
-            .document(2.toString())
-            .get()
-            .addOnSuccessListener {
-                val box1 = it.toObject(BoxS::class.java)
-                if (box1 != null) {
-                    if (box1.day!! <= day) {
-
-                        if (box1.month!! <= month) {
-
-                            if (box1.year!! <= year) {
-                        Log.d(2.toString() + " skrytka jest po terminie", box1.day.toString())
-                        tworzycliste.add(box1)
-                        cloudResult.postValue(tworzycliste)
-                    } else {
-                        Log.d(2.toString() + " jest czas na odebranie ", box1.day.toString())
-                                liczbaSkrytek = liczbaSkrytek + 1
-                                if (liczbaSkrytek == 5){cloudResult.setValue(null)}
-                    }}}
-                }
-
-            }
-
-        cloud.collection("box")
-            .get()
-            .addOnSuccessListener {
-                val box = it.toObject(BoxS::class.java)
-                if (box != null) {
-                    if (box.day!! <= day) {
-
-                        if (box.month!! <= month) {
-
-                            if (box.year!! <= year) {
-                        Log.d(3.toString() + " skrytka jest po terminie", box.day.toString())
-                        tworzycliste.add(box)
-                        cloudResult.postValue(tworzycliste)
-                    } else {
-                        Log.d(3.toString() + " jest czas na odebranie ", box.day.toString())
-                        //liczbaPelnych = liczbaPelnych + 1
-                        //if (liczbaPelnych == 5){zwrotEmptyBox.setValue(null)}
-                    }}}
-                }
-
-            }
-
-        cloud.collection("box")
-            .document(4.toString())
-            .get()
-            .addOnSuccessListener {
-                val box = it.toObject(BoxS::class.java)
-                if (box != null) {
-                    if (box.day!! <= day) {
-
-                        if (box.month!! <= month) {
-
-                            if (box.year!! <= year) {
-                        Log.d(4.toString() + " skrytka jest po terminie", box.day.toString())
-                        tworzycliste.add(box)
-                        cloudResult.postValue(tworzycliste)
-                    } else {
-                        Log.d(4.toString() + " jest czas na odebranie ", box.day.toString())
-                        //liczbaPelnych = liczbaPelnych + 1
-                        //if (liczbaPelnych == 5){zwrotEmptyBox.setValue(null)}
-                    }}}
-                }
-
-            }
-
-        cloud.collection("box")
-            .document(5.toString())
-            .get()
-            .addOnSuccessListener {
-                val box = it.toObject(BoxS::class.java)
-                if (box != null) {
-                    if (box.day!! <= day) {
-
-                        if (box.month!! <= month) {
-
-                            if (box.year!! <= year) {
-                        Log.d(5.toString() + " skrytka jest po terminie", box.day.toString())
-                        tworzycliste.add(box)
-                        cloudResult.postValue(tworzycliste)
-                    } else {
-                        Log.d(5.toString() + " jest czas na odebranie ", box.day.toString())
-                        //liczbaPelnych = liczbaPelnych + 1
-                        //if (liczbaPelnych == 5){zwrotEmptyBox.setValue(null)}
-                    }}}
-                }
-
-            }
-
-        return cloudResult
-    }
-*/
-
+    //Funkcja Pobranie informacji o danym Box`ie
     fun getOneBoxInfo(nazwa:String): LiveData<BoxS> {
         val cloudResult = MutableLiveData<BoxS>()
         val cal = Calendar.getInstance()
@@ -474,17 +305,7 @@ class FirebaseRepository {
             }
         return cloudResult
     }
-
-   /* fun getEndTimePacks2(): LiveData<List<BoxS>>{
-        val cloudResult = MutableLiveData<List<BoxS>>()
-        var paczkaPoTerminie = LiveData<BoxS>()
-        for(i in 1..5){
-            paczkaPoTerminie = getOneBoxInfo(i.toString())
-            cloudResult.postValue(paczkaPoTerminie)
-        }
-        return cloudResult
-    }*/
-
+    //Funkcja zwraca liste paczek do aktualnie zalogowanego użytkownika
     fun packsToMe(): LiveData<List<String>> {
         val uid = auth.currentUser?.uid
         val cloudResult = MutableLiveData<List<String>>()
@@ -494,7 +315,6 @@ class FirebaseRepository {
             .get()
             .addOnSuccessListener {
                 val pack = it.toObject(User::class.java)
-                //if (pack?.paczki?.size!! > 1 || pack.paczki.get(0) != "") {
                  if (pack?.paczki != null){
                     listaPaczek = pack.paczki
                 }
@@ -505,7 +325,7 @@ class FirebaseRepository {
             }
         return cloudResult
     }
-
+    //Funkcja zwraca liste paczek do danego użytkownika
     fun packsToUser(UID: String): LiveData<List<String>> {
         val cloudResult = MutableLiveData<List<String>>()
         var listaPaczek: ArrayList<String>? = null
@@ -525,9 +345,7 @@ class FirebaseRepository {
             }
         return cloudResult
     }
-
-    //Funkcja do której dostarczamy id paczki
-    //Po id paczki funkcja wyszukuje jej pozostałe dane i zwracamy (później z tych danych wyciągamy rozmiar paczki)
+    //Funkcja zwraca informacje o paczce
     fun PutPack(id: String): LiveData<Pack> {
         val cloudResult = MutableLiveData<Pack>()
         val uid = id
@@ -543,7 +361,7 @@ class FirebaseRepository {
             }
         return cloudResult
     }
-
+    //Funkcja zwraca wolny box todo poprawic to...
     fun findEmptyBoxS(size: String): LiveData<String> {
         var emptyBox = null.toString()
         var zwrotEmptyBox = MutableLiveData<String>()
@@ -682,9 +500,7 @@ class FirebaseRepository {
 
         return zwrotEmptyBox
     }
-
-
-    //Funkcja wysyłająca informację do skrytki o danym id aby ją otworzyć
+    //Funkcja edytuje dane skrytki - otwiera i uzupełnia dane o ID paczki która jest w tym box`ie
     fun editBoxData(size: String, id: String, packID: String) {
         cloud.collection(size)
             .document(id)
@@ -696,7 +512,21 @@ class FirebaseRepository {
                 Log.d(REPO_DEBUG, it.message.toString())
             }
     }
+   //Funkcja "otwiera" box
+    fun openBox(size: String, id: String) {
+        var rozmiar = size
 
+        cloud.collection(rozmiar)
+            .document(id)
+            .update("OC", 1)
+            .addOnSuccessListener {
+                Log.d("Zaktualizowano dane skrytki ", id)
+            }
+            .addOnFailureListener {
+                Log.d(REPO_DEBUG, it.message.toString())
+            }
+    }
+    //Funkcja aktualizuje informacje o paczce
     fun upDataPack(numerIDPack: String) {
         cloud.collection("pack")
             .document(numerIDPack)
@@ -708,7 +538,7 @@ class FirebaseRepository {
                 Log.d(REPO_DEBUG, it.message.toString())
             }
     }
-
+    //Funkcja aktualizuje informacje o paczkach uzytkownika
     fun upDataUser(nowaListaPaczekUzytkownika : ArrayList<String>)  {
         val uid = auth.currentUser?.uid
         var czyUzytkownikMaPaczki = 0
@@ -727,35 +557,7 @@ class FirebaseRepository {
                 Log.d(REPO_DEBUG, it.message.toString())
             }
     }
-
-
-    fun openBoxCT(size: String, id: String) {
-        cloud.collection(size)
-            .document(id)
-            .update("OC", 1)
-            .addOnSuccessListener {
-                Log.d("Zaktualizowano dane skrytki ", id)
-            }
-            .addOnFailureListener {
-                Log.d(REPO_DEBUG, it.message.toString())
-            }
-    }
-
-    fun openBox(size: String, id: String) {
-        var rozmiar = "box"
-
-        cloud.collection(rozmiar)
-
-            .document(id)
-            .update("OC", 1)
-            .addOnSuccessListener {
-                Log.d("Zaktualizowano dane skrytki ", id)
-            }
-            .addOnFailureListener {
-                Log.d(REPO_DEBUG, it.message.toString())
-            }
-    }
-
+    //Funkcja zapisujaca informacje w paczce ze zostala wyjeta poniewaz minal czas na jej odebranie
     fun notePack(id:String) {
         cloud.collection("pack")
             .document(id)
@@ -767,20 +569,7 @@ class FirebaseRepository {
                 Log.d(REPO_DEBUG, it.message.toString())
             }
     }
-
-    //Funkcja zmieniająca w bazie danych informację użytkownikowi że odstał paczkę o danym numerze ID
-    fun sendInfoToUser(Id_pack: String, uid: String) {
-        cloud.collection("user")
-            .document(uid)
-            .update("toMePackID", Id_pack)
-            .addOnSuccessListener {
-                Log.d("Zaktualizowano informację o paczce. Jej numer ID to ", Id_pack)
-            }
-            .addOnFailureListener {
-                Log.d(REPO_DEBUG, it.message.toString())
-            }
-    }
-
+    //Funkcja aktualizujaca informacje w bazie danych - box jest zapelniony
     fun editBoxFullData(size: String, id: String) {
         cloud.collection(size)
             .document(id)
@@ -792,7 +581,7 @@ class FirebaseRepository {
                 Log.d(REPO_DEBUG, it.message.toString())
             }
     }
-
+    //Funkcja ustawiajaca Box na pusty (po wyciagnieciu paczki)
     fun editBoxEmptyData(size: String, id: String) {
         cloud.collection(size)
             .document(id)
@@ -804,7 +593,7 @@ class FirebaseRepository {
                 Log.d(REPO_DEBUG, it.message.toString())
             }
     }
-
+    //Funkcja zamykajaca box
     fun closeBox(size: String, id: String) {
         cloud.collection(size)
             .document(id)
@@ -816,7 +605,7 @@ class FirebaseRepository {
                 Log.d(REPO_DEBUG, it.message.toString())
             }
     }
-
+    //Funkcja aktualizujaca informacje o paczce - W jakim jest boxie i ze jest w boxie
     fun editPackData(numerIdPack: String, numerIdBox: String) {
         cloud.collection("pack")
             .document(numerIdPack)
