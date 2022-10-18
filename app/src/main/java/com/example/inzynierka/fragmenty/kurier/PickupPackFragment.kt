@@ -97,7 +97,6 @@ class PickupPackFragment : Fragment() {
                         //Wywołanie Funkcji wyświetlającą notyfikację na tel odbiorcy paczki
                         notyfiactionFunctionSend(packID,boxID,userDataInfo.token.toString())
 
-
                             val fragmentTransaction = fragmentManager?.beginTransaction()
                             fragmentTransaction?.replace(R.id.frame_layout, HomeFragment())
                             fragmentTransaction?.commit()

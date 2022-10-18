@@ -40,6 +40,10 @@ class MainActivity : AppCompatActivity() {
         intent.extras?.getString("title")?.let { title ->
             Log.i("MyTag", "FROM notification $title")
         }
+        //Sprawdzenie czy mamy zezwolenie wyslania SMS`a
+        //Jak nie to prosimy o dostęp
+        if (checkAndRequestPermissions()) {
+        }
 
         replaceFragment(HomeFragment())
         binding.bottomNavigationView.setOnItemSelectedListener {
@@ -92,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(AktywnoscPierwszeOkno)
     }
 
+    //Funkacja sprawdzająca czy może aplikacja wysyłać i odczytywać sms`y
     private fun checkAndRequestPermissions(): Boolean {
         val permissionSendMessage = ContextCompat.checkSelfPermission(
             this,
@@ -116,7 +121,7 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
-
+    //Zapytanie o pozwolenie na dostęp do SMS
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>, grantResults: IntArray
@@ -127,7 +132,6 @@ class MainActivity : AppCompatActivity() {
             REQUEST_ID_MULTIPLE_PERMISSIONS -> {
                 val perms: MutableMap<String, Int> = HashMap()
 
-                Log.i("Powtorzenie", "1")
                 // Initialize the map with both permissions
                 perms[Manifest.permission.SEND_SMS] = PackageManager.PERMISSION_GRANTED
                 perms[Manifest.permission.RECEIVE_SMS] = PackageManager.PERMISSION_GRANTED
@@ -146,20 +150,15 @@ class MainActivity : AppCompatActivity() {
                     ) {
                         Log.d("sms", "READ_SMS & RECEIVE_SMS services permission granted")
 
-
                         // process the normal flow
-
 
                         //else any one or both the permissions are not granted
                     } else {
                         Log.d("Some", "Some permissions are not granted ask again ")
 
-
                         //permission is denied (this is the first time, when "never ask again" is not checked) so ask again explaining the usage of permission
 
-
 //                        // shouldShowRequestPermissionRationale will return true
-
 
                         //show the dialog or snackbar saying its necessary and try again otherwise proceed with setup.
                         if (ActivityCompat.shouldShowRequestPermissionRationale(
@@ -181,9 +180,7 @@ class MainActivity : AppCompatActivity() {
                                 })
                         } else {
 
-
                             //  Toast.makeText(this, "Go to settings and enable permissions", Toast.LENGTH_LONG).show();
-
 
                             //                            //proceed with logic by disabling the related features or quit the app.
                         }
@@ -192,7 +189,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
+    //Logika zapytania o dostep do SMS
     private fun showDialogOK(message: String, okListener: DialogInterface.OnClickListener) {
         AlertDialog.Builder(this)
             .setMessage(message)
@@ -202,4 +199,12 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 }
+
+
+
+
+
+
+
+
 
