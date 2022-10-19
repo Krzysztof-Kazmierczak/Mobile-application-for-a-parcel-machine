@@ -88,7 +88,7 @@ class PickupPackFragment : Fragment() {
                         //Ustawienie w bazie danych że box jest już dostępny/pusty
                         PickupPackVm.boxEmpty("box", boxID)
                         PUP_boxId = boxID
-                        //Zaktualizowanie informacji paczki. TODO połaczyć z funkcją note!
+                        //Zaktualizowanie informacji paczki.
                         PickupPackVm.upDataPack(packID)
                         //"Zamkniecie" box
                         PickupPackVm.closeBox("box", boxID)
@@ -165,7 +165,7 @@ class PickupPackFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         // Tworzenie listy box`ów które są po terminie
         var boxAfterTime = ArrayList<BoxS>()
-        // Pobranie informacji o tym czy skrytka nie jest juz po terminie... TODO poprawic to!
+        // Pobranie informacji o tym czy skrytka nie jest juz po terminie... TODO poprawic to! N
         PickupPackVm.oneBoxInfo(1.toString())
         PickupPackVm.endTimeBox.observe(viewLifecycleOwner, { boxInfo01 ->
             if (boxInfo01 != null)

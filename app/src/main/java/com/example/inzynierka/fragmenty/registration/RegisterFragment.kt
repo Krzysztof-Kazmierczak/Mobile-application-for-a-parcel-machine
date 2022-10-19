@@ -26,6 +26,8 @@ class RegisterFragment : BaseFragment() {
                 ".{6,}" +  //at least 6 characters
                 "$"
     )
+    //Sprawdzanie czy w hasle jest jakaś litera
+    private val PHONE_PATTERN: Pattern = Pattern.compile("^" + "(?=.*[a-zA-Z])" + "$")
 
     private val REG_DEBUG = "REG_DEBUG"
     private var _binding: FragmentRegistrationBinding? = null
