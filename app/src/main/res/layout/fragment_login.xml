@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="top"
     android:orientation="vertical"
-    android:gravity="center"
     android:padding="16dp"
     tools:context=".aktywnosci.RegistrationActivity">
 
@@ -15,50 +15,59 @@
         android:layout_height="180dp"
         app:srcCompat="@mipmap/ic_banner_foreground" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/LogMail"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:startIconDrawable="@drawable/fui_ic_mail_white_24dp"
-        app:endIconMode="clear_text"
-        app:helperTextTextColor="#FB1100"
-        app:boxBackgroundColor="#3603A9F4"
-        app:errorEnabled="true">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".aktywnosci.RegistrationActivity">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/LogMail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/W_Maila"
-            android:inputType="textEmailAddress" />
+            app:boxBackgroundColor="#3603A9F4"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:helperTextTextColor="#FB1100"
+            app:startIconDrawable="@drawable/fui_ic_mail_white_24dp">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/W_Maila"
+                android:inputType="textEmailAddress" />
 
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/LogPass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:helperTextTextColor="#FB1100"
-        app:boxBackgroundColor="#3603A9F4"
-        app:errorEnabled="true"
-        app:passwordToggleEnabled="true">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/LogPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/W_Haslo"
-            android:inputType="textPassword" />
+            app:boxBackgroundColor="#3603A9F4"
+            app:errorEnabled="true"
+            app:helperTextTextColor="#FB1100"
+            app:passwordToggleEnabled="true">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/W_Haslo"
+                android:inputType="textPassword" />
 
-    <Button
-        android:id="@+id/LoginButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Logowanie"/>
-    <Button
-        android:id="@+id/RegisterButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Rejestracja"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/LoginButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Logowanie" />
+
+        <Button
+            android:id="@+id/RegisterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Rejestracja" />
+    </LinearLayout>
 </LinearLayout>

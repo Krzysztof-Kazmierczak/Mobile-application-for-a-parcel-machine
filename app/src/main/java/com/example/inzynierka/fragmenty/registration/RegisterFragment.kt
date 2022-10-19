@@ -125,7 +125,7 @@ class RegisterFragment : BaseFragment() {
             true
         }
     }
-    //Wymaganie rejsetracyjne - poprawny numer telefonu. Liczba cyfr = 9 todo NAPRAWIć tylko numer tel!
+    //Wymaganie rejsetracyjne - poprawny numer telefonu. Liczba cyfr = 9
     private fun validatePhone(): Boolean {
         //Sprawdzenie czy to pole nie zostało puste jeżeli tak wyświetlany jest komunikat
         return if (binding.RegNumPhon?.editText!!.text.toString().trim().isEmpty()) {

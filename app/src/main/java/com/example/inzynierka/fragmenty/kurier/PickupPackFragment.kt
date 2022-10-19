@@ -68,23 +68,22 @@ class PickupPackFragment : Fragment() {
                     //Pobranie informacji o uzytkowniku (odbiorcy paczki)
                     PickupPackVm.infoUser(packDataInfo.uid.toString())
                     PickupPackVm.userInfo.observe(viewLifecycleOwner, { userDataInfo ->
-                        //Pobranie informacji o paczkach uzytkownika
-                        //TODO SPRAWDZIC czy to kolejne pogranie informacji jest niezbedne
-                        PickupPackVm.infoUserPacks(userDataInfo.uid.toString())
-                        PickupPackVm.idPacksToUser.observe(viewLifecycleOwner, { listUserPacks ->
-                            //Stworzenie i umieszczenie w bazie danych nowej listy paczek uzytkownika (usunięcie tej którą wyjęliśmy)
-                            var nowaListaPaczekUzytkownika = ArrayList<String>()
-                            val liczbaPaczek = (listUserPacks.size) - 1
-                            var idPaczek = listUserPacks.get(0)
-                            for (i in 0..liczbaPaczek) {
-                                idPaczek = listUserPacks.get(i)
-                                if(packID != idPaczek)
-                                {
-                                    nowaListaPaczekUzytkownika.add(idPaczek)
-                                }
-                            }
-                            PickupPackVm.upDataUser(nowaListaPaczekUzytkownika)
+                        //Przypisanie do zmiennej listy paczek uzytkownika
+                        val listUserPacks = userDataInfo.paczki
 
+                        //Stworzenie i umieszczenie w bazie danych nowej listy paczek uzytkownika (usunięcie tej którą wyjęliśmy)
+                        var nowaListaPaczekUzytkownika = ArrayList<String>()
+                        val liczbaPaczek = (listUserPacks?.size)?.minus(1)
+                        var idPaczek = listUserPacks?.get(0)
+                        for (i in 0..liczbaPaczek!!) {
+                            idPaczek = listUserPacks?.get(i)
+                            if(packID != idPaczek)
+                            {
+                                nowaListaPaczekUzytkownika.add(idPaczek)
+                            }
+                        }
+                        //Przypisanie w bazie danych nowej listy paczek użytkownika
+                        PickupPackVm.upDataUser(nowaListaPaczekUzytkownika)
                         //Ustawienie w bazie danych że box jest już dostępny/pusty
                         PickupPackVm.boxEmpty("box", boxID)
                         PUP_boxId = boxID
@@ -97,10 +96,9 @@ class PickupPackFragment : Fragment() {
                         //Wywołanie Funkcji wyświetlającą notyfikację na tel odbiorcy paczki
                         notyfiactionFunctionSend(packID,boxID,userDataInfo.token.toString())
 
-                            val fragmentTransaction = fragmentManager?.beginTransaction()
-                            fragmentTransaction?.replace(R.id.frame_layout, HomeFragment())
-                            fragmentTransaction?.commit()
-                        })
+                        val fragmentTransaction = fragmentManager?.beginTransaction()
+                        fragmentTransaction?.replace(R.id.frame_layout, HomeFragment())
+                        fragmentTransaction?.commit()
                     })
                 })
             }

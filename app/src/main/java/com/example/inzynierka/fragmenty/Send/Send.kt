@@ -13,7 +13,7 @@ import com.example.inzynierka.data.Pack
 import com.example.inzynierka.databinding.SendFragmentBinding
 import com.example.inzynierka.fragmenty.potwierdzenie.ConfirmSend
 
-// wspólny viewModel, datastore/sharePrefereces, callback, navargs / intent.bundle (putString()) todo wytlumaczenie
+// wspólny viewModel, datastore/sharePrefereces, callback, navargs / intent.bundle (putString()) todo wytlumaczenie N
 var boxId = String()
 var numerPaczkiGL = String()
 
@@ -44,7 +44,7 @@ class Send : Fragment() {
             val numerPaczki = binding.SendWpiszNumer.text?.trim().toString()
             //Sprawdzamy czy zostalo cos wpisane
             if (numerPaczki != "") {
-                //Przypisanie informacji do zmiennej globalnej (POPRAWIC TO!) todo
+                //Przypisanie informacji do zmiennej globalnej (POPRAWIC TO!) todo N
                 numerPaczkiGL = numerPaczki
                 //Pobranie informacji o naszej paczce
                 SendVm.putPack(numerPaczki)
@@ -60,7 +60,7 @@ class Send : Fragment() {
                                 if (idBoxS != null) {
                                     //Wyświetlamy informacje użytkownikowi
                                     Toast.makeText(requireContext(), idBoxS, Toast.LENGTH_SHORT).show()
-                                    //Przypisanie informacji do zmiennej globalnej (POPRAWI TO!) todo
+                                    //Przypisanie informacji do zmiennej globalnej (POPRAWI TO!) todo N
                                     boxId = idBoxS.toString()
                                     //Zaktualizowanie informacji boxu
                                     SendVm.editBoxData("box", idBoxS, numerPaczki)

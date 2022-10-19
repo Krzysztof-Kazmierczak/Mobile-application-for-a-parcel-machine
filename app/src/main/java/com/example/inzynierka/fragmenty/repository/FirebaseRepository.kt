@@ -151,7 +151,7 @@ class FirebaseRepository {
         }
         return cloudResult
     }
-    //Funkcja zwraca boxy w ktorych jest paczka po terminie todo poprawic to...
+    //Funkcja zwraca boxy w ktorych jest paczka po terminie todo poprawic to... N
     fun getEndTimePacks(): LiveData<List<BoxS>> {
         val cloudResult = MutableLiveData<List<BoxS>>()
 
@@ -361,7 +361,7 @@ class FirebaseRepository {
             }
         return cloudResult
     }
-    //Funkcja zwraca wolny box todo poprawic to...
+    //Funkcja zwraca wolny box todo poprawic to... N
     fun findEmptyBoxS(size: String): LiveData<String> {
         var emptyBox = null.toString()
         var zwrotEmptyBox = MutableLiveData<String>()
