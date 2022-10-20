@@ -26,8 +26,6 @@ class RegisterFragment : BaseFragment() {
                 ".{6,}" +  //at least 6 characters
                 "$"
     )
-    //Sprawdzanie czy w hasle jest jakaś litera
-    private val PHONE_PATTERN: Pattern = Pattern.compile("^" + "(?=.*[a-zA-Z])" + "$")
 
     private val REG_DEBUG = "REG_DEBUG"
     private var _binding: FragmentRegistrationBinding? = null
@@ -46,6 +44,21 @@ class RegisterFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         confirmInput()
+        //Sprawdzanie połączenia z internetem
+        observeInternetConnection()
+    }
+    //Sprawdzanie połączenia z internetem
+    override fun onResume() {
+        super.onResume()
+        regVm.checkInternetConnection(requireActivity().application)
+    }
+    //Sprawdzanie połączenia z internetem
+    private fun observeInternetConnection(){
+        regVm.isConnectedToTheInternet.observe(viewLifecycleOwner){
+            it?.let{
+                binding.networkConnection.visibility = if(it) View.GONE else View.VISIBLE
+            }
+        }
     }
 
     override fun onDestroyView() {

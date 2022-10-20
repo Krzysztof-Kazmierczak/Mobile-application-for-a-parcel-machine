@@ -52,7 +52,6 @@ class PickupPackFragment : Fragment() {
             requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         var networkInfo = connect.activeNetworkInfo
         binding.recyclerViewPickuppack.layoutManager = LinearLayoutManager(requireContext())
-
         adapter = PickupPacksAdapter { position ->
         //Pobieramy informacje z wybranego "kafelka"
             val boxID = PickupPackVm.endTimeBoxS.value?.get(position)?.ID_Box.toString()
@@ -105,7 +104,19 @@ class PickupPackFragment : Fragment() {
         }
         binding.recyclerViewPickuppack.adapter = adapter
     }
-
+    //Sprawdzanie połączenia z internetem
+    override fun onResume() {
+        super.onResume()
+        PickupPackVm.checkInternetConnection(requireActivity().application)
+    }
+    //Sprawdzanie połączenia z internetem
+    private fun observeInternetConnection(){
+        PickupPackVm.isConnectedToTheInternet.observe(viewLifecycleOwner){
+            it?.let{
+                binding.networkConnection.visibility = if(it) View.GONE else View.VISIBLE
+            }
+        }
+    }
     //Wyslanie SMS do użytkownika że paczka została wyjęta
     private fun sendSMS(numberPH:String,numberPack:String,numberBox:String) {
         val tresc1 = "Twoja paczka o numerze id "
@@ -144,23 +155,10 @@ class PickupPackFragment : Fragment() {
         }
     }
 
-    //Sprawdzanie połączenie z internetem
-    private fun networkConnectioCheck(){
-        val connect =
-            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        var networkInfo = connect.activeNetworkInfo
-        if(networkInfo != null && networkInfo.isConnected)
-        {
-            binding.networkConnection.visibility = View.INVISIBLE
-            binding.PUPBrakPaczek.visibility = View.VISIBLE
-        }else
-        {
-            binding.networkConnection.visibility = View.VISIBLE
-        }
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        //Sprawdzanie połączenia z internetem
+        observeInternetConnection()
         // Tworzenie listy box`ów które są po terminie
         var boxAfterTime = ArrayList<BoxS>()
         // Pobranie informacji o tym czy skrytka nie jest juz po terminie... TODO poprawic to! N
@@ -196,29 +194,20 @@ class PickupPackFragment : Fragment() {
                             {
                                 boxAfterTime.add(boxInfo05)
                                 if (boxAfterTime.isNotEmpty()) {
-                                    networkConnectioCheck()
                                     binding.PUPBrakPaczek.visibility = View.INVISIBLE
 
                                     adapter.setEndTimePacks(boxAfterTime)
                                 } else {
-                                    networkConnectioCheck()
                                 }
                             }else {
                                 if (boxAfterTime.isNotEmpty()) {
-                                    networkConnectioCheck()
                                     binding.PUPBrakPaczek.visibility = View.INVISIBLE
 
                                     adapter.setEndTimePacks(boxAfterTime)
                                 } else {
-                                    networkConnectioCheck()
                                 }
                             }
         })})})})})
-    }
-
-    //Id boxu to wyciagniecia paczki po terminie
-    fun getPUPIdBox(): String{
-        return PUP_boxId
     }
 
     override fun onDestroyView() {

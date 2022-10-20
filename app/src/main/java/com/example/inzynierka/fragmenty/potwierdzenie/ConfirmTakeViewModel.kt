@@ -1,16 +1,14 @@
 package com.example.inzynierka.fragmenty.potwierdzenie
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.example.inzynierka.aktywnosci.BaseViewModel
 import com.example.inzynierka.data.Pack
 import com.example.inzynierka.fragmenty.TakePack.TakepackFragment
-import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 
-class ConfirmTakeViewModel : ViewModel() {
-    private val repository = FirebaseRepository()
+class ConfirmTakeViewModel : BaseViewModel() {
+
     private val takePack = TakepackFragment()
     var cloudResult = MutableLiveData<Pack>()
-    var cloudResultBoxS = MutableLiveData<String>()
     var numerPaczki = String()
     var numerBoxu = String()
     val idPacksToMe = repository.packsToMe()

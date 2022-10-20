@@ -1,16 +1,14 @@
 package com.example.inzynierka.fragmenty.kurier
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.inzynierka.aktywnosci.BaseViewModel
 import com.example.inzynierka.data.BoxS
 import com.example.inzynierka.data.Pack
 import com.example.inzynierka.data.User
-import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 
-class PickupPackViewModel : ViewModel() {
+class PickupPackViewModel : BaseViewModel() {
 
-    private val repository = FirebaseRepository()
     var cloudResult = MutableLiveData<Pack>()
     var userInfo = MutableLiveData<User>()
     var packInfo = MutableLiveData<Pack>()

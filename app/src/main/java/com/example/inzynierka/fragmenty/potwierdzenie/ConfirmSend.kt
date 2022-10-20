@@ -44,6 +44,9 @@ class ConfirmSend : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //Sprawdzanie połączenia z internetem
+        observeInternetConnection()
+
         var size = String()
         var numerIdBox = String()
         var numerIdPack = String()
@@ -123,6 +126,20 @@ class ConfirmSend : Fragment() {
             })
         }
     }
+    //Sprawdzanie połączenia z internetem
+    override fun onResume() {
+        super.onResume()
+        ConfirmSendVm.checkInternetConnection(requireActivity().application)
+    }
+    //Sprawdzanie połączenia z internetem
+    private fun observeInternetConnection(){
+        ConfirmSendVm.isConnectedToTheInternet.observe(viewLifecycleOwner){
+            it?.let{
+                binding.networkConnection.visibility = if(it) View.GONE else View.VISIBLE
+            }
+        }
+    }
+
     //Funkcja wysyłająca sms`a do użytkownika że odstał paczkę
     private fun sendSMS(numberPH:String,numberPack:String,numberBox:String,dataOdbioru:String) {
         val tresc1 = "Twoja paczka o numerze id "

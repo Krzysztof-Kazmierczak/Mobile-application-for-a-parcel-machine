@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.inzynierka.databinding.FragmentLoginBinding
+import com.example.inzynierka.fragmenty.registration.RegistrationViewModel
 import com.example.inzynierka.fragmenty.repository.BaseFragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -16,6 +18,7 @@ class LoginFragment : BaseFragment() {
     private val fbAuth = FirebaseAuth.getInstance()
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+    private val regVm by viewModels<RegistrationViewModel>()
     private val LOG_DEUBG = "LOG_DEBUG"
 
     override fun onCreateView(
@@ -31,6 +34,21 @@ class LoginFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupLoginClick()
         setupRegistrationClick()
+        //Sprawdzanie połączenia z internetem
+        observeInternetConnection()
+    }
+    //Sprawdzanie połączenia z internetem
+    override fun onResume() {
+        super.onResume()
+        regVm.checkInternetConnection(requireActivity().application)
+    }
+    //Sprawdzanie połączenia z internetem
+    private fun observeInternetConnection(){
+        regVm.isConnectedToTheInternet.observe(viewLifecycleOwner){
+            it?.let{
+                binding.networkConnection.visibility = if(it) View.GONE else View.VISIBLE
+            }
+        }
     }
 
     override fun onDestroyView() {

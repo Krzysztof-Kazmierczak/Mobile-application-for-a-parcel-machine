@@ -1,7 +1,6 @@
 package com.example.inzynierka.fragmenty.potwierdzenie
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +28,9 @@ class ConfirmTake : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //Sprawdzanie połączenia z internetem
+        observeInternetConnection()
+
         var size = String()
         var numerIdBox = String()
         var numerIdPaczki = String()
@@ -87,6 +89,19 @@ class ConfirmTake : Fragment() {
             val fragmentTransaction = fragmentManager?.beginTransaction()
             fragmentTransaction?.replace(R.id.frame_layout, TakepackFragment())
             fragmentTransaction?.commit()
+        }
+    }
+    //Sprawdzanie połączenia z internetem
+    override fun onResume() {
+        super.onResume()
+        ConfirmTakeVm.checkInternetConnection(requireActivity().application)
+    }
+    //Sprawdzanie połączenia z internetem
+    private fun observeInternetConnection(){
+        ConfirmTakeVm.isConnectedToTheInternet.observe(viewLifecycleOwner){
+            it?.let{
+                binding.networkConnection.visibility = if(it) View.GONE else View.VISIBLE
+            }
         }
     }
 }

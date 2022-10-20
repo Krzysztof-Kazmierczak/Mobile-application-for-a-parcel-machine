@@ -3,13 +3,11 @@ package com.example.inzynierka.fragmenty.TakePack
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.inzynierka.R
 import com.example.inzynierka.data.Pack
@@ -70,7 +68,7 @@ class TakepackFragment : Fragment(){
             //Sprawdzamy czy lista nie jest pusta
             if(listMyPack.isNotEmpty()){
                 //Sprawdzamy połączenie internetowe
-                networkConnectioCheck()
+                observeInternetConnection()
                 //Jeżeli użytkownik ma paczki do odebrania "chowamy" komunikat o braku paczek
                 binding.TPBrakPaczek.visibility = View.INVISIBLE
                 //Pobieramy informacje o paczkach
@@ -81,10 +79,24 @@ class TakepackFragment : Fragment(){
                 })}
             else{
                 //Sprawdzamy połączenie internetowe
-                networkConnectioCheck()
+                observeInternetConnection()
             }
         })
     }
+    //Sprawdzanie połączenia z internetem
+    override fun onResume() {
+        super.onResume()
+        TakepackVm.checkInternetConnection(requireActivity().application)
+    }
+    //Sprawdzanie połączenia z internetem
+    private fun observeInternetConnection(){
+        TakepackVm.isConnectedToTheInternet.observe(viewLifecycleOwner){
+            it?.let{
+                binding.networkConnection.visibility = if(it) View.GONE else View.VISIBLE
+            }
+        }
+    }
+
     //Funkacja sprawdzająca połączenie internetowe i ewntualnie wyświetla komunikat o braku połączenia
     private fun networkConnectioCheck(){
         val connect =

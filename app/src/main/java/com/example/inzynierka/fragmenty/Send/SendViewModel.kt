@@ -2,13 +2,11 @@ package com.example.inzynierka.fragmenty.Send
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.example.inzynierka.aktywnosci.BaseViewModel
 import com.example.inzynierka.data.Pack
-import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 
-class SendViewModel : ViewModel() {
+class SendViewModel : BaseViewModel() {
 
-    private val repository = FirebaseRepository()
     var cloudResult = MutableLiveData<Pack>()
     var cloudResultBoxS = MutableLiveData<String>()
 

@@ -1,7 +1,6 @@
 package com.example.inzynierka.fragmenty.Send
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.inzynierka.R
-import com.example.inzynierka.data.Pack
 import com.example.inzynierka.databinding.SendFragmentBinding
 import com.example.inzynierka.fragmenty.potwierdzenie.ConfirmSend
 
@@ -35,7 +33,23 @@ class Send : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         PutPack()
+        //Sprawdzanie połączenia z internetem
+        observeInternetConnection()
     }
+    //Sprawdzanie połączenia z internetem
+    override fun onResume() {
+        super.onResume()
+        SendVm.checkInternetConnection(requireActivity().application)
+    }
+    //Sprawdzanie połączenia z internetem
+    private fun observeInternetConnection(){
+        SendVm.isConnectedToTheInternet.observe(viewLifecycleOwner){
+            it?.let{
+                binding.networkConnection.visibility = if(it) View.GONE else View.VISIBLE
+            }
+        }
+    }
+
     // Funkcja szukajaca wolnej skrytki do ktorej mozemy umiescic wysylaną paczkę
     private fun PutPack(){
         //Sprawdzenie czy użytkownik klikną przycisk "wyslij paczkę"
