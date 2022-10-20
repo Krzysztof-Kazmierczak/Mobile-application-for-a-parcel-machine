@@ -9,6 +9,15 @@
     android:padding="16dp"
     tools:context=".aktywnosci.RegistrationActivity">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:hint="@string/Network"
+        android:drawableEnd="@drawable/ic_baseline_signal_wifi_off_24"
+        android:drawablePadding="2dp"/>
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"

@@ -12,17 +12,11 @@ class PickupPackViewModel : ViewModel() {
 
     private val repository = FirebaseRepository()
     var cloudResult = MutableLiveData<Pack>()
-    var idPacksToUser = MutableLiveData<List<String>>()
     var userInfo = MutableLiveData<User>()
     var packInfo = MutableLiveData<Pack>()
     val endTimeBoxS = repository.getEndTimePacks()
     var endTimeBox = MutableLiveData<BoxS>()
 
-    //Pobranie informacji o paczkach użytkownika
-    fun infoUserPacks(UID: String): LiveData<List<String>> {
-        idPacksToUser = repository.packsToUser(UID) as MutableLiveData<List<String>>
-        return idPacksToUser
-    }
     //Pobranie informacji o danym Box`ie
     fun oneBoxInfo(name: String): LiveData<BoxS> {
         endTimeBox = repository.getOneBoxInfo(name) as MutableLiveData<BoxS>
@@ -71,9 +65,8 @@ class PickupPackViewModel : ViewModel() {
             }
         }
     }
-
+    //Funkcja zapisujaca informacje w paczce ze zostala wyjeta poniewaz minal czas na jej odebranie
     fun noteToPack(idPack:String){
         repository.notePack(idPack)
     }
-
 }
