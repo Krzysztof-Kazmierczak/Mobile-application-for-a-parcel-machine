@@ -114,6 +114,9 @@ class PickupPackFragment : Fragment() {
         PickupPackVm.isConnectedToTheInternet.observe(viewLifecycleOwner){
             it?.let{
                 binding.networkConnection.visibility = if(it) View.GONE else View.VISIBLE
+
+                //wyswietlamy komunikat ze brak paczek jezeli nie ma dostepu do internetu
+                binding.PUPBrakPaczek.visibility = if(it) View.GONE else View.VISIBLE
             }
         }
     }
@@ -194,17 +197,23 @@ class PickupPackFragment : Fragment() {
                             {
                                 boxAfterTime.add(boxInfo05)
                                 if (boxAfterTime.isNotEmpty()) {
+                                    //wyswietlamy komunikat ze brak paczek
                                     binding.PUPBrakPaczek.visibility = View.INVISIBLE
 
                                     adapter.setEndTimePacks(boxAfterTime)
                                 } else {
+                                    //wyswietlamy komunikat ze brak paczek
+                                    binding.PUPBrakPaczek.visibility = View.VISIBLE
                                 }
                             }else {
                                 if (boxAfterTime.isNotEmpty()) {
+                                    //wyswietlamy komunikat ze brak paczek
                                     binding.PUPBrakPaczek.visibility = View.INVISIBLE
 
                                     adapter.setEndTimePacks(boxAfterTime)
                                 } else {
+                                    //wyswietlamy komunikat ze brak paczek
+                                    binding.PUPBrakPaczek.visibility = View.VISIBLE
                                 }
                             }
         })})})})})

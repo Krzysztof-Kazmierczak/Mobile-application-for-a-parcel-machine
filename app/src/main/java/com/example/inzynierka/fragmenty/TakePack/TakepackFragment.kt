@@ -80,6 +80,8 @@ class TakepackFragment : Fragment(){
             else{
                 //Sprawdzamy połączenie internetowe
                 observeInternetConnection()
+                //wyswietlamy komunikat ze brak paczek
+                binding.TPBrakPaczek.visibility = View.VISIBLE
             }
         })
     }
