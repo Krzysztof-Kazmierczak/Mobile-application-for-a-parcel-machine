@@ -7,6 +7,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".aktywnosci.MainActivity">
 
+
+
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/takeFragment_Screen"
@@ -42,15 +44,12 @@
             android:id="@+id/networkConnection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="25dip"
-            android:foregroundGravity="center"
-            android:gravity="center"
-            android:justificationMode="none"
-            android:text="@string/Network"
-            android:textSize="25sp"
-            android:visibility="invisible"
-            tools:visibility="invisible" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:hint="@string/Network"
+            android:drawableEnd="@drawable/ic_baseline_signal_wifi_off_24"
+            android:drawablePadding="2dp"
+            android:visibility="gone"/>
 
 
     </FrameLayout>
