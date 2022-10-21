@@ -45,6 +45,11 @@ class MainActivity : AppCompatActivity() {
         if (checkAndRequestPermissions()) {
         }
 
+        userDataMainActivity = repository.getUserData() as MutableLiveData<User>
+        userDataMainActivity.observe(this) { pack ->
+            pack.access?.let { menuBar(it) }
+        }
+
         replaceFragment(HomeFragment())
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
@@ -78,8 +83,12 @@ class MainActivity : AppCompatActivity() {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_layout, fragment)
         fragmentTransaction.commit()
-        userDataMainActivity = repository.getUserData() as MutableLiveData<User>
-        if (userDataMainActivity.value?.access?.toInt() == 1)
+
+    }
+
+    //Wyswietlanie odpowiedniego menu bottom Bar (dla kuriera i zwyklego uzytkownika)
+    private fun menuBar(access:Int){
+        if (access == 1)
         {
             binding.bottomNavigationViewDeliwer.visibility = View.VISIBLE
             binding.bottomNavigationView.visibility = View.INVISIBLE
