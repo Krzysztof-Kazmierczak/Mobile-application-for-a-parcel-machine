@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             pack.access?.let { menuBar(it) }
         }
 
-        replaceFragment(HomeFragment())
+        replaceFragment(TakepackFragment())
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> replaceFragment(HomeFragment())

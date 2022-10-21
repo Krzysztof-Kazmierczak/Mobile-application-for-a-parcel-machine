@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
-        android:title="@string/Home"
-        android:id="@+id/home"
-        android:icon="@drawable/ic_home_white_24dp"
-        />
+        android:title="@string/Moje_Paczki"
+        android:id="@+id/takePack"
+        android:icon="@drawable/ic_list"/>
 
     <item
         android:title="@string/Wyjmij_Paczke"
@@ -12,18 +12,17 @@
         android:icon="@drawable/ic_stat_notification"/>
 
     <item
-        android:title="@string/Moje_Paczki"
-        android:id="@+id/takePack"
-        android:icon="@drawable/ic_list"
-        />
-    <item
         android:title="@string/Nadaj_Paczke"
         android:id="@+id/sendPack"
         android:icon="@drawable/ic_action_name"/>
 
     <item
+        android:title="@string/Setting"
+        android:id="@+id/home"
+        android:icon="@drawable/ic_baseline_settings_24"/>
+
+    <item
         android:title="@string/Wyloguj"
         android:id="@+id/logout"
         android:icon="@drawable/ic_logout"/>
-
 </menu>

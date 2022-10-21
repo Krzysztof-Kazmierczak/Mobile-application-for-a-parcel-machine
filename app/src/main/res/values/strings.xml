@@ -41,6 +41,7 @@
     <string name="CPUF_Paczka_Po_Terminie">Paczka po terminie została wyjęta?</string>
     <string name="CPUF_Tak_Zakoncz">Tak, zakończ wyjmowanie paczki</string>
     <string name="CPUF_Nie_Otworz">Nie, otwórz skrzynkę ponownie</string>
-    <string name="Reg_Fragment_Wrong_Phone_Number">"Please enter a valid phone number"</string>
+    <string name="Reg_Fragment_Wrong_Phone_Number">Please enter a valid phone number</string>
+    <string name="Setting">Ustawienia</string>
 
 </resources>
