@@ -1,47 +1,47 @@
 package com.example.inzynierka.fragmenty.settings
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.inzynierka.R
-import com.example.inzynierka.aktywnosci.RegistrationActivity
-import com.example.inzynierka.databinding.HomeFragmentBinding
-import com.example.inzynierka.fragmenty.Send.Send
-import com.example.inzynierka.fragmenty.TakePack.TakepackFragment
-import com.example.inzynierka.fragmenty.kurier.PickupPackFragment
+import com.example.inzynierka.databinding.SettingsFragmentBinding
 import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 
 class SettingsFragment : Fragment() {
 
     private val settingsVm by viewModels<SettingsViewModel>()
-    private val fbAuth = FirebaseAuth.getInstance()
     private val repository = FirebaseRepository()
-    private var _binding: HomeFragmentBinding? = null
+    private var _binding: SettingsFragmentBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = HomeFragmentBinding.inflate(layoutInflater, container, false)
+        _binding = SettingsFragmentBinding.inflate(layoutInflater, container, false)
+
+
+
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
+        //Wyświetlanie jaki język ma być używany w aplikacji
+        val languages = resources.getStringArray(R.array.languageSelection)
+        val arrayAdapter = ArrayAdapter(requireContext(),R.layout.dropdown_item,languages)
+        binding.languageSelection.setAdapter(arrayAdapter)
+
+        //Sprawdzanie połączenia internetowego
         settingsVm.checkInternetConnection(requireActivity().application)
     }
 

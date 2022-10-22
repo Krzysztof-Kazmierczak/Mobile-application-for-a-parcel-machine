@@ -43,5 +43,15 @@
     <string name="CPUF_Nie_Otworz">Nie, otwórz skrzynkę ponownie</string>
     <string name="Reg_Fragment_Wrong_Phone_Number">Please enter a valid phone number</string>
     <string name="Setting">Ustawienia</string>
+    <string name="DarkMode">Tryb Ciemny</string>
+    <string name="Notyfication">Powiadomienia</string>
+    <string name="SMS">Powiadomienia SMS</string>
+    <string name="polski">Polski</string>
+    <string name="languageSelection">Wybór języka</string>
+    <string-array name="languageSelection">
+        <item>Polski</item>
+        <item>English</item>
+
+    </string-array>
 
 </resources>

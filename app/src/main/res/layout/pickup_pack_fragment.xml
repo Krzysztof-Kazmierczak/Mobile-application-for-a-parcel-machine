@@ -40,6 +40,6 @@ tools:context=".fragmenty.kurier.PickupPackFragment">
         android:layout_marginTop="10dp"
         android:hint="@string/Network"
         android:drawableEnd="@drawable/ic_baseline_signal_wifi_off_24"
-        android:drawablePadding="2dp"
+        android:drawablePadding="20dp"
         android:visibility="gone"/>
 </FrameLayout>
