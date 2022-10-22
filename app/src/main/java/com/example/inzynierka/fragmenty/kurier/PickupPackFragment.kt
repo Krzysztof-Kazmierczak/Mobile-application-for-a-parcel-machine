@@ -19,8 +19,8 @@ import com.example.inzynierka.databinding.PickupPackFragmentBinding
 import com.example.inzynierka.firebase.NotificationData
 import com.example.inzynierka.firebase.PushNotification
 import com.example.inzynierka.firebase.RetrofitInstance
-import com.example.inzynierka.fragmenty.home.HomeFragment
-import com.example.inzynierka.fragmenty.home.PickupPacksAdapter
+import com.example.inzynierka.fragmenty.settings.SettingsFragment
+import com.example.inzynierka.fragmenty.settings.PickupPacksAdapter
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
@@ -96,7 +96,7 @@ class PickupPackFragment : Fragment() {
                         notyfiactionFunctionSend(packID,boxID,userDataInfo.token.toString())
 
                         val fragmentTransaction = fragmentManager?.beginTransaction()
-                        fragmentTransaction?.replace(R.id.frame_layout, HomeFragment())
+                        fragmentTransaction?.replace(R.id.frame_layout, SettingsFragment())
                         fragmentTransaction?.commit()
                     })
                 })

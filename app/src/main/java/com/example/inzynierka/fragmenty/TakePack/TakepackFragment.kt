@@ -1,19 +1,27 @@
 package com.example.inzynierka.fragmenty.TakePack
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.NonNull
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.inzynierka.R
 import com.example.inzynierka.data.Pack
 import com.example.inzynierka.databinding.TakeFragmentBinding
-import com.example.inzynierka.fragmenty.home.MyPacksAdapter
+import com.example.inzynierka.fragmenty.settings.MyPacksAdapter
 import com.example.inzynierka.fragmenty.potwierdzenie.ConfirmTake
+import com.example.inzynierka.fragmenty.repository.FirebaseRepository
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.messaging.FirebaseMessaging
 
 var boxIdTF = String()
 var numerPaczkiGLTF = String()
@@ -23,9 +31,7 @@ class TakepackFragment : Fragment(){
     private var _binding: TakeFragmentBinding? = null
     private val binding get() = _binding!!
     private val TakepackVm by viewModels<TakepackViewModel>()
-
     private lateinit var adapter: MyPacksAdapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +65,6 @@ class TakepackFragment : Fragment(){
             }
             binding.recyclerViewTakepack.adapter = adapter
     }
-
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -98,7 +103,6 @@ class TakepackFragment : Fragment(){
             }
         }
     }
-
     //Funkacja sprawdzająca połączenie internetowe i ewntualnie wyświetla komunikat o braku połączenia
     private fun networkConnectioCheck(){
         val connect =

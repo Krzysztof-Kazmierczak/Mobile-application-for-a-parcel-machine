@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -18,10 +19,13 @@ import com.example.inzynierka.data.User
 import com.example.inzynierka.databinding.ActivityMainBinding
 import com.example.inzynierka.fragmenty.Send.Send
 import com.example.inzynierka.fragmenty.TakePack.TakepackFragment
-import com.example.inzynierka.fragmenty.home.HomeFragment
+import com.example.inzynierka.fragmenty.settings.SettingsFragment
 import com.example.inzynierka.fragmenty.kurier.PickupPackFragment
 import com.example.inzynierka.fragmenty.repository.FirebaseRepository
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.messaging.FirebaseMessaging
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -36,6 +40,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //Aktualizajca tokenu uzytkownika w bazie danych
+        pushNewToken()
 
         intent.extras?.getString("title")?.let { title ->
             Log.i("MyTag", "FROM notification $title")
@@ -53,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         replaceFragment(TakepackFragment())
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.home -> replaceFragment(HomeFragment())
+                R.id.home -> replaceFragment(SettingsFragment())
                 R.id.takePack -> replaceFragment(TakepackFragment())
                 R.id.sendPack -> replaceFragment(Send())
                 R.id.logout -> logout()
@@ -65,7 +71,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigationViewDeliwer.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.home -> replaceFragment(HomeFragment())
+                R.id.home -> replaceFragment(SettingsFragment())
                 R.id.pickup -> replaceFragment(PickupPackFragment())
                 R.id.takePack -> replaceFragment(TakepackFragment())
                 R.id.sendPack -> replaceFragment(Send())
@@ -98,7 +104,27 @@ class MainActivity : AppCompatActivity() {
             binding.bottomNavigationView.visibility = View.VISIBLE
         }
     }
+    //Wpisanie do bazy danych zaktualizowanego tokenu uzytkownika
+    private fun pushNewToken(){
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener(object : OnCompleteListener<String?> {
+                override fun onComplete(@NonNull task: Task<String?>) {
+                    if (!task.isSuccessful()) {
+                        println("Fetching FCM registration token failed")
+                        return
+                    }
 
+                    // Get new FCM registration token
+                    val token: String? = task.getResult()
+
+                    // Log and toast
+                    token?.let { Log.d("moj token ", it) }
+
+                    repository.pushToken(token.toString())
+                }
+            })
+    }
+    //Wylogowanie uzytkownika
     private fun logout(){
         fbAuth.signOut()
         val AktywnoscPierwszeOkno: Intent = Intent(applicationContext, RegistrationActivity::class.java)

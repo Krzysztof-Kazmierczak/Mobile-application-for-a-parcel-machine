@@ -1,4 +1,4 @@
-package com.example.inzynierka.fragmenty.home
+package com.example.inzynierka.fragmenty.settings
 
 import android.view.LayoutInflater
 import android.view.View

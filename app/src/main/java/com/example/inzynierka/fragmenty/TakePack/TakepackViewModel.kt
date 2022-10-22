@@ -4,12 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.inzynierka.aktywnosci.BaseViewModel
 import com.example.inzynierka.data.Pack
+import com.example.inzynierka.data.User
 
 class TakepackViewModel : BaseViewModel() {
 
     var cloudResult = MutableLiveData<Pack>()
     var mypacks = MutableLiveData<List<Pack>>()
     val idPacksToMe = repository.packsToMe()
+    var userData = MutableLiveData<User>()
 
     //Zaktualizowanie listy paczek użytkownika
     fun packData(mojePaczki: List<String>){
@@ -27,5 +29,12 @@ class TakepackViewModel : BaseViewModel() {
                 repository.openBox(it1, it2)
             }
         }
+    }
+    //Pobranie informacji o zalogowanym uzytkowniku
+    fun getUserData(): LiveData<User>
+    {
+        userData = repository.getUserData() as MutableLiveData<User>
+
+        return userData
     }
 }
