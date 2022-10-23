@@ -103,22 +103,6 @@ class TakepackFragment : Fragment(){
             }
         }
     }
-    //Funkacja sprawdzająca połączenie internetowe i ewntualnie wyświetla komunikat o braku połączenia
-    private fun networkConnectioCheck(){
-        val connect =
-            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        var networkInfo = connect.activeNetworkInfo
-        //Jeżeli mamy połaczenie internetowe "chowamy" napis o braku połączenia
-        if(networkInfo != null && networkInfo.isConnected)
-        {
-            binding.networkConnection.visibility = View.INVISIBLE
-            binding.TPBrakPaczek.visibility = View.VISIBLE
-        }else
-        //Jeżeli nie mamy połączenia wyświetlamy komunikat że nie ma połączenia z internetem
-        {
-            binding.networkConnection.visibility = View.VISIBLE
-        }
-    }
     //Wpisujemy w zmiennej globalnej id boxu
     fun getIdBox(): String {
         return boxIdTF

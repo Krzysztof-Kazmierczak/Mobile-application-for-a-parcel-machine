@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.CompoundButton
+import android.widget.Switch
 import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,6 +17,7 @@ import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
+
 
 class SettingsFragment : Fragment() {
 
@@ -50,7 +53,24 @@ class SettingsFragment : Fragment() {
 
         pushNewToken()
         observeInternetConnection()
+        offNotyfication()
     }
+    //Funkcja wyłączająca wysyłanie notyfikacji
+    private fun offNotyfication(){
+
+        val switchNotyfication = binding.switchNotyfication
+        switchNotyfication.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                settingsVm.notyficationPermit(1)
+            } else {
+                settingsVm.notyficationPermit(0)
+            }
+        }
+    }
+
+
+
+
     //Sprawdzanie połączenia z internetem
     private fun observeInternetConnection(){
         settingsVm.isConnectedToTheInternet.observe(viewLifecycleOwner){

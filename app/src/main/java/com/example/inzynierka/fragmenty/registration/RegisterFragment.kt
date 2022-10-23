@@ -91,6 +91,7 @@ class RegisterFragment : BaseFragment() {
                         phoneNumber,
                         0,
                         0,
+                        1,
                         arrayListOf(),
                     )
                     regVm.createNewUser(user)

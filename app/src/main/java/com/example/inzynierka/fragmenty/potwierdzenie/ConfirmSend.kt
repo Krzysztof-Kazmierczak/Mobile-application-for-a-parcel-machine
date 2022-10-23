@@ -116,9 +116,11 @@ class ConfirmSend : Fragment() {
                     var paczkiUser = user.paczki
                     paczkiUser?.add(numberIDPack.toString())
                     ConfirmSendVm.editUserData(numerUID, paczkiUser!!)
-                    //Wyświetlenie notyfikacji na tel użytkownika (odbioryc paczki)
-                    notyfiactionFunctionSend(numberIDPack,numberIDBox,user.token.toString(),wyswietlanieDaty)
-
+                    //Sprawdzenie czy użytkownik chce otrzymywać notyfikacje
+                    if (user.permitNotyfication == 1){
+                        //Wyświetlenie notyfikacji na tel użytkownika (odbioryc paczki)
+                        notyfiactionFunctionSend(numberIDPack,numberIDBox,user.token.toString(),wyswietlanieDaty)
+                    }
                     val fragmentTransaction = fragmentManager?.beginTransaction()
                     fragmentTransaction?.replace(R.id.frame_layout, Send())
                     fragmentTransaction?.commit()

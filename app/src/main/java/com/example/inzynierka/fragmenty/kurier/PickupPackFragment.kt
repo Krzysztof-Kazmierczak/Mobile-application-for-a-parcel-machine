@@ -92,9 +92,11 @@ class PickupPackFragment : Fragment() {
                         PickupPackVm.closeBox("box", boxID)
                         //Wywołanie funkcji wysyłającej SMS`a
                         sendSMS(userDataInfo.phone.toString(),packID,boxID)
-                        //Wywołanie Funkcji wyświetlającą notyfikację na tel odbiorcy paczki
-                        notyfiactionFunctionSend(packID,boxID,userDataInfo.token.toString())
-
+                        //Sprawdzenie czy użytkownik chce otrzymywać notyfikacje
+                        if (userDataInfo.permitNotyfication == 1){
+                            //Wywołanie Funkcji wyświetlającą notyfikację na tel odbiorcy paczki
+                            notyfiactionFunctionSend(packID,boxID,userDataInfo.token.toString())
+                        }
                         val fragmentTransaction = fragmentManager?.beginTransaction()
                         fragmentTransaction?.replace(R.id.frame_layout, SettingsFragment())
                         fragmentTransaction?.commit()

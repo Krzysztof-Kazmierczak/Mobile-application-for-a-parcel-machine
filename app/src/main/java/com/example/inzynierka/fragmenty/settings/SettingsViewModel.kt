@@ -8,4 +8,10 @@ import com.example.inzynierka.data.User
 
 class SettingsViewModel : BaseViewModel() {
     var pack = MutableLiveData<Pack>()
+
+
+    //Funkcja zmieniajaca zezwolenie uzytkownika o wysyłanie do niego notyfikacji
+    fun notyficationPermit(permit: Int){
+        repository.notyficationPermit(permit)
+    }
 }

@@ -9,5 +9,6 @@ data class User(
                 val phone: String? = null,
                 val check: Int? = null,
                 val access: Int? = null,
+                val permitNotyfication: Int? = null,
                 val paczki: ArrayList<String>? = null,
                 val token: String? = null)

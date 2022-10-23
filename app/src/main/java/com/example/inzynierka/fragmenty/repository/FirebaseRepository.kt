@@ -618,4 +618,18 @@ class FirebaseRepository {
                 Log.d(REPO_DEBUG, it.message.toString())
             }
     }
+
+    fun notyficationPermit(permit: Int) {
+        val uid = auth.currentUser?.uid
+
+        cloud.collection("user")
+            .document(uid!!)
+            .update("permitNotyfication", permit)
+            .addOnSuccessListener {
+                Log.d("Zaktualizowano zezwolenie ", permit.toString())
+            }
+            .addOnFailureListener {
+                Log.d(REPO_DEBUG, it.message.toString())
+            }
+    }
 }
