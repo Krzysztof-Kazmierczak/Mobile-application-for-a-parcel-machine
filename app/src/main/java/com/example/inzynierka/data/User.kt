@@ -10,5 +10,6 @@ data class User(
                 val check: Int? = null,
                 val access: Int? = null,
                 val permitNotyfication: Int? = null,
+                val permitSMS: Int? = null,
                 val paczki: ArrayList<String>? = null,
                 val token: String? = null)

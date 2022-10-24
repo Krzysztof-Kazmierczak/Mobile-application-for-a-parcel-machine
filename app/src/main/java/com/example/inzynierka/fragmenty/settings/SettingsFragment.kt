@@ -11,7 +11,9 @@ import android.widget.Switch
 import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import com.example.inzynierka.R
+import com.example.inzynierka.data.User
 import com.example.inzynierka.databinding.SettingsFragmentBinding
 import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 import com.google.android.gms.tasks.OnCompleteListener
@@ -23,6 +25,7 @@ class SettingsFragment : Fragment() {
 
     private val settingsVm by viewModels<SettingsViewModel>()
     private val repository = FirebaseRepository()
+    var userSettings = MutableLiveData<User>()
     private var _binding: SettingsFragmentBinding? = null
     private val binding get() = _binding!!
 
@@ -53,8 +56,26 @@ class SettingsFragment : Fragment() {
 
         pushNewToken()
         observeInternetConnection()
+        setUserNotyficatio()
         offNotyfication()
+        offSMS()
     }
+    //Sprawdzenie i wyswietlenie wyborow uzytkownika todo sprawdzic czy to jest git n
+    private fun setUserNotyficatio(){
+        settingsVm.userData.observe(viewLifecycleOwner, { user ->
+            if(user.permitNotyfication == 1){
+                binding.switchNotyfication.isChecked = true
+            }else{
+                binding.switchNotyfication.isChecked = false
+            }
+            if(user.permitSMS == 1){
+                binding.switchSMS.isChecked = true
+            }else{
+                binding.switchSMS.isChecked = false
+            }
+        })
+    }
+
     //Funkcja wyłączająca wysyłanie notyfikacji
     private fun offNotyfication(){
 
@@ -67,10 +88,17 @@ class SettingsFragment : Fragment() {
             }
         }
     }
-
-
-
-
+    //Funkcja wyłączająca wysyłanie notyfikacji
+    private fun offSMS(){
+        val switchSMS = binding.switchSMS
+        switchSMS.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                settingsVm.smsPermit(1)
+            } else {
+                settingsVm.smsPermit(0)
+            }
+        }
+    }
     //Sprawdzanie połączenia z internetem
     private fun observeInternetConnection(){
         settingsVm.isConnectedToTheInternet.observe(viewLifecycleOwner){

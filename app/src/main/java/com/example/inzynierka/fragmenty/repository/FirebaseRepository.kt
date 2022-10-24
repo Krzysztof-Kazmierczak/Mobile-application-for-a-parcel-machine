@@ -619,14 +619,27 @@ class FirebaseRepository {
             }
     }
 
-    fun notyficationPermit(permit: Int) {
+    fun notyficationPermit(permitNotyfication: Int) {
         val uid = auth.currentUser?.uid
 
         cloud.collection("user")
             .document(uid!!)
-            .update("permitNotyfication", permit)
+            .update("permitNotyfication", permitNotyfication)
             .addOnSuccessListener {
-                Log.d("Zaktualizowano zezwolenie ", permit.toString())
+                Log.d("Zaktualizowano zezwolenie ", permitNotyfication.toString())
+            }
+            .addOnFailureListener {
+                Log.d(REPO_DEBUG, it.message.toString())
+            }
+    }
+    fun smsPermit(permitSMS: Int) {
+        val uid = auth.currentUser?.uid
+
+        cloud.collection("user")
+            .document(uid!!)
+            .update("permitSMS", permitSMS)
+            .addOnSuccessListener {
+                Log.d("Zaktualizowano zezwolenie ", permitSMS.toString())
             }
             .addOnFailureListener {
                 Log.d(REPO_DEBUG, it.message.toString())

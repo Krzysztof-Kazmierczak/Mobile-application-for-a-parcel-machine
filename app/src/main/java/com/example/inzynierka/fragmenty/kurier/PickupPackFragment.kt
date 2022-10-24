@@ -90,12 +90,15 @@ class PickupPackFragment : Fragment() {
                         PickupPackVm.upDataPack(packID)
                         //"Zamkniecie" box
                         PickupPackVm.closeBox("box", boxID)
-                        //Wywołanie funkcji wysyłającej SMS`a
-                        sendSMS(userDataInfo.phone.toString(),packID,boxID)
                         //Sprawdzenie czy użytkownik chce otrzymywać notyfikacje
                         if (userDataInfo.permitNotyfication == 1){
                             //Wywołanie Funkcji wyświetlającą notyfikację na tel odbiorcy paczki
                             notyfiactionFunctionSend(packID,boxID,userDataInfo.token.toString())
+                        }
+                        //Sprawdzenie czy użytkownik chce otrzymywać SMS
+                        if (userDataInfo.permitSMS == 1){
+                            //Wywołanie funkcji wysyłającej SMS`a
+                            sendSMS(userDataInfo.phone.toString(),packID,boxID)
                         }
                         val fragmentTransaction = fragmentManager?.beginTransaction()
                         fragmentTransaction?.replace(R.id.frame_layout, SettingsFragment())

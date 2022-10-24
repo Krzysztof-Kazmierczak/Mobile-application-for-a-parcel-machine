@@ -30,11 +30,4 @@ class TakepackViewModel : BaseViewModel() {
             }
         }
     }
-    //Pobranie informacji o zalogowanym uzytkowniku
-    fun getUserData(): LiveData<User>
-    {
-        userData = repository.getUserData() as MutableLiveData<User>
-
-        return userData
-    }
 }

@@ -106,9 +106,6 @@ class ConfirmSend : Fragment() {
                 val numberIDBox = packListData.Id_box.toString().trim()
                 val numerUID = packListData.uid.toString().trim()
 
-                //Wysłanie SMS że paczka została do nas wysłana
-                sendSMS(numberToSendInfo,numberIDPack,numberIDBox,wyswietlanieDaty)
-
                 //Pobranie informacji o użytkowniku do którego wysłana jest paczka
                 ConfirmSendVm.getUser(numerUID)
                 ConfirmSendVm.infoUser.observe(viewLifecycleOwner, { user ->
@@ -120,6 +117,11 @@ class ConfirmSend : Fragment() {
                     if (user.permitNotyfication == 1){
                         //Wyświetlenie notyfikacji na tel użytkownika (odbioryc paczki)
                         notyfiactionFunctionSend(numberIDPack,numberIDBox,user.token.toString(),wyswietlanieDaty)
+                    }
+                    //Sprawdzenie czy użytkownik chce otrzymywać SMS
+                    if (user.permitSMS == 1){
+                        //Wysłanie SMS że paczka została do nas wysłana
+                        sendSMS(numberToSendInfo,numberIDPack,numberIDBox,wyswietlanieDaty)
                     }
                     val fragmentTransaction = fragmentManager?.beginTransaction()
                     fragmentTransaction?.replace(R.id.frame_layout, Send())

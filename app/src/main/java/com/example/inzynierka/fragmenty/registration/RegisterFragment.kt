@@ -92,6 +92,7 @@ class RegisterFragment : BaseFragment() {
                         0,
                         0,
                         1,
+                        1,
                         arrayListOf(),
                     )
                     regVm.createNewUser(user)
