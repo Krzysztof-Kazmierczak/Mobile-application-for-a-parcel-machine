@@ -618,7 +618,7 @@ class FirebaseRepository {
                 Log.d(REPO_DEBUG, it.message.toString())
             }
     }
-
+    //Funkcja zmieniajaca w bazie danych zezwolenie uzytkownika o notyfikacjach
     fun notyficationPermit(permitNotyfication: Int) {
         val uid = auth.currentUser?.uid
 
@@ -632,6 +632,7 @@ class FirebaseRepository {
                 Log.d(REPO_DEBUG, it.message.toString())
             }
     }
+    //Funkcja zmieniajaca w bazie danych zezwolenie uzytkownika o SMS`ach
     fun smsPermit(permitSMS: Int) {
         val uid = auth.currentUser?.uid
 
@@ -640,6 +641,20 @@ class FirebaseRepository {
             .update("permitSMS", permitSMS)
             .addOnSuccessListener {
                 Log.d("Zaktualizowano zezwolenie ", permitSMS.toString())
+            }
+            .addOnFailureListener {
+                Log.d(REPO_DEBUG, it.message.toString())
+            }
+    }
+    //Funkcja zmieniajaca w bazie danych ustawienie uzytkownika o wygladzie aplikacji
+    fun darkMode(setting: Int) {
+        val uid = auth.currentUser?.uid
+
+        cloud.collection("user")
+            .document(uid!!)
+            .update("darkMode", setting)
+            .addOnSuccessListener {
+                Log.d("Zaktualizowano zezwolenie ", setting.toString())
             }
             .addOnFailureListener {
                 Log.d(REPO_DEBUG, it.message.toString())

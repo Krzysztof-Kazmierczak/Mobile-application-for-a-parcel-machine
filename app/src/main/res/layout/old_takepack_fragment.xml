@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/takeFragment_Screen"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/main_page_color">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/networkConnection"

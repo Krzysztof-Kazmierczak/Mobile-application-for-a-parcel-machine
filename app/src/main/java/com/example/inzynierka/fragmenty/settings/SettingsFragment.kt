@@ -9,12 +9,14 @@ import android.widget.ArrayAdapter
 import android.widget.CompoundButton
 import android.widget.Switch
 import androidx.annotation.NonNull
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import com.example.inzynierka.R
 import com.example.inzynierka.data.User
 import com.example.inzynierka.databinding.SettingsFragmentBinding
+import com.example.inzynierka.fragmenty.Send.Send
 import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -34,9 +36,6 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = SettingsFragmentBinding.inflate(layoutInflater, container, false)
-
-
-
         return binding.root
     }
 
@@ -59,6 +58,22 @@ class SettingsFragment : Fragment() {
         setUserNotyficatio()
         offNotyfication()
         offSMS()
+        darkMode()
+    }
+    //Funkcja włącza i wyłacza darkmod + zapis w bazie danych todo sprawdzic czy to jest git...czemu samo przeskakuje do innego fragmentu n
+    private fun darkMode(){
+        val switchDarkMode = binding.switchDarkMode
+        switchDarkMode.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                settingsVm.darkMode(1)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+            } else {
+                settingsVm.darkMode(0)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+            }
+        }
     }
     //Sprawdzenie i wyswietlenie wyborow uzytkownika todo sprawdzic czy to jest git n
     private fun setUserNotyficatio(){
@@ -73,9 +88,13 @@ class SettingsFragment : Fragment() {
             }else{
                 binding.switchSMS.isChecked = false
             }
+            if(user.darkMode == 1){
+                binding.switchDarkMode.isChecked = true
+            }else{
+                binding.switchDarkMode.isChecked = false
+            }
         })
     }
-
     //Funkcja wyłączająca wysyłanie notyfikacji
     private fun offNotyfication(){
 

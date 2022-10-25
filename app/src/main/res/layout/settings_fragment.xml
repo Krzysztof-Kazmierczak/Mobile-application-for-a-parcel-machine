@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginVertical="10dp"
-    android:layout_marginHorizontal="50dp"
-    android:background="#FFFFFF">
+    android:layout_marginHorizontal="50dp">
 
     <TextView
         android:id="@+id/networkConnection"
@@ -57,6 +56,18 @@
             app:layout_column="0"
             android:paddingVertical="15dp"
             />
+
+        <TextView
+            android:id="@+id/textViewNotyfication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Notyfication"
+            android:textStyle="bold"
+            android:drawableStart="@drawable/ic_baseline_notifications_24"
+            app:layout_row="1"
+            app:layout_column="0"
+            android:paddingVertical="15dp"
+            />
         <Switch
             android:id="@+id/switchDarkMode"
             android:layout_width="wrap_content"
@@ -64,17 +75,7 @@
             app:layout_row="0"
             app:layout_column="2"
            />
-        <TextView
-            android:id="@+id/textViewNotyfication"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Notyfication"
-            android:textStyle="bold"
-            android:drawableStart="@drawable/ic_notifications_black_24dp"
-            app:layout_row="1"
-            app:layout_column="0"
-            android:paddingVertical="15dp"
-            />
+
         <Switch
             android:id="@+id/switchNotyfication"
             android:layout_width="wrap_content"

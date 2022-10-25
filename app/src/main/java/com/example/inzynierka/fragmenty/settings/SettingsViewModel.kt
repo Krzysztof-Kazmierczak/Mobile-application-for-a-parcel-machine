@@ -18,4 +18,8 @@ class SettingsViewModel : BaseViewModel() {
     fun smsPermit(permit: Int){
         repository.smsPermit(permit)
     }
+    //Funkcja zmieniajaca ustawienie uzytkownika o wygladzie aplikacji
+    fun darkMode(setting: Int){
+        repository.darkMode(setting)
+    }
 }
