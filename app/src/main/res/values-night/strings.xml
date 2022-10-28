@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="todo">TODO</string>
-    <string name="app_name">Automatyczna Skrytka</string>
-    <string name="Logowanie">LOGOWANIE</string>
-    <string name="Rejestracja">Stwórz konto</string>
-    <string name="Login">LOGIN</string>
-    <string name="Home">Home</string>
-    <string name="Wyjmij_Paczke">Wyjmij Paczkę</string>
-    <string name="Hasło">HASŁO</string>
-    <string name="Zarejestruj">Zarejestruj mnie!</string>
-    <string name="W_Maila">Wpisz e-mail</string>
-    <string name="W_Haslo">Wpisz hasło</string>
-    <string name="W_Tel">Wpisz numer telefonu</string>
-    <string name="Zaloguj">Zaloguj się</string>
-    <string name="PWH_Haslo">Powtórz hasło</string>
-    <string name="Wyloguj">Wyloguj się</string>
-    <string name="Odbierz_Paczke">Odbierz paczkę</string>
-    <string name="Moje_Paczki">Moje paczki</string>
-    <string name="Nadaj_Paczke">Nadaj paczkę</string>
-    <string name="Numer_Paczki">Wpisz numer paczki</string>
-    <string name="Umiesc_Paczke">Umieść paczkę</string>
-    <string name="CSP_Umiesciles_paczke">Paczka została umieszczona w skrzynce?</string>
-    <string name="CSP_Tak_Zakoncz">Tak, zakończ umieszczanie paczki</string>
-    <string name="CSP_Nie_Otworz">Nie, otwórz skrzynkę ponownie</string>
-    <string name="CTP_Odebrales_paczke">Paczka została odebrana ze skrzynki?</string>
-    <string name="CTP_Tak_Zakoncz">Tak, zakończ odbieranie paczki</string>
-    <string name="CTP_Nie_Otworz">Nie, otwórz skrzynkę ponownie</string>
-    <string name="CzyNaPewno">Czy na pewno chcesz teraz otworzyć swoją skrytkę</string>
-    <string name="TakChce">Tak, otwórz moją skrytkę</string>
-    <string name="MP_packID">ID paczki</string>
-    <string name="MP_boxID">Numer skrytki</string>
-    <string name="MP_Rozmiar">Rozmiar paczki</string>
-    <string name="MP_Odbierz_Paczke">Odbierz paczkę</string>
-    <string name="MP_pickupTime"><b>Czas odbioru</b></string>
-    <string name="Network"><b>Brak połączenia z internetem</b></string>
-    <string name="TP_BrakPaczek">Nie masz żadnych paczek do odebrania</string>
-    <string name="MP_wyciagnijPaczke">Wyciągnij Paczkę</string>
-    <string name="PUP_BrakPaczek">Nie masz żadnych paczek do wyciągnięcia</string>
+    <string name="todo" translatable="false">TODO</string>
+    <string name="app_name" translatable="false">Automatyczna Skrytka</string>
+    <string name="Logowanie" translatable="false">LOGOWANIE</string>
+    <string name="Rejestracja" translatable="false">Stwórz konto</string>
+    <string name="Login" translatable="false">LOGIN</string>
+    <string name="Home" translatable="false">Home</string>
+    <string name="Wyjmij_Paczke" translatable="false">Wyjmij Paczkę</string>
+    <string name="Hasło" translatable="false">HASŁO</string>
+    <string name="Zarejestruj" translatable="false">Zarejestruj mnie!</string>
+    <string name="W_Maila" translatable="false">Wpisz e-mail</string>
+    <string name="W_Haslo" translatable="false">Wpisz hasło</string>
+    <string name="W_Tel" translatable="false">Wpisz numer telefonu</string>
+    <string name="Zaloguj" translatable="false">Zaloguj się</string>
+    <string name="PWH_Haslo" translatable="false">Powtórz hasło</string>
+    <string name="Wyloguj" translatable="false">Wyloguj się</string>
+    <string name="Odbierz_Paczke" translatable="false">Odbierz paczkę</string>
+    <string name="Moje_Paczki" translatable="false">Moje paczki</string>
+    <string name="Nadaj_Paczke" translatable="false">Nadaj paczkę</string>
+    <string name="Numer_Paczki" translatable="false">Wpisz numer paczki</string>
+    <string name="Umiesc_Paczke" translatable="false">Umieść paczkę</string>
+    <string name="CSP_Umiesciles_paczke" translatable="false">Paczka została umieszczona w skrzynce?</string>
+    <string name="CSP_Tak_Zakoncz" translatable="false">Tak, zakończ umieszczanie paczki</string>
+    <string name="CSP_Nie_Otworz" translatable="false">Nie, otwórz skrzynkę ponownie</string>
+    <string name="CTP_Odebrales_paczke" translatable="false">Paczka została odebrana ze skrzynki?</string>
+    <string name="CTP_Tak_Zakoncz" translatable="false">Tak, zakończ odbieranie paczki</string>
+    <string name="CTP_Nie_Otworz" translatable="false">Nie, otwórz skrzynkę ponownie</string>
+    <string name="CzyNaPewno" translatable="false">Czy na pewno chcesz teraz otworzyć swoją skrytkę</string>
+    <string name="TakChce" translatable="false">Tak, otwórz moją skrytkę</string>
+    <string name="MP_packID" translatable="false">ID paczki</string>
+    <string name="MP_boxID" translatable="false">Numer skrytki</string>
+    <string name="MP_Rozmiar" translatable="false">Rozmiar paczki</string>
+    <string name="MP_Odbierz_Paczke" translatable="false">Odbierz paczkę</string>
+    <string name="MP_pickupTime" translatable="false"><b>Czas odbioru</b></string>
+    <string name="Network" translatable="false"><b>Brak połączenia z internetem</b></string>
+    <string name="TP_BrakPaczek" translatable="false">Nie masz żadnych paczek do odebrania</string>
+    <string name="MP_wyciagnijPaczke" translatable="false">Wyciągnij Paczkę</string>
+    <string name="PUP_BrakPaczek" translatable="false">Nie masz żadnych paczek do wyciągnięcia</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="Po_terminie">Paczki po terminie</string>
-    <string name="CPUF_Paczka_Po_Terminie">Paczka po terminie została wyjęta?</string>
-    <string name="CPUF_Tak_Zakoncz">Tak, zakończ wyjmowanie paczki</string>
-    <string name="CPUF_Nie_Otworz">Nie, otwórz skrzynkę ponownie</string>
-    <string name="Reg_Fragment_Wrong_Phone_Number">Please enter a valid phone number</string>
-    <string name="Setting">Ustawienia</string>
-    <string name="DarkMode">Tryb Ciemny</string>
-    <string name="Notyfication">Powiadomienia</string>
-    <string name="SMS">Powiadomienia SMS</string>
-    <string name="polski">Polski</string>
-    <string name="languageSelection">Wybór języka</string>
+    <string name="Po_terminie" translatable="false">Paczki po terminie</string>
+    <string name="CPUF_Paczka_Po_Terminie" translatable="false">Paczka po terminie została wyjęta?</string>
+    <string name="CPUF_Tak_Zakoncz" translatable="false">Tak, zakończ wyjmowanie paczki</string>
+    <string name="CPUF_Nie_Otworz" translatable="false">Nie, otwórz skrzynkę ponownie</string>
+    <string name="Reg_Fragment_Wrong_Phone_Number" translatable="false">Wpisz poprawny numer telefonu</string>
+    <string name="Setting" translatable="false">Ustawienia</string>
+    <string name="DarkMode" translatable="false">Tryb Ciemny</string>
+    <string name="Notyfication" translatable="false">Powiadomienia</string>
+    <string name="SMS" translatable="false">Powiadomienia SMS</string>
+    <string name="polski" translatable="false">Polski</string>
+    <string name="languageSelection" translatable="false">Wybór języka</string>
     <string-array name="languageSelection">
         <item>Polski</item>
         <item>English</item>

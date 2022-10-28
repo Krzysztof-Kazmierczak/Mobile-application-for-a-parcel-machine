@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Parcel Machine Ap</string>
+    <string name="Logowanie" translatable="false">Login</string>
+    <string name="Rejestracja" translatable="false">Create account</string>
+    <string name="Login" translatable="false">Login</string>
+    <string name="Home" translatable="false">Home</string>
+    <string name="Wyjmij_Paczke" translatable="false">Pull Out Pack</string>
+    <string name="Hasło" translatable="false">Password</string>
+    <string name="Zarejestruj" translatable="false">Sign me</string>
+    <string name="W_Maila" translatable="false">Enter e-mail</string>
+    <string name="W_Haslo" translatable="false">Enter password</string>
+    <string name="W_Tel" translatable="false">Enter phone No</string>
+    <string name="Zaloguj" translatable="false">Login</string>
+    <string name="PWH_Haslo" translatable="false">Repeat password</string>
+    <string name="Wyloguj" translatable="false">Logout</string>
+    <string name="Odbierz_Paczke" translatable="false">Pick up pack</string>
+    <string name="Moje_Paczki" translatable="false">My packs</string>
+    <string name="Nadaj_Paczke">Send pack</string>
+    <string name="Numer_Paczki">Put pack number</string>
+    <string name="Umiesc_Paczke">Put pack</string>
+    <string name="languageSelection" translatable="false">Language selection</string>
+    <string name="polski" translatable="false">Polish</string>
+    <string name="SMS" translatable="false">SMS messages</string>
+    <string name="Notyfication" translatable="false">Notification</string>
+    <string name="DarkMode" translatable="false">Dark mode</string>
+    <string name="Setting" translatable="false">Settings</string>
+    <string name="Reg_Fragment_Wrong_Phone_Number" translatable="false">Please enter a valid phone number</string>
+    <string name="CPUF_Nie_Otworz" translatable="false">No, reopen box</string>
+    <string name="CPUF_Tak_Zakoncz" translatable="false">Yes, end pick up pack</string>
+    <string name="CPUF_Paczka_Po_Terminie" translatable="false">The package was taken out after the time?</string>
+    <string name="Po_terminie" translatable="false">Pack after time</string>
+    <string name="PUP_BrakPaczek" translatable="false">You don\'t have any packages to take out</string>
+    <string name="MP_wyciagnijPaczke" translatable="false">Pull out pack</string>
+    <string name="TP_BrakPaczek" translatable="false">You don\'t have any packages to pick up</string>
+    <string name="Network" translatable="false"><b> No internet connection </b></string>
+    <string name="MP_pickupTime" translatable="false"><b> Pickup time </b></string>
+    <string name="MP_Odbierz_Paczke" translatable="false">Pick up pack</string>
+    <string name="MP_Rozmiar" translatable="false">Pack size</string>
+    <string name="MP_boxID" translatable="false">Box number</string>
+    <string name="MP_packID" translatable="false">Pack ID</string>
+    <string name="TakChce" translatable="false">Yes, open my box</string>
+    <string name="CzyNaPewno" translatable="false">Are you sure you want to open your box now</string>
+    <string name="CTP_Nie_Otworz" translatable="false">No, open the box again</string>
+    <string name="CTP_Tak_Zakoncz" translatable="false">Yes, finish pick up pack</string>
+    <string name="CTP_Odebrales_paczke" translatable="false">The package has been pick up from the box?</string>
+    <string name="CSP_Nie_Otworz" translatable="false">No, open the box again</string>
+    <string name="CSP_Tak_Zakoncz" translatable="false">Yes, end putting the package</string>
+    <string name="CSP_Umiesciles_paczke" translatable="false">The package was putting in the box?</string>
+</resources>
