@@ -47,4 +47,6 @@
     <string name="CSP_Nie_Otworz" translatable="false">No, open the box again</string>
     <string name="CSP_Tak_Zakoncz" translatable="false">Yes, end putting the package</string>
     <string name="CSP_Umiesciles_paczke" translatable="false">The package was putting in the box?</string>
+    <string name="AddYourName">Add your name</string>
+    <string name="infoToUser">Your data</string>
 </resources>

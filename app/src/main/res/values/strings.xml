@@ -30,13 +30,11 @@
     <string name="MP_boxID">Numer skrytki</string>
     <string name="MP_Rozmiar">Rozmiar paczki</string>
     <string name="MP_Odbierz_Paczke">Odbierz paczkę</string>
-    <string name="todo">TODO</string>
     <string name="MP_pickupTime"><b>Czas odbioru</b></string>
     <string name="Network"><b>Brak połączenia z internetem</b></string>
     <string name="TP_BrakPaczek">Nie masz żadnych paczek do odebrania</string>
     <string name="MP_wyciagnijPaczke">Wyciągnij Paczkę</string>
     <string name="PUP_BrakPaczek">Nie masz żadnych paczek do wyciągnięcia</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Po_terminie">Paczki po terminie</string>
     <string name="CPUF_Paczka_Po_Terminie">Paczka po terminie została wyjęta?</string>
     <string name="CPUF_Tak_Zakoncz">Tak, zakończ wyjmowanie paczki</string>
@@ -46,7 +44,9 @@
     <string name="DarkMode">Tryb Ciemny</string>
     <string name="Notyfication">Powiadomienia</string>
     <string name="SMS">Powiadomienia SMS</string>
+    <string name="AddYourName">Wpisz swoje imię</string>
     <string name="polski">Polski</string>
+    <string name="infoToUser">Twoje dane</string>
     <string name="languageSelection">Wybór języka</string>
     <string-array name="languageSelection">
         <item>Polski</item>

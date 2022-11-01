@@ -59,6 +59,7 @@ class SettingsFragment : Fragment() {
         offNotyfication()
         offSMS()
         darkMode()
+        userInfo()
     }
     //Funkcja włącza i wyłacza darkmod + zapis w bazie danych todo sprawdzic czy to jest git...czemu samo przeskakuje do innego fragmentu n
     private fun darkMode(){
@@ -145,6 +146,15 @@ class SettingsFragment : Fragment() {
                     repository.pushToken(token.toString())
                 }
             })
+    }
+    //Wyswietlenie podstawowych informacji o uzytkowniku
+    private fun userInfo(){
+        settingsVm.userData.observe(viewLifecycleOwner, { user ->
+            val mailUser = user.email
+            val phoneUser = user.phone
+            binding.userPhone.setText(phoneUser)
+            binding.userMail.setText(mailUser)
+        })
     }
 
     override fun onDestroyView() {

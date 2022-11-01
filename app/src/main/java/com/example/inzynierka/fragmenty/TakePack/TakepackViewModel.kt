@@ -11,7 +11,6 @@ class TakepackViewModel : BaseViewModel() {
     var cloudResult = MutableLiveData<Pack>()
     var mypacks = MutableLiveData<List<Pack>>()
     val idPacksToMe = repository.packsToMe()
-    var userData = MutableLiveData<User>()
 
     //Zaktualizowanie listy paczek użytkownika
     fun packData(mojePaczki: List<String>){
