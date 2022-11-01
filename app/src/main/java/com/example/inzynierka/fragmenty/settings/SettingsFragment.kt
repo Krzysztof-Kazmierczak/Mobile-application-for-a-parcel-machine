@@ -1,33 +1,32 @@
 package com.example.inzynierka.fragmenty.settings
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
-import android.widget.CompoundButton
-import android.widget.Switch
+import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat.recreate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import com.example.inzynierka.R
-import com.example.inzynierka.data.User
 import com.example.inzynierka.databinding.SettingsFragmentBinding
-import com.example.inzynierka.fragmenty.Send.Send
 import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.core.ComponentProvider
 import com.google.firebase.messaging.FirebaseMessaging
-
+import java.util.*
 
 class SettingsFragment : Fragment() {
 
     private val settingsVm by viewModels<SettingsViewModel>()
     private val repository = FirebaseRepository()
-    var userSettings = MutableLiveData<User>()
     private var _binding: SettingsFragmentBinding? = null
     private val binding get() = _binding!!
 
@@ -37,6 +36,7 @@ class SettingsFragment : Fragment() {
     ): View {
         _binding = SettingsFragmentBinding.inflate(layoutInflater, container, false)
         return binding.root
+
     }
 
     override fun onResume() {
@@ -48,6 +48,7 @@ class SettingsFragment : Fragment() {
 
         //Sprawdzanie połączenia internetowego
         settingsVm.checkInternetConnection(requireActivity().application)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,6 +61,7 @@ class SettingsFragment : Fragment() {
         offSMS()
         darkMode()
         userInfo()
+        changeLanguage()
     }
     //Funkcja włącza i wyłacza darkmod + zapis w bazie danych todo sprawdzic czy to jest git...czemu samo przeskakuje do innego fragmentu n
     private fun darkMode(){
@@ -155,6 +157,27 @@ class SettingsFragment : Fragment() {
             binding.userPhone.setText(phoneUser)
             binding.userMail.setText(mailUser)
         })
+    }
+    //Zmiana jezyka
+    private fun changeLanguage(){
+        val autoCompleteTxt = binding.languageSelection
+        var language = String()
+        autoCompleteTxt!!.onItemClickListener =
+            OnItemClickListener { parent, view, position, id ->
+                val item = parent.getItemAtPosition(position).toString()
+                //Toast.makeText(activity, "Item: $item", Toast.LENGTH_SHORT).show()
+                if (position == 0){
+                    language = "pl-rPL"
+                   // binding.languageSelection.setText("Polski")
+                }else if (position == 1){
+                    language = "en"
+                   // binding.languageSelection.setText("English")
+                }
+                val resources = activity?.getResources()
+                val configuration = resources?.getConfiguration()
+                configuration?.setLocale(Locale(language))
+                resources?.updateConfiguration(configuration,resources?.getDisplayMetrics())
+            }
     }
 
     override fun onDestroyView() {
