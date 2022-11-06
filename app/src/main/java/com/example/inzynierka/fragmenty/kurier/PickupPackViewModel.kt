@@ -11,10 +11,15 @@ class PickupPackViewModel : BaseViewModel() {
 
     var cloudResult = MutableLiveData<Pack>()
     var userInfo = MutableLiveData<User>()
+    var idPacksToUser = MutableLiveData<List<String>>()
     var packInfo = MutableLiveData<Pack>()
     val endTimeBoxS = repository.getEndTimePacks()
     var endTimeBox = MutableLiveData<BoxS>()
-
+    //Pobranie informacji o paczkach uzytkownika
+    fun infoUserPacks(UID: String): LiveData<List<String>> {
+        idPacksToUser = repository.packsToUser(UID) as MutableLiveData<List<String>>
+        return idPacksToUser
+    }
     //Pobranie informacji o danym Box`ie
     fun oneBoxInfo(name: String): LiveData<BoxS> {
         endTimeBox = repository.getOneBoxInfo(name) as MutableLiveData<BoxS>

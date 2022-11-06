@@ -67,6 +67,8 @@ class PickupPackFragment : Fragment() {
                     //Pobranie informacji o uzytkowniku (odbiorcy paczki)
                     PickupPackVm.infoUser(packDataInfo.uid.toString())
                     PickupPackVm.userInfo.observe(viewLifecycleOwner, { userDataInfo ->
+                        //PickupPackVm.infoUserPacks(userDataInfo.uid.toString())
+                       // PickupPackVm.idPacksToUser.observe(viewLifecycleOwner, { listUserPacks ->
                         //Przypisanie do zmiennej listy paczek uzytkownika
                         val listUserPacks = userDataInfo.paczki
 
@@ -105,6 +107,7 @@ class PickupPackFragment : Fragment() {
                         fragmentTransaction?.commit()
                     })
                 })
+               // })
             }
         }
         binding.recyclerViewPickuppack.adapter = adapter
