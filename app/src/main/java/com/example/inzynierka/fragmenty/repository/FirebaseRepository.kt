@@ -152,7 +152,7 @@ class FirebaseRepository {
     //Funkcja zwraca boxy w ktorych jest paczka po terminie todo poprawic to... N
     fun getEndTimePacks(): LiveData<List<BoxS>> {
         val cloudResult = MutableLiveData<List<BoxS>>()
-
+//TODO sprawdzenie dla całej daty a nie, że tylko dzień musi się zgadzać!
         // val liczbaPaczek = (mojePaczki.size) - 1
         var tworzycliste = ArrayList<BoxS>()
 
