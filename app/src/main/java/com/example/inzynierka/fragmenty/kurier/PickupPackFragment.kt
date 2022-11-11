@@ -28,6 +28,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 var PUP_boxId = String()
+// Tworzenie listy box`ów które są po terminie
+var boxAfterTime = ArrayList<BoxS>()
 
 class PickupPackFragment : Fragment() {
 
@@ -54,8 +56,10 @@ class PickupPackFragment : Fragment() {
         binding.recyclerViewPickuppack.layoutManager = LinearLayoutManager(requireContext())
         adapter = PickupPacksAdapter { position ->
         //Pobieramy informacje z wybranego "kafelka"
-            val boxID = PickupPackVm.endTimeBoxS.value?.get(position)?.ID_Box.toString()
-            val packID = PickupPackVm.endTimeBoxS.value?.get(position)?.ID.toString()
+           // val twojaStara = boxAfterTime[position].ID_Box.toString()
+
+            val boxID = boxAfterTime[position].ID_Box.toString() //PickupPackVm.endTimeBoxS.value?.get(position)?.ID_Box.toString()
+            val packID = boxAfterTime[position].ID.toString() //PickupPackVm.endTimeBoxS.value?.get(position)?.ID.toString()
             //Adnotacja w bazie danych że paczka została wyjęta przez opóźnienie w odebraniu
             PickupPackVm.noteToPack(packID)
             if(networkInfo != null && networkInfo.isConnected) {
@@ -170,8 +174,8 @@ class PickupPackFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         //Sprawdzanie połączenia z internetem
         observeInternetConnection()
-        // Tworzenie listy box`ów które są po terminie
-        var boxAfterTime = ArrayList<BoxS>()
+        //Czyszczenie listy
+        boxAfterTime.clear()
         // Pobranie informacji o tym czy skrytka nie jest juz po terminie... TODO poprawic to! N
         PickupPackVm.oneBoxInfo(1.toString())
         PickupPackVm.endTimeBox.observe(viewLifecycleOwner, { boxInfo01 ->
@@ -217,7 +221,6 @@ class PickupPackFragment : Fragment() {
                                 if (boxAfterTime.isNotEmpty()) {
                                     //wyswietlamy komunikat ze brak paczek
                                     binding.PUPBrakPaczek.visibility = View.INVISIBLE
-
                                     adapter.setEndTimePacks(boxAfterTime)
                                 } else {
                                     //wyswietlamy komunikat ze brak paczek

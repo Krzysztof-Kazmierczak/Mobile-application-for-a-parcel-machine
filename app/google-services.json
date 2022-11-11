@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "981424736047",
-    "project_id": "nowe111022",
-    "storage_bucket": "nowe111022.appspot.com"
+    "project_number": "973476114815",
+    "project_id": "nowe111122",
+    "storage_bucket": "nowe111122.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:981424736047:android:c3f6cc7aba4060fefac3da",
+        "mobilesdk_app_id": "1:973476114815:android:26c9856ead91a0d969ea4a",
         "android_client_info": {
           "package_name": "com.example.inzynierka"
         }
       },
       "oauth_client": [
         {
-          "client_id": "981424736047-om5p6fj2o63foq5hs7b0r8o1lda03h4a.apps.googleusercontent.com",
+          "client_id": "973476114815-ihafa47ojrq3l1det4c2pmfiuf42c1is.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD1hxo6VIRNQBIQmZMRmXxTYVtTnyhsrYw"
+          "current_key": "AIzaSyBPACaPRRg62XLINY_isMiDAwj0lQVlG2E"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "981424736047-om5p6fj2o63foq5hs7b0r8o1lda03h4a.apps.googleusercontent.com",
+              "client_id": "973476114815-ihafa47ojrq3l1det4c2pmfiuf42c1is.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
