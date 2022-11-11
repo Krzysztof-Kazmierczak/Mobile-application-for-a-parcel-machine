@@ -271,33 +271,32 @@ class FirebaseRepository {
             .get()
             .addOnSuccessListener {
                 val box = it.toObject(BoxS::class.java)
+
                 if (box != null) {
                     if (box.day!! != "") {
-                        if (box.day!! <= day) {
 
-                            if (box.month!! <= month) {
-
-                                if (box.year!! <= year) {
-                                    Log.d(
-                                        nazwa.toString() + " skrytka jest po terminie",
-                                        box.day.toString()
-                                    )
-                                    cloudResult.postValue(box)
-                                } else {
-                                    Log.d(nazwa + " jest jeszcze termin ", "TERMIN")
-                                    cloudResult.setValue(null)
-                                }
-                            }else {
-                                Log.d(nazwa + " jest jeszcze termin ", "TERMIN")
-                                cloudResult.setValue(null)
-                            }
+                        if (box.year!! < year) {
+                            Log.d(
+                                nazwa.toString() + " skrytka jest po terminie",
+                                box.day.toString()
+                            )
+                            cloudResult.postValue(box)
+                        }else if (box.year!! == year && box.month!! < month) {
+                            Log.d(
+                                nazwa.toString() + " skrytka jest po terminie",
+                                box.day.toString()
+                            )
+                            cloudResult.postValue(box)
+                        }else if (box.year!! == year && box.month!! == month && box.day!! <= day) {
+                            Log.d(
+                                nazwa.toString() + " skrytka jest po terminie",
+                                box.day.toString()
+                            )
+                            cloudResult.postValue(box)
                         }else {
                             Log.d(nazwa + " jest jeszcze termin ", "TERMIN")
                             cloudResult.setValue(null)
                         }
-                    }else {
-                        Log.d(nazwa + " jest jeszcze termin ", "TERMIN")
-                        cloudResult.setValue(null)
                     }
                 }
             }

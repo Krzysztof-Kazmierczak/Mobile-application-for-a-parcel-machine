@@ -55,9 +55,7 @@ class PickupPackFragment : Fragment() {
         var networkInfo = connect.activeNetworkInfo
         binding.recyclerViewPickuppack.layoutManager = LinearLayoutManager(requireContext())
         adapter = PickupPacksAdapter { position ->
-        //Pobieramy informacje z wybranego "kafelka"
-           // val twojaStara = boxAfterTime[position].ID_Box.toString()
-
+            //Pobieramy informacje z wybranego "kafelka" //todo sprawdzic dla wielu paczek
             val boxID = boxAfterTime[position].ID_Box.toString() //PickupPackVm.endTimeBoxS.value?.get(position)?.ID_Box.toString()
             val packID = boxAfterTime[position].ID.toString() //PickupPackVm.endTimeBoxS.value?.get(position)?.ID.toString()
             //Adnotacja w bazie danych że paczka została wyjęta przez opóźnienie w odebraniu
