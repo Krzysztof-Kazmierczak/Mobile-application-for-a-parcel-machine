@@ -13,7 +13,7 @@ class PickupPackViewModel : BaseViewModel() {
     var userInfo = MutableLiveData<User>()
     var idPacksToUser = MutableLiveData<List<String>>()
     var packInfo = MutableLiveData<Pack>()
-    val endTimeBoxS = repository.getEndTimePacks()
+    //val endTimeBoxS = repository.getEndTimePacks()
     var endTimeBox = MutableLiveData<BoxS>()
     //Pobranie informacji o paczkach uzytkownika
     fun infoUserPacks(UID: String): LiveData<List<String>> {

@@ -271,17 +271,15 @@ class FirebaseRepository {
             .get()
             .addOnSuccessListener {
                 val box = it.toObject(BoxS::class.java)
-
                 if (box != null) {
                     if (box.day!! != "") {
-
                         if (box.year!! < year) {
                             Log.d(
                                 nazwa.toString() + " skrytka jest po terminie",
                                 box.day.toString()
                             )
                             cloudResult.postValue(box)
-                        }else if (box.year!! == year && box.month!! < month) {
+                        }else if (box.year!! == year && box.month!!.toInt() < month.toInt()) {
                             Log.d(
                                 nazwa.toString() + " skrytka jest po terminie",
                                 box.day.toString()
@@ -297,7 +295,11 @@ class FirebaseRepository {
                             Log.d(nazwa + " jest jeszcze termin ", "TERMIN")
                             cloudResult.setValue(null)
                         }
+                        Log.d(nazwa + " nie ma żadnej paczki ", "TERMIN")
+                        cloudResult.setValue(box)
                     }
+                    Log.d(nazwa + " nie ma żadnej paczki ", "TERMIN")
+                    cloudResult.setValue(box)
                 }
             }
         return cloudResult

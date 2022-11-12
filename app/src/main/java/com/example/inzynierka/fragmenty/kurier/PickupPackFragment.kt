@@ -55,14 +55,15 @@ class PickupPackFragment : Fragment() {
         var networkInfo = connect.activeNetworkInfo
         binding.recyclerViewPickuppack.layoutManager = LinearLayoutManager(requireContext())
         adapter = PickupPacksAdapter { position ->
-            //Pobieramy informacje z wybranego "kafelka" //todo sprawdzic dla wielu paczek
+            //Pobieramy informacje z wybranego "kafelka"
+            //todo pozycje srpawdzic z paczka!
             val boxID = boxAfterTime[position].ID_Box.toString() //PickupPackVm.endTimeBoxS.value?.get(position)?.ID_Box.toString()
             val packID = boxAfterTime[position].ID.toString() //PickupPackVm.endTimeBoxS.value?.get(position)?.ID.toString()
             //Adnotacja w bazie danych że paczka została wyjęta przez opóźnienie w odebraniu
             PickupPackVm.noteToPack(packID)
             if(networkInfo != null && networkInfo.isConnected) {
                 //Otwarcie wybranego boxu z paczka po terminie
-                PickupPackVm.openBox(PickupPackVm.endTimeBoxS.value?.get(position)?.Size.toString(),boxID)
+               //todo PickupPackVm.openBox(PickupPackVm.endTimeBoxS.value?.get(position)?.Size.toString(),boxID)
                 //Pobranie informacji o paczce
                 PickupPackVm.infoPack(packID)
                 PickupPackVm.packInfo.observe(viewLifecycleOwner, { packDataInfo ->
@@ -174,6 +175,43 @@ class PickupPackFragment : Fragment() {
         observeInternetConnection()
         //Czyszczenie listy
         boxAfterTime.clear()
+        var liczbaPaczek = 0
+        var listaPaczek = ArrayList<Int>()
+        listaPaczek.clear()
+        listaPaczek.add(0)
+        listaPaczek.add(0)
+        listaPaczek.add(0)
+        listaPaczek.add(0)
+        listaPaczek.add(0)
+        listaPaczek.add(0)
+        for (i in 1..5) {
+            PickupPackVm.oneBoxInfo(i.toString())
+            PickupPackVm.endTimeBox.observe(viewLifecycleOwner, { boxInfo ->
+                if(boxInfo!=null){
+                    if(listaPaczek[boxInfo.ID_Box!!.toInt()] != boxInfo.ID_Box?.toInt()){
+                        listaPaczek[boxInfo.ID_Box?.toInt()!!] = boxInfo.ID_Box?.toInt()
+
+                        if (boxInfo != null) {
+                            liczbaPaczek = liczbaPaczek + 1
+                            if (boxInfo.day!! != "") {
+                            boxAfterTime.add(boxInfo)
+                            }
+                        }
+                    }
+                }
+                if (liczbaPaczek == 5) {
+                    if (boxAfterTime.isNotEmpty()) {
+                        //wyswietlamy komunikat ze brak paczek
+                        binding.PUPBrakPaczek.visibility = View.INVISIBLE
+                        adapter.setEndTimePacks(boxAfterTime)
+                    } else {
+                        //wyswietlamy komunikat ze brak paczek
+                        binding.PUPBrakPaczek.visibility = View.VISIBLE
+                    }
+                }
+            })
+        }
+        /*
         // Pobranie informacji o tym czy skrytka nie jest juz po terminie... TODO poprawic to! N
         PickupPackVm.oneBoxInfo(1.toString())
         PickupPackVm.endTimeBox.observe(viewLifecycleOwner, { boxInfo01 ->
@@ -226,8 +264,8 @@ class PickupPackFragment : Fragment() {
                                 }
                             }
         })})})})})
+    }*/
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
