@@ -184,6 +184,7 @@ class PickupPackFragment : Fragment() {
         listaPaczek.add(0)
         listaPaczek.add(0)
         listaPaczek.add(0)
+        //todo dodać nowe pole w info paczek po czym sprawdzać czy jest po terminie.
         for (i in 1..5) {
             PickupPackVm.oneBoxInfo(i.toString())
             PickupPackVm.endTimeBox.observe(viewLifecycleOwner, { boxInfo ->
