@@ -10,21 +10,10 @@ import com.example.inzynierka.data.User
 class PickupPackViewModel : BaseViewModel() {
 
     var cloudResult = MutableLiveData<Pack>()
+    var boxInfo = MutableLiveData<BoxS>()
     var userInfo = MutableLiveData<User>()
-    var idPacksToUser = MutableLiveData<List<String>>()
     var packInfo = MutableLiveData<Pack>()
-    //val endTimeBoxS = repository.getEndTimePacks()
-    var endTimeBox = MutableLiveData<BoxS>()
-    //Pobranie informacji o paczkach uzytkownika
-    fun infoUserPacks(UID: String): LiveData<List<String>> {
-        idPacksToUser = repository.packsToUser(UID) as MutableLiveData<List<String>>
-        return idPacksToUser
-    }
-    //Pobranie informacji o danym Box`ie
-    fun oneBoxInfo(name: String): LiveData<BoxS> {
-        endTimeBox = repository.getOneBoxInfo(name) as MutableLiveData<BoxS>
-        return endTimeBox
-    }
+
     //Pobranie informacji o paczce
     fun packData(id: String): LiveData<Pack> {
         cloudResult = repository.PutPack(id) as MutableLiveData<Pack>
@@ -34,6 +23,12 @@ class PickupPackViewModel : BaseViewModel() {
     fun upDataUser(nowaListaPaczekUzytkownika : ArrayList<String>)
     {
         repository.upDataUser(nowaListaPaczekUzytkownika)
+    }
+    //Pobranie informacji o danym boxie
+    fun getBoxData(boxNumber : String) : LiveData<BoxS>
+    {
+        boxInfo = repository.getBoxData(boxNumber) as MutableLiveData<BoxS>
+        return boxInfo
     }
     //Zaktualizowanie informacji o paczce
     fun upDataPack(numerIDPack: String)
@@ -59,14 +54,6 @@ class PickupPackViewModel : BaseViewModel() {
     fun infoPack(pack_id: String): LiveData<Pack>{
         packInfo = repository.getPackData(pack_id) as MutableLiveData<Pack>
         return packInfo
-    }
-    //Wysłanie informacji do bazy danych że należy otworzyć dany box
-    fun openBox(size: String?, id: String?){
-        size?.let{ it1 ->
-            id?.let{ it2->
-                repository.openBox(it1, it2)
-            }
-        }
     }
     //Funkcja zapisujaca informacje w paczce ze zostala wyjeta poniewaz minal czas na jej odebranie
     fun noteToPack(idPack:String){

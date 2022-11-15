@@ -11,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.inzynierka.R
 import com.example.inzynierka.constants.Constants
@@ -26,6 +28,8 @@ import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
 var PUP_boxId = String()
 // Tworzenie listy box`ów które są po terminie
@@ -110,7 +114,6 @@ class PickupPackFragment : Fragment() {
                         fragmentTransaction?.commit()
                     })
                 })
-               // })
             }
         }
         binding.recyclerViewPickuppack.adapter = adapter
@@ -168,107 +171,102 @@ class PickupPackFragment : Fragment() {
             Log.i("MyTag", "Response Exception ${e.message}")
         }
     }
-
+    //Wyświetlanie paczek po terminie //todo N
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         //Sprawdzanie połączenia z internetem
         observeInternetConnection()
         //Czyszczenie listy
         boxAfterTime.clear()
-        var liczbaPaczek = 0
-        var listaPaczek = ArrayList<Int>()
-        listaPaczek.clear()
-        listaPaczek.add(0)
-        listaPaczek.add(0)
-        listaPaczek.add(0)
-        listaPaczek.add(0)
-        listaPaczek.add(0)
-        listaPaczek.add(0)
-        //todo dodać nowe pole w info paczek po czym sprawdzać czy jest po terminie.
-        for (i in 1..5) {
-            PickupPackVm.oneBoxInfo(i.toString())
-            PickupPackVm.endTimeBox.observe(viewLifecycleOwner, { boxInfo ->
-                if(boxInfo!=null){
-                    if(listaPaczek[boxInfo.ID_Box!!.toInt()] != boxInfo.ID_Box?.toInt()){
-                        listaPaczek[boxInfo.ID_Box?.toInt()!!] = boxInfo.ID_Box?.toInt()
-
-                        if (boxInfo != null) {
-                            liczbaPaczek = liczbaPaczek + 1
-                            if (boxInfo.day!! != "") {
-                            boxAfterTime.add(boxInfo)
-                            }
-                        }
-                    }
-                }
-                if (liczbaPaczek == 5) {
-                    if (boxAfterTime.isNotEmpty()) {
-                        //wyswietlamy komunikat ze brak paczek
-                        binding.PUPBrakPaczek.visibility = View.INVISIBLE
-                        adapter.setEndTimePacks(boxAfterTime)
-                    } else {
-                        //wyswietlamy komunikat ze brak paczek
-                        binding.PUPBrakPaczek.visibility = View.VISIBLE
-                    }
-                }
-            })
-        }
-        /*
-        // Pobranie informacji o tym czy skrytka nie jest juz po terminie... TODO poprawic to! N
-        PickupPackVm.oneBoxInfo(1.toString())
-        PickupPackVm.endTimeBox.observe(viewLifecycleOwner, { boxInfo01 ->
-            if (boxInfo01 != null)
-            {
-                boxAfterTime.add(boxInfo01)
-               // boxInfo01 = null
+        var answerFunction = "0"
+        PickupPackVm.getBoxData(1.toString())
+        PickupPackVm.boxInfo.observe(viewLifecycleOwner, { boxInfo1 ->
+            answerFunction = boxCheckTime(boxInfo1)
+            if (answerFunction != "0") {
+                boxAfterTime.add(boxInfo1)
             }
-            PickupPackVm.oneBoxInfo(2.toString())
-            PickupPackVm.endTimeBox.observe(viewLifecycleOwner, { boxInfo02 ->
-                if (boxInfo02 != null)
-                {
-                    boxAfterTime.add(boxInfo02)
+            PickupPackVm.getBoxData(2.toString())
+            PickupPackVm.boxInfo.observe(viewLifecycleOwner, { boxInfo2 ->
+                answerFunction = boxCheckTime(boxInfo2)
+                if (answerFunction != "0") {
+                    boxAfterTime.add(boxInfo2)
                 }
-            PickupPackVm.oneBoxInfo(3.toString())
-                PickupPackVm.endTimeBox.observe(viewLifecycleOwner, { boxInfo03 ->
-                    if (boxInfo03 != null)
-                    {
-                        boxAfterTime.add(boxInfo03)
+                PickupPackVm.getBoxData(3.toString())
+                PickupPackVm.boxInfo.observe(viewLifecycleOwner, { boxInfo3 ->
+                    answerFunction = boxCheckTime(boxInfo3)
+                    if (answerFunction != "0") {
+                        boxAfterTime.add(boxInfo3)
                     }
-            PickupPackVm.oneBoxInfo(4.toString())
-                    PickupPackVm.endTimeBox.observe(viewLifecycleOwner, { boxInfo04 ->
-                        if (boxInfo04 != null)
-                        {
-                            boxAfterTime.add(boxInfo04)
+                    PickupPackVm.getBoxData(4.toString())
+                    PickupPackVm.boxInfo.observe(viewLifecycleOwner, { boxInfo4 ->
+                        answerFunction = boxCheckTime(boxInfo4)
+                        if (answerFunction != "0") {
+                            boxAfterTime.add(boxInfo4)
                         }
-
-            PickupPackVm.oneBoxInfo(5.toString())
-                        PickupPackVm.endTimeBox.observe(viewLifecycleOwner, { boxInfo05 ->
-                            if (boxInfo05 != null)
-                            {
-                                boxAfterTime.add(boxInfo05)
-                                if (boxAfterTime.isNotEmpty()) {
-                                    //wyswietlamy komunikat ze brak paczek
-                                    binding.PUPBrakPaczek.visibility = View.INVISIBLE
-
-                                    adapter.setEndTimePacks(boxAfterTime)
-                                } else {
-                                    //wyswietlamy komunikat ze brak paczek
-                                    binding.PUPBrakPaczek.visibility = View.VISIBLE
-                                }
-                            }else {
-                                if (boxAfterTime.isNotEmpty()) {
-                                    //wyswietlamy komunikat ze brak paczek
-                                    binding.PUPBrakPaczek.visibility = View.INVISIBLE
-                                    adapter.setEndTimePacks(boxAfterTime)
-                                } else {
-                                    //wyswietlamy komunikat ze brak paczek
-                                    binding.PUPBrakPaczek.visibility = View.VISIBLE
-                                }
+                        PickupPackVm.getBoxData(5.toString())
+                        PickupPackVm.boxInfo.observe(viewLifecycleOwner, { boxInfo5 ->
+                            answerFunction = boxCheckTime(boxInfo5)
+                            if (answerFunction != "0") {
+                                boxAfterTime.add(boxInfo5)
                             }
-        })})})})})
-    }*/
+                            if (boxAfterTime.isNotEmpty()) {
+                                //wyswietlamy komunikat ze brak paczek
+                                binding.PUPBrakPaczek.visibility = View.INVISIBLE
+                                adapter.setEndTimePacks(boxAfterTime)
+                            } else {
+                                //wyswietlamy komunikat ze brak paczek
+                                binding.PUPBrakPaczek.visibility = View.VISIBLE
+                            }
+                        })
+                    })
+                })
+            })
+        })
     }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    //Funkcja sprawdza czy paczka jest po terminie. Jeżeli jest po terminie funkcja zwraca w stringu
+    //numer boxu w którym jest paczka po terminie, jeżeli jest termin funkcja zwraca 0 - stringowe
+    fun boxCheckTime(box: BoxS): String {
+        var backInfo = "0"
+        val boxID = box.ID_Box.toString()
+        val cal = Calendar.getInstance()
+        cal.time
+        cal[Calendar.DAY_OF_MONTH]
+        val day = cal[Calendar.DAY_OF_MONTH].toString()
+        val month = (cal[Calendar.MONTH] + 1).toString()
+        val year = cal[Calendar.YEAR].toString()
+        if (box != null) {
+            if (box.day!! != "") {
+                if (box.year!! < year) {
+                    Log.d(
+                        boxID + " skrytka jest po terminie",
+                        box.day.toString()
+                    )
+                    backInfo = boxID
+                } else if (box.year!! == year && box.month!!.toInt() < month.toInt()) {
+                    Log.d(
+                        boxID + " skrytka jest po terminie",
+                        box.day.toString()
+                    )
+                    backInfo = boxID
+                } else if (box.year!! == year && box.month!! == month && box.day!! <= day) {
+                    Log.d(
+                        boxID + " skrytka jest po terminie",
+                        box.day.toString()
+                    )
+                    backInfo = boxID
+                } else {
+                    Log.d(boxID + " jest jeszcze termin ", "TERMIN")
+
+                }
+                Log.d(boxID + " nie ma żadnej paczki ", "TERMIN")
+
+            }
+            Log.d(boxID + " nie ma żadnej paczki ", "TERMIN")
+        }
+        return backInfo
     }
-}
+        override fun onDestroyView() {
+            super.onDestroyView()
+            _binding = null
+        }
+    }

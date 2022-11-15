@@ -35,6 +35,22 @@ class FirebaseRepository {
             }
         return cloudResult
     }
+    //Funkcja zwracająca informację o boxach.
+    fun getBoxData(boxNumber:String): LiveData<BoxS> {
+        val cloudResult = MutableLiveData<BoxS>()
+        cloud.collection("box")
+            .document(boxNumber)
+            .get()
+            .addOnSuccessListener {
+                val box = it.toObject(BoxS::class.java)
+               // listOf(user?.paczki.toString())
+                cloudResult.postValue(box)
+            }
+            .addOnFailureListener {
+                Log.d(REPO_DEBUG, it.message.toString())
+            }
+        return cloudResult
+    }
     //Funkcja dodaje date do paczki
     fun addDatePack(day:String,month:String,year:String, packID:String){
         cloud.collection("pack")
