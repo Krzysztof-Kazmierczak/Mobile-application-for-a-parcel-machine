@@ -74,6 +74,7 @@ class ConfirmSend : Fragment() {
         //Po naciśnieciu przycisku "Otwórz ponownie" wywołujemy funkacjię otwierającą box.
         binding.CSFNie.setOnClickListener {
             ConfirmSendVm.editBoxData(size, numerIdBox, numerIdPack)
+            //todo dodac angielski tekst (string)
             Toast.makeText(requireContext(), "Otwarto ponownie box " + numerIdBox, Toast.LENGTH_SHORT).show()
         }
         //Po wykryciu przycisku o zakończeniu procesu wysyłania paczki
@@ -146,6 +147,7 @@ class ConfirmSend : Fragment() {
 
     //Funkcja wysyłająca sms`a do użytkownika że odstał paczkę
     private fun sendSMS(numberPH:String,numberPack:String,numberBox:String,dataOdbioru:String) {
+        //todo dodac angielski tekst (string)
         val tresc1 = "Twoja paczka o numerze id "
         val tresc2 = " znajduje sie w skrytce: "
         val tresc3 = " Czas na odebranie paczkio: "
@@ -157,10 +159,12 @@ class ConfirmSend : Fragment() {
         //Wywołanie wysłania sms`a
         smsManager.sendTextMessage(numberPH,null,SMS,null,null)
        //Potwierdzenie na ekranie, że SMS został wysłany
+        //todo dodac angielski tekst (string)
         Toast.makeText(requireContext(),"SMS został wysłany",Toast.LENGTH_SHORT).show()
     }
     //Funkacja wyświetlająca notyfikacje na tel odbiorcy paczki że otrzymał paczkę
     private fun notyfiactionFunctionSend(numberPack:String,numberBox:String,tokenUser:String,dataOdbioru:String){
+        //todo dodac angielski tekst (string)
         val tresc1 = "Twoja paczka o numerze id "
         val tresc2 = " znajduje sie w skrytce: "
         val tresc3 = " Czas na odebranie paczki: "
@@ -169,6 +173,7 @@ class ConfirmSend : Fragment() {
         //Wysyłanie notyfikacji
         FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC)
         val notification = PushNotification(
+            //todo dodac angielski tekst (string)
             data = NotificationData("Otrzymano Paczkę", mess, 10, false),
             to = tokenUser)
         sendNotification(notification)

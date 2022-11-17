@@ -136,6 +136,7 @@ class PickupPackFragment : Fragment() {
     }
     //Wyslanie SMS do użytkownika że paczka została wyjęta
     private fun sendSMS(numberPH:String,numberPack:String,numberBox:String) {
+        //todo dodac angielski tekst (string)
         val tresc1 = "Twoja paczka o numerze id "
         val tresc2 = " zostala wyjeta ze skrytki: "
         val tresc3 = " Minal Twoj czas na odbioru paczki."
@@ -144,9 +145,11 @@ class PickupPackFragment : Fragment() {
         var smsManager = SmsManager.getDefault()
         smsManager.sendTextMessage(numberPH,null,SMS,null,null)
         Toast.makeText(requireContext(),"SMS został wysłany", Toast.LENGTH_SHORT).show()
+        //todo dodac angielski tekst (string)
     }
     //Publikacja notyfikacji że wyciągamy paczkę
     private fun notyfiactionFunctionSend(numberPack:String,numberBox:String,tokenUser:String){
+        //todo dodac angielski tekst (string)
         val tresc1 = "Twoja paczka o numerze id "
         val tresc2 = " zostala wyjeta ze skrytki: "
         val tresc3 = " Minal Twoj czas na odbioru paczki."
@@ -154,6 +157,7 @@ class PickupPackFragment : Fragment() {
         val mess = tresc1 + numberPack + tresc2 + numberBox + tresc3
         FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC)
         val notification = PushNotification(
+            //todo dodac angielski tekst (string)
             data = NotificationData("Wyciagnieto paczke", mess, 10, false),
             to = tokenUser)
         sendNotification(notification)

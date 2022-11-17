@@ -1,6 +1,5 @@
 package com.example.inzynierka.fragmenty.settings
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.app.ActivityCompat.recreate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.inzynierka.R
@@ -19,10 +16,11 @@ import com.example.inzynierka.databinding.SettingsFragmentBinding
 import com.example.inzynierka.fragmenty.repository.FirebaseRepository
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.core.ComponentProvider
 import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
 
+@Suppress("DEPRECATION")
 class SettingsFragment : Fragment() {
 
     private val settingsVm by viewModels<SettingsViewModel>()
@@ -39,6 +37,7 @@ class SettingsFragment : Fragment() {
 
     }
 
+    @ExperimentalCoroutinesApi
     override fun onResume() {
         super.onResume()
         //Wyświetlanie jaki język ma być używany w aplikacji
@@ -63,10 +62,10 @@ class SettingsFragment : Fragment() {
         userInfo()
         changeLanguage()
     }
-    //Funkcja włącza i wyłacza darkmod + zapis w bazie danych todo sprawdzic czy to jest git...czemu samo przeskakuje do innego fragmentu n
+    //Funkcja włącza i wyłacza darkmod + zapis w bazie danych todo sprawdzic czy to jest git...czemu samo przeskakuje do innego fragmentu N
     private fun darkMode(){
         val switchDarkMode = binding.switchDarkMode
-        switchDarkMode.setOnCheckedChangeListener { buttonView, isChecked ->
+        switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 settingsVm.darkMode(1)
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -78,7 +77,7 @@ class SettingsFragment : Fragment() {
             }
         }
     }
-    //Sprawdzenie i wyswietlenie wyborow uzytkownika todo sprawdzic czy to jest git n
+    //Sprawdzenie i wyswietlenie wyborow uzytkownika todo sprawdzic czy to jest git N
     private fun setUserNotyficatio(){
         settingsVm.userData.observe(viewLifecycleOwner, { user ->
             if(user.permitNotyfication == 1){
@@ -162,9 +161,8 @@ class SettingsFragment : Fragment() {
     private fun changeLanguage(){
         val autoCompleteTxt = binding.languageSelection
         var language = String()
-        autoCompleteTxt!!.onItemClickListener =
+        autoCompleteTxt.onItemClickListener =
             OnItemClickListener { parent, view, position, id ->
-                val item = parent.getItemAtPosition(position).toString()
                 //Toast.makeText(activity, "Item: $item", Toast.LENGTH_SHORT).show()
                 if (position == 0){
                     language = "pl-rPL"
@@ -176,7 +174,7 @@ class SettingsFragment : Fragment() {
                 val resources = activity?.getResources()
                 val configuration = resources?.getConfiguration()
                 configuration?.setLocale(Locale(language))
-                resources?.updateConfiguration(configuration,resources?.getDisplayMetrics())
+                resources?.updateConfiguration(configuration, resources.getDisplayMetrics())
             }
     }
 

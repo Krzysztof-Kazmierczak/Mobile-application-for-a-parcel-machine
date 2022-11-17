@@ -73,7 +73,6 @@ class RegistrationActivity : AppCompatActivity() {
             REQUEST_ID_MULTIPLE_PERMISSIONS -> {
                 val perms: MutableMap<String, Int> = HashMap()
 
-                Log.i("Powtorzenie", "1")
                 // Initialize the map with both permissions
                 perms[Manifest.permission.SEND_SMS] = PackageManager.PERMISSION_GRANTED
                 perms[Manifest.permission.RECEIVE_SMS] = PackageManager.PERMISSION_GRANTED

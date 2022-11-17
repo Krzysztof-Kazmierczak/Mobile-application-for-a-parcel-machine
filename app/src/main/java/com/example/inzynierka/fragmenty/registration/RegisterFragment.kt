@@ -104,6 +104,7 @@ class RegisterFragment : BaseFragment() {
             //Jeżeli wystąpił problem wyświetlamy informacjię użytkownikowi że coś poszło nie tak.
             .addOnFailureListener { exc ->
                 Snackbar.make(
+                    //todo dodac angielski tekst (string)
                     requireView(),
                     "Upss...Something went wrong...",
                     Snackbar.LENGTH_SHORT
@@ -118,6 +119,7 @@ class RegisterFragment : BaseFragment() {
             if (!validateEmail() or !validatePhone() or !validatePassword() or !validatePasswordRepeat()) {
                 return@setOnClickListener
             }
+            //todo dodac angielski tekst (string)
             var input = "Email: " + binding.RegMail?.getEditText()?.getText().toString()
             input += "\n"
             input += "Phone Number: " + binding.RegNumPhon?.getEditText()?.getText().toString()
@@ -130,10 +132,12 @@ class RegisterFragment : BaseFragment() {
         //Sprawdzenie czy to pole nie zostało puste jeżeli tak wyświetlany jest komunikat
        return if (binding.RegMail.editText!!.text.toString().trim().isEmpty()) {
            binding.RegMail.helperText = "Field can't be empty"
+           //todo dodac angielski tekst (string)
             false
            //Jeżeli wpisany tekst nie jest mailem wyświetlamy komunikat
         } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.RegMail.editText!!.text.toString().trim()).matches()) {
            binding.RegMail.helperText = "Please enter a valid email address"
+           //todo dodac angielski tekst (string)
             false
         } else {
             //Wszystko się zgadza. Warunek jest spełniony
@@ -146,10 +150,12 @@ class RegisterFragment : BaseFragment() {
         //Sprawdzenie czy to pole nie zostało puste jeżeli tak wyświetlany jest komunikat
         return if (binding.RegNumPhon?.editText!!.text.toString().trim().isEmpty()) {
             binding.RegNumPhon.helperText = "Field can't be empty"
+            //todo dodac angielski tekst (string)
             false
             //Jeżeli wpisany tekst nie ma 9 cyfr wyświetlamy komunikat
         } else if (binding.RegNumPhon?.editText!!.text.toString().trim().length != 9) {
             binding.RegNumPhon.helperText = "Please enter a valid phone number"
+            //todo dodac angielski tekst (string)
             false
         } else {
             //Wszystko się zgadza. Warunek jest spełniony
@@ -163,10 +169,12 @@ class RegisterFragment : BaseFragment() {
         //Sprawdzenie czy to pole nie zostało puste jeżeli tak wyświetlany jest komunikat
         val passwordInput = binding.RegPass?.editText!!.text.toString().trim()
         return if (passwordInput.isEmpty()) {
+            //todo dodac angielski tekst (string)
             binding.RegPass.helperText = "Field can't be empty"
             false
             //Jeżeli pattern nie jest sprawdzony wyświetlamy komunikat o wymaganiach hasła
         } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
+            //todo dodac angielski tekst (string)
             binding.RegPass.helperText = "Password too weak. Use: 1 lower letter, 1 upper letter, 1 digit, at least 6 characters, no spaces"
             false
         } else {
@@ -181,10 +189,12 @@ class RegisterFragment : BaseFragment() {
         val passwordRepeatInput = binding.RegPass?.editText!!.text.toString().trim()
         val passwordInput = binding.RegPassRep?.editText!!.text.toString().trim()
         return if (passwordInput.isEmpty()){
+            //todo dodac angielski tekst (string)
             binding.RegPassRep.helperText = "Field can't be empty"
             false
             //Jeżeli hasła się nie pokrywają wyświetlamy komunikat
         } else if (passwordInput != passwordRepeatInput) {
+            //todo dodac angielski tekst (string)
             binding.RegPassRep.helperText = "The passwords entered do not match"
             false
         } else {

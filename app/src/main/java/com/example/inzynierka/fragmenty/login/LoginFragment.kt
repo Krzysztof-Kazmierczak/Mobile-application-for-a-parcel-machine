@@ -76,6 +76,7 @@ class LoginFragment : BaseFragment() {
                         //Jeżeli wszystko się zgadza logujemy się do aplikacji
                         if(authRes.user != null) startApp()
                     }
+                    //todo dodac angielski tekst (string)
                     .addOnFailureListener{ exc ->
                         //Jeżeli występuje błąd wyświetlamy komunikat o błędzie użytkownikowi
                         Snackbar.make(requireView(), "Błędny login lub hasło", Snackbar.LENGTH_SHORT)
