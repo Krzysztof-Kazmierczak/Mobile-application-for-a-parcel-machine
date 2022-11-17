@@ -55,6 +55,14 @@ class PickupPackViewModel : BaseViewModel() {
         packInfo = repository.getPackData(pack_id) as MutableLiveData<Pack>
         return packInfo
     }
+    //Wysłanie informacji do bazy danych że należy otworzyć dany box
+    fun openBox(size: String?, id: String?){
+        size?.let{ it1 ->
+            id?.let{ it2->
+                repository.openBox(it1, it2)
+            }
+        }
+    }
     //Funkcja zapisujaca informacje w paczce ze zostala wyjeta poniewaz minal czas na jej odebranie
     fun noteToPack(idPack:String){
         repository.notePack(idPack)

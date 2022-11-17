@@ -60,14 +60,14 @@ class PickupPackFragment : Fragment() {
         binding.recyclerViewPickuppack.layoutManager = LinearLayoutManager(requireContext())
         adapter = PickupPacksAdapter { position ->
             //Pobieramy informacje z wybranego "kafelka"
-            //todo pozycje srpawdzic z paczka!
             val boxID = boxAfterTime[position].ID_Box.toString() //PickupPackVm.endTimeBoxS.value?.get(position)?.ID_Box.toString()
             val packID = boxAfterTime[position].ID.toString() //PickupPackVm.endTimeBoxS.value?.get(position)?.ID.toString()
+            val size = boxAfterTime[position].Size.toString()
             //Adnotacja w bazie danych że paczka została wyjęta przez opóźnienie w odebraniu
             PickupPackVm.noteToPack(packID)
             if(networkInfo != null && networkInfo.isConnected) {
                 //Otwarcie wybranego boxu z paczka po terminie
-               //todo PickupPackVm.openBox(PickupPackVm.endTimeBoxS.value?.get(position)?.Size.toString(),boxID)
+               PickupPackVm.openBox(size,boxID)
                 //Pobranie informacji o paczce
                 PickupPackVm.infoPack(packID)
                 PickupPackVm.packInfo.observe(viewLifecycleOwner, { packDataInfo ->
@@ -110,7 +110,7 @@ class PickupPackFragment : Fragment() {
                             sendSMS(userDataInfo.phone.toString(),packID,boxID)
                         }
                         val fragmentTransaction = fragmentManager?.beginTransaction()
-                        fragmentTransaction?.replace(R.id.frame_layout, SettingsFragment())
+                        fragmentTransaction?.replace(R.id.frame_layout, PickupPackFragment())
                         fragmentTransaction?.commit()
                     })
                 })
