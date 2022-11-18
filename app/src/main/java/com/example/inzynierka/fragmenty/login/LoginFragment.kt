@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.inzynierka.R
 import com.example.inzynierka.databinding.FragmentLoginBinding
 import com.example.inzynierka.fragmenty.registration.RegistrationViewModel
 import com.example.inzynierka.fragmenty.repository.BaseFragment
@@ -76,10 +77,9 @@ class LoginFragment : BaseFragment() {
                         //Jeżeli wszystko się zgadza logujemy się do aplikacji
                         if(authRes.user != null) startApp()
                     }
-                    //todo dodac angielski tekst (string)
                     .addOnFailureListener{ exc ->
                         //Jeżeli występuje błąd wyświetlamy komunikat o błędzie użytkownikowi
-                        Snackbar.make(requireView(), "Błędny login lub hasło", Snackbar.LENGTH_SHORT)
+                        Snackbar.make(requireView(), R.string.LOGWrongLoginOrPassword.toString(), Snackbar.LENGTH_SHORT)
                             .show()
                         Log.d(LOG_DEUBG, exc.message.toString())
                     }

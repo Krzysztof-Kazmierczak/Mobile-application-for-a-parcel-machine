@@ -84,15 +84,13 @@ class Send : Fragment() {
                                     fragmentTransaction?.commit()
                                 } else {
                                     //Jeżeli nie ma wolnych box`ów wyświetlamy komunikat użytkownikowi
-                                    //todo dodac angielski tekst (string)
-                                    Toast.makeText(requireContext(),"Wszystkie małe skrytki są zajęte!",Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(requireContext(),R.string.LOGAllBoxFull.toString(),Toast.LENGTH_SHORT).show()
                                 }
                             })
                         } else {}
                     } else {
                         //Jeżeli użytkownik wpisał numer paczki której nie ma w bazie danych wyświetlamy komunikat
-                        //todo dodac angielski tekst (string)
-                        Toast.makeText(requireContext(),"Nie ma takiej paczki w bazie danych",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(),R.string.LOGNoSuchPackage.toString(),Toast.LENGTH_SHORT).show()
                     }
                 })
             }

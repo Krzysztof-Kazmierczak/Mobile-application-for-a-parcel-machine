@@ -74,8 +74,7 @@ class ConfirmSend : Fragment() {
         //Po naciśnieciu przycisku "Otwórz ponownie" wywołujemy funkacjię otwierającą box.
         binding.CSFNie.setOnClickListener {
             ConfirmSendVm.editBoxData(size, numerIdBox, numerIdPack)
-            //todo dodac angielski tekst (string)
-            Toast.makeText(requireContext(), "Otwarto ponownie box " + numerIdBox, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), R.string.LOGReopenBox.toString() + numerIdBox, Toast.LENGTH_SHORT).show()
         }
         //Po wykryciu przycisku o zakończeniu procesu wysyłania paczki
         binding.CSFTak.setOnClickListener {
@@ -147,10 +146,9 @@ class ConfirmSend : Fragment() {
 
     //Funkcja wysyłająca sms`a do użytkownika że odstał paczkę
     private fun sendSMS(numberPH:String,numberPack:String,numberBox:String,dataOdbioru:String) {
-        //todo dodac angielski tekst (string)
-        val tresc1 = "Twoja paczka o numerze id "
-        val tresc2 = " znajduje sie w skrytce: "
-        val tresc3 = " Czas na odebranie paczkio: "
+        val tresc1 = R.string.SMSyourPackNumberID.toString()
+        val tresc2 = R.string.SMSIsInBox.toString()
+        val tresc3 = R.string.SMSTimeToTakePack.toString()
         //Treść SMS do użytkownika
         val SMS = tresc1 + numberPack + tresc2 + numberBox + tresc3 + dataOdbioru
         //Wysłanie SMS`a
@@ -159,22 +157,20 @@ class ConfirmSend : Fragment() {
         //Wywołanie wysłania sms`a
         smsManager.sendTextMessage(numberPH,null,SMS,null,null)
        //Potwierdzenie na ekranie, że SMS został wysłany
-        //todo dodac angielski tekst (string)
-        Toast.makeText(requireContext(),"SMS został wysłany",Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(),R.string.LOGsmsWasSend.toString(),Toast.LENGTH_SHORT).show()
     }
     //Funkacja wyświetlająca notyfikacje na tel odbiorcy paczki że otrzymał paczkę
     private fun notyfiactionFunctionSend(numberPack:String,numberBox:String,tokenUser:String,dataOdbioru:String){
-        //todo dodac angielski tekst (string)
-        val tresc1 = "Twoja paczka o numerze id "
-        val tresc2 = " znajduje sie w skrytce: "
-        val tresc3 = " Czas na odebranie paczki: "
+        val tresc1 = R.string.SMSyourPackNumberID.toString()
+        val tresc2 = R.string.SMSIsInBox.toString()
+        val tresc3 = R.string.SMSTimeToTakePack.toString()
         //Treść wiadomości notyfikacji (BEZ POLSKICH ZNAKÓW!)
         val mess = tresc1 + numberPack + tresc2 + numberBox + tresc3 + dataOdbioru
         //Wysyłanie notyfikacji
         FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC)
         val notification = PushNotification(
-            //todo dodac angielski tekst (string)
-            data = NotificationData("Otrzymano Paczkę", mess, 10, false),
+
+            data = NotificationData(R.string.LOGPackInBox.toString(), mess, 10, false),
             to = tokenUser)
         sendNotification(notification)
     }

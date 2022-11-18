@@ -54,4 +54,27 @@
 
     </string-array>
 
+    <string name="SMSyourPackNumberID">Twoja paczka o numerze id</string>
+    <string name="SMSwasTakenFromBox"> zostala wyjeta ze skrytki: </string>
+    <string name="SMStimeEnd"> Minal Twoj czas na odbioru paczki.</string>
+    <string name="LOGsmsWasSend">SMS został wysłany</string>
+    <string name="LOGPackWasTaken">Wyciagnieto paczke</string>
+    <string name="LOGWrongLoginOrPassword">Błędny login lub hasło</string>
+    <string name="LOGReopenBox">Otwarto ponownie box </string>
+    <string name="SMSIsInBox"> znajduje sie w skrytce </string>
+    <string name="SMSTimeToTakePack">  Czas na odebranie paczki to: </string>
+    <string name="LOGPackInBox"> Otrzymano Paczkę </string>
+    <string name="LOGSomeWentWrong">Upss...Something went wrong...</string>
+    <string name="LOGEmail">Email: </string>
+    <string name="LOGPhoneNumber">Numer telefonu: </string>
+    <string name="LOGFileCantEmpty">Field can't be empty </string>
+    <string name="LOGPleaseValidEmail">Please enter a valid email address </string>
+    <string name="LOGPleaseValidPhoneNo">Please enter a valid phone number </string>
+    <string name="LOGPasswordTooWeek">Password too weak. Use: 1 lower letter, 1 upper letter, 1 digit, at least 6 characters, no spaces</string>
+    <string name="LOGPasswordNotMatch">The passwords entered do not match </string>
+    <string name="LOGAllBoxFull">Wszystkie małe skrytki są zajęte!</string>
+    <string name="LOGNoSuchPackage">Nie ma takiej paczki w bazie danych:</string>
+
+
+
 </resources>

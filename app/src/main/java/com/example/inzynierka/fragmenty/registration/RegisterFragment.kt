@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import com.example.inzynierka.R
 import com.example.inzynierka.databinding.FragmentRegistrationBinding
 import com.example.inzynierka.fragmenty.repository.BaseFragment
 import com.google.android.material.snackbar.Snackbar
@@ -104,9 +105,7 @@ class RegisterFragment : BaseFragment() {
             //Jeżeli wystąpił problem wyświetlamy informacjię użytkownikowi że coś poszło nie tak.
             .addOnFailureListener { exc ->
                 Snackbar.make(
-                    //todo dodac angielski tekst (string)
-                    requireView(),
-                    "Upss...Something went wrong...",
+                    requireView(), R.string.LOGSomeWentWrong.toString(),
                     Snackbar.LENGTH_SHORT
                 )
                     .show()
@@ -119,10 +118,9 @@ class RegisterFragment : BaseFragment() {
             if (!validateEmail() or !validatePhone() or !validatePassword() or !validatePasswordRepeat()) {
                 return@setOnClickListener
             }
-            //todo dodac angielski tekst (string)
-            var input = "Email: " + binding.RegMail?.getEditText()?.getText().toString()
+            var input = R.string.LOGEmail.toString() + binding.RegMail?.getEditText()?.getText().toString()
             input += "\n"
-            input += "Phone Number: " + binding.RegNumPhon?.getEditText()?.getText().toString()
+            input += R.string.LOGPhoneNumber.toString() + binding.RegNumPhon?.getEditText()?.getText().toString()
             Toast.makeText(requireContext(), input, Toast.LENGTH_SHORT).show()
             setupSignUpClick()
         }
@@ -131,13 +129,11 @@ class RegisterFragment : BaseFragment() {
     private fun validateEmail(): Boolean {
         //Sprawdzenie czy to pole nie zostało puste jeżeli tak wyświetlany jest komunikat
        return if (binding.RegMail.editText!!.text.toString().trim().isEmpty()) {
-           binding.RegMail.helperText = "Field can't be empty"
-           //todo dodac angielski tekst (string)
+           binding.RegMail.helperText = R.string.LOGFileCantEmpty.toString()
             false
            //Jeżeli wpisany tekst nie jest mailem wyświetlamy komunikat
         } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.RegMail.editText!!.text.toString().trim()).matches()) {
-           binding.RegMail.helperText = "Please enter a valid email address"
-           //todo dodac angielski tekst (string)
+           binding.RegMail.helperText = R.string.LOGPleaseValidEmail.toString()
             false
         } else {
             //Wszystko się zgadza. Warunek jest spełniony
@@ -149,13 +145,11 @@ class RegisterFragment : BaseFragment() {
     private fun validatePhone(): Boolean {
         //Sprawdzenie czy to pole nie zostało puste jeżeli tak wyświetlany jest komunikat
         return if (binding.RegNumPhon?.editText!!.text.toString().trim().isEmpty()) {
-            binding.RegNumPhon.helperText = "Field can't be empty"
-            //todo dodac angielski tekst (string)
+            binding.RegNumPhon.helperText = R.string.LOGFileCantEmpty.toString()
             false
             //Jeżeli wpisany tekst nie ma 9 cyfr wyświetlamy komunikat
         } else if (binding.RegNumPhon?.editText!!.text.toString().trim().length != 9) {
-            binding.RegNumPhon.helperText = "Please enter a valid phone number"
-            //todo dodac angielski tekst (string)
+            binding.RegNumPhon.helperText = R.string.LOGPleaseValidPhoneNo.toString()
             false
         } else {
             //Wszystko się zgadza. Warunek jest spełniony
@@ -169,13 +163,11 @@ class RegisterFragment : BaseFragment() {
         //Sprawdzenie czy to pole nie zostało puste jeżeli tak wyświetlany jest komunikat
         val passwordInput = binding.RegPass?.editText!!.text.toString().trim()
         return if (passwordInput.isEmpty()) {
-            //todo dodac angielski tekst (string)
-            binding.RegPass.helperText = "Field can't be empty"
+            binding.RegPass.helperText = R.string.LOGFileCantEmpty.toString()
             false
             //Jeżeli pattern nie jest sprawdzony wyświetlamy komunikat o wymaganiach hasła
         } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            //todo dodac angielski tekst (string)
-            binding.RegPass.helperText = "Password too weak. Use: 1 lower letter, 1 upper letter, 1 digit, at least 6 characters, no spaces"
+            binding.RegPass.helperText = R.string.LOGPasswordTooWeek.toString()
             false
         } else {
             //Wszystko się zgadza. Warunek jest spełniony
@@ -189,13 +181,11 @@ class RegisterFragment : BaseFragment() {
         val passwordRepeatInput = binding.RegPass?.editText!!.text.toString().trim()
         val passwordInput = binding.RegPassRep?.editText!!.text.toString().trim()
         return if (passwordInput.isEmpty()){
-            //todo dodac angielski tekst (string)
-            binding.RegPassRep.helperText = "Field can't be empty"
+            binding.RegPassRep.helperText = R.string.LOGFileCantEmpty.toString()
             false
             //Jeżeli hasła się nie pokrywają wyświetlamy komunikat
         } else if (passwordInput != passwordRepeatInput) {
-            //todo dodac angielski tekst (string)
-            binding.RegPassRep.helperText = "The passwords entered do not match"
+            binding.RegPassRep.helperText = R.string.LOGPasswordNotMatch.toString()
             false
         } else {
             //Wszystko się zgadza. Warunek jest spełniony

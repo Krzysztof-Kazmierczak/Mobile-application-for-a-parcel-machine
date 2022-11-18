@@ -136,29 +136,25 @@ class PickupPackFragment : Fragment() {
     }
     //Wyslanie SMS do użytkownika że paczka została wyjęta
     private fun sendSMS(numberPH:String,numberPack:String,numberBox:String) {
-        //todo dodac angielski tekst (string)
-        val tresc1 = "Twoja paczka o numerze id "
-        val tresc2 = " zostala wyjeta ze skrytki: "
-        val tresc3 = " Minal Twoj czas na odbioru paczki."
+        val tresc1 = R.string.SMSyourPackNumberID.toString()
+        val tresc2 = R.string.SMSwasTakenFromBox.toString()
+        val tresc3 = R.string.SMStimeEnd.toString()
         //Tresc SMS`a
         val SMS = tresc1 + numberPack + tresc2 + numberBox + tresc3
         var smsManager = SmsManager.getDefault()
         smsManager.sendTextMessage(numberPH,null,SMS,null,null)
-        Toast.makeText(requireContext(),"SMS został wysłany", Toast.LENGTH_SHORT).show()
-        //todo dodac angielski tekst (string)
+        Toast.makeText(requireContext(),R.string.LOGsmsWasSend.toString(), Toast.LENGTH_SHORT).show()
     }
     //Publikacja notyfikacji że wyciągamy paczkę
     private fun notyfiactionFunctionSend(numberPack:String,numberBox:String,tokenUser:String){
-        //todo dodac angielski tekst (string)
-        val tresc1 = "Twoja paczka o numerze id "
-        val tresc2 = " zostala wyjeta ze skrytki: "
-        val tresc3 = " Minal Twoj czas na odbioru paczki."
+        val tresc1 = R.string.SMSyourPackNumberID.toString()
+        val tresc2 = R.string.SMSwasTakenFromBox.toString()
+        val tresc3 = R.string.SMStimeEnd.toString()
 
         val mess = tresc1 + numberPack + tresc2 + numberBox + tresc3
         FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC)
         val notification = PushNotification(
-            //todo dodac angielski tekst (string)
-            data = NotificationData("Wyciagnieto paczke", mess, 10, false),
+            data = NotificationData(R.string.LOGPackWasTaken.toString(), mess, 10, false),
             to = tokenUser)
         sendNotification(notification)
     }
