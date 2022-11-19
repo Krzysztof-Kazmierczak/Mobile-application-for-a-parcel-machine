@@ -84,15 +84,18 @@ class Send : Fragment() {
                                     fragmentTransaction?.commit()
                                 } else {
                                     //Jeżeli nie ma wolnych box`ów wyświetlamy komunikat użytkownikowi
-                                    Toast.makeText(requireContext(),R.string.LOGAllBoxFull.toString(),Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(requireContext(),context?.getResources()?.getString(R.string.LOGAllBoxFull),Toast.LENGTH_SHORT).show()
                                 }
                             })
                         } else {}
                     } else {
                         //Jeżeli użytkownik wpisał numer paczki której nie ma w bazie danych wyświetlamy komunikat
-                        Toast.makeText(requireContext(),R.string.LOGNoSuchPackage.toString(),Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(),context?.getResources()?.getString(R.string.LOGNoSuchPackage) + numerPaczki,Toast.LENGTH_SHORT).show()
                     }
                 })
+            }else{
+                //Jeżeli użytkownik nic nie wpisał wyświetal się komunikat
+                Toast.makeText(requireContext(),context?.getResources()?.getString(R.string.LOGFileCantEmpty) ,Toast.LENGTH_SHORT).show()
             }
         }
     }

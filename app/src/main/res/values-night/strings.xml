@@ -37,7 +37,6 @@
     <string name="TP_BrakPaczek" translatable="false">Nie masz żadnych paczek do odebrania</string>
     <string name="MP_wyciagnijPaczke" translatable="false">Wyciągnij Paczkę</string>
     <string name="PUP_BrakPaczek" translatable="false">Nie masz żadnych paczek do wyciągnięcia</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Po_terminie" translatable="false">Paczki po terminie</string>
     <string name="CPUF_Paczka_Po_Terminie" translatable="false">Paczka po terminie została wyjęta?</string>
     <string name="CPUF_Tak_Zakoncz" translatable="false">Tak, zakończ wyjmowanie paczki</string>
@@ -54,4 +53,25 @@
         <item>English</item>
 
     </string-array>
+
+    <string name="SMSyourPackNumberID"  translatable="false">Twoja paczka o numerze id</string>
+    <string name="SMSwasTakenFromBox"  translatable="false"> zostala wyjeta ze skrytki: </string>
+    <string name="SMStimeEnd"  translatable="false"> Minal Twoj czas na odbioru paczki.</string>
+    <string name="LOGsmsWasSend"  translatable="false">SMS został wysłany</string>
+    <string name="LOGPackWasTaken"  translatable="false">Wyciagnieto paczke</string>
+    <string name="LOGWrongLoginOrPassword"  translatable="false">Błędny login lub hasło</string>
+    <string name="LOGReopenBox"  translatable="false">Otwarto ponownie box </string>
+    <string name="SMSIsInBox"  translatable="false"> znajduje sie w skrytce </string>
+    <string name="SMSTimeToTakePack"  translatable="false">  Czas na odebranie paczki to: </string>
+    <string name="LOGPackInBox"  translatable="false"> Otrzymano Paczkę </string>
+    <string name="LOGSomeWentWrong"  translatable="false">Upss... Coś poszło nie tak...</string>
+    <string name="LOGEmail"  translatable="false">Email: </string>
+    <string name="LOGPhoneNumber"  translatable="false">Numer telefonu: </string>
+    <string name="LOGFileCantEmpty"  translatable="false">Pole nie może być puste</string>
+    <string name="LOGPleaseValidEmail"  translatable="false">Proszę podać poprawny adres email</string>
+    <string name="LOGPleaseValidPhoneNo"  translatable="false">Proszę podać poprawny numer telefonu</string>
+    <string name="LOGPasswordTooWeek"  translatable="false">Hasło jest zbyt słabe. Hasło musi mieć przynajmniej 6 znaków, nie zawierać spacji i trzeba użyć przynajmniej jednej: małej litery, dużej litery i cyfry</string>
+    <string name="LOGPasswordNotMatch"  translatable="false">Hasła nie są takie same.</string>
+    <string name="LOGAllBoxFull"  translatable="false">Wszystkie małe skrytki są zajęte!</string>
+    <string name="LOGNoSuchPackage"  translatable="false">Nie ma takiej paczki w bazie danych: </string>
 </resources>

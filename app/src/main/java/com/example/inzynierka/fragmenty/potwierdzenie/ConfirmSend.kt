@@ -74,7 +74,7 @@ class ConfirmSend : Fragment() {
         //Po naciśnieciu przycisku "Otwórz ponownie" wywołujemy funkacjię otwierającą box.
         binding.CSFNie.setOnClickListener {
             ConfirmSendVm.editBoxData(size, numerIdBox, numerIdPack)
-            Toast.makeText(requireContext(), R.string.LOGReopenBox.toString() + numerIdBox, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), context?.getResources()?.getString(R.string.LOGReopenBox).toString() + numerIdBox, Toast.LENGTH_SHORT).show()
         }
         //Po wykryciu przycisku o zakończeniu procesu wysyłania paczki
         binding.CSFTak.setOnClickListener {
@@ -146,9 +146,9 @@ class ConfirmSend : Fragment() {
 
     //Funkcja wysyłająca sms`a do użytkownika że odstał paczkę
     private fun sendSMS(numberPH:String,numberPack:String,numberBox:String,dataOdbioru:String) {
-        val tresc1 = R.string.SMSyourPackNumberID.toString()
-        val tresc2 = R.string.SMSIsInBox.toString()
-        val tresc3 = R.string.SMSTimeToTakePack.toString()
+        val tresc1 = context?.getResources()?.getString(R.string.SMSyourPackNumberID) + " "
+        val tresc2 = " " + context?.getResources()?.getString(R.string.SMSIsInBox) + " "
+        val tresc3 = context?.getResources()?.getString(R.string.SMSTimeToTakePack) + " "
         //Treść SMS do użytkownika
         val SMS = tresc1 + numberPack + tresc2 + numberBox + tresc3 + dataOdbioru
         //Wysłanie SMS`a
@@ -157,20 +157,20 @@ class ConfirmSend : Fragment() {
         //Wywołanie wysłania sms`a
         smsManager.sendTextMessage(numberPH,null,SMS,null,null)
        //Potwierdzenie na ekranie, że SMS został wysłany
-        Toast.makeText(requireContext(),R.string.LOGsmsWasSend.toString(),Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(),context?.getResources()?.getString(R.string.LOGsmsWasSend).toString(),Toast.LENGTH_SHORT).show()
     }
     //Funkacja wyświetlająca notyfikacje na tel odbiorcy paczki że otrzymał paczkę
     private fun notyfiactionFunctionSend(numberPack:String,numberBox:String,tokenUser:String,dataOdbioru:String){
-        val tresc1 = R.string.SMSyourPackNumberID.toString()
-        val tresc2 = R.string.SMSIsInBox.toString()
-        val tresc3 = R.string.SMSTimeToTakePack.toString()
+        val tresc1 = context?.getResources()?.getString(R.string.SMSyourPackNumberID) + " "
+        val tresc2 = " " + context?.getResources()?.getString(R.string.SMSIsInBox) + " "
+        val tresc3 = context?.getResources()?.getString(R.string.SMSTimeToTakePack) + " "
         //Treść wiadomości notyfikacji (BEZ POLSKICH ZNAKÓW!)
         val mess = tresc1 + numberPack + tresc2 + numberBox + tresc3 + dataOdbioru
         //Wysyłanie notyfikacji
         FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC)
         val notification = PushNotification(
 
-            data = NotificationData(R.string.LOGPackInBox.toString(), mess, 10, false),
+            data = NotificationData(context?.getResources()?.getString(R.string.LOGPackInBox).toString(), mess, 10, false),
             to = tokenUser)
         sendNotification(notification)
     }

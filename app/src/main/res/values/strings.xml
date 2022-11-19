@@ -67,13 +67,13 @@
     <string name="LOGSomeWentWrong">Upss...Something went wrong...</string>
     <string name="LOGEmail">Email: </string>
     <string name="LOGPhoneNumber">Numer telefonu: </string>
-    <string name="LOGFileCantEmpty">Field can't be empty </string>
+    <string name="LOGFileCantEmpty">Field can not be empty </string>
     <string name="LOGPleaseValidEmail">Please enter a valid email address </string>
     <string name="LOGPleaseValidPhoneNo">Please enter a valid phone number </string>
     <string name="LOGPasswordTooWeek">Password too weak. Use: 1 lower letter, 1 upper letter, 1 digit, at least 6 characters, no spaces</string>
     <string name="LOGPasswordNotMatch">The passwords entered do not match </string>
     <string name="LOGAllBoxFull">Wszystkie małe skrytki są zajęte!</string>
-    <string name="LOGNoSuchPackage">Nie ma takiej paczki w bazie danych:</string>
+    <string name="LOGNoSuchPackage">Nie ma takiej paczki w bazie danych: </string>
 
 
 

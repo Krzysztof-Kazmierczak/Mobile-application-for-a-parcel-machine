@@ -136,25 +136,25 @@ class PickupPackFragment : Fragment() {
     }
     //Wyslanie SMS do użytkownika że paczka została wyjęta
     private fun sendSMS(numberPH:String,numberPack:String,numberBox:String) {
-        val tresc1 = R.string.SMSyourPackNumberID.toString()
-        val tresc2 = R.string.SMSwasTakenFromBox.toString()
-        val tresc3 = R.string.SMStimeEnd.toString()
+        val tresc1 = context?.getResources()?.getString(R.string.SMSyourPackNumberID) + " "
+        val tresc2 = " " + context?.getResources()?.getString(R.string.SMSwasTakenFromBox) + " "
+        val tresc3 = context?.getResources()?.getString(R.string.SMStimeEnd) + " "
         //Tresc SMS`a
         val SMS = tresc1 + numberPack + tresc2 + numberBox + tresc3
         var smsManager = SmsManager.getDefault()
         smsManager.sendTextMessage(numberPH,null,SMS,null,null)
-        Toast.makeText(requireContext(),R.string.LOGsmsWasSend.toString(), Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(),context?.getResources()?.getString(R.string.LOGsmsWasSend), Toast.LENGTH_SHORT).show()
     }
     //Publikacja notyfikacji że wyciągamy paczkę
     private fun notyfiactionFunctionSend(numberPack:String,numberBox:String,tokenUser:String){
-        val tresc1 = R.string.SMSyourPackNumberID.toString()
-        val tresc2 = R.string.SMSwasTakenFromBox.toString()
-        val tresc3 = R.string.SMStimeEnd.toString()
+        val tresc1 = context?.getResources()?.getString(R.string.SMSyourPackNumberID) + " "
+        val tresc2 = " " + context?.getResources()?.getString(R.string.SMSwasTakenFromBox) + " "
+        val tresc3 = context?.getResources()?.getString(R.string.SMStimeEnd) + " "
 
         val mess = tresc1 + numberPack + tresc2 + numberBox + tresc3
         FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC)
         val notification = PushNotification(
-            data = NotificationData(R.string.LOGPackWasTaken.toString(), mess, 10, false),
+            data = NotificationData(context?.getResources()?.getString(R.string.LOGPackWasTaken).toString(), mess, 10, false),
             to = tokenUser)
         sendNotification(notification)
     }

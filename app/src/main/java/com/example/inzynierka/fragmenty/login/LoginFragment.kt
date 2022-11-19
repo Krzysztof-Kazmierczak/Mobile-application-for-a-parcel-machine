@@ -79,7 +79,7 @@ class LoginFragment : BaseFragment() {
                     }
                     .addOnFailureListener{ exc ->
                         //Jeżeli występuje błąd wyświetlamy komunikat o błędzie użytkownikowi
-                        Snackbar.make(requireView(), R.string.LOGWrongLoginOrPassword.toString(), Snackbar.LENGTH_SHORT)
+                        Snackbar.make(requireView(), context?.getResources()?.getString(R.string.LOGWrongLoginOrPassword).toString(), Snackbar.LENGTH_SHORT)
                             .show()
                         Log.d(LOG_DEUBG, exc.message.toString())
                     }

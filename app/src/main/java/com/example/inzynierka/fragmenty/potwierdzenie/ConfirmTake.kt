@@ -58,7 +58,7 @@ class ConfirmTake : Fragment() {
         //Wykrycie użycia przycisku "otwórz ponownie". Funkcja ponownie otwiera nasz box
         binding.CTFNie.setOnClickListener {
             ConfirmTakeVm.openBox(size, numerIdBox)
-            Toast.makeText(requireContext(), R.string.LOGReopenBox.toString() + numerIdBox, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), context?.getResources()?.getString(R.string.LOGReopenBox) + numerIdBox, Toast.LENGTH_SHORT).show()
         }
         //Wykrycie użycia przycisku potwierdzającego zakończenie odbierania paczki
         binding.CTFTak.setOnClickListener {

@@ -49,4 +49,25 @@
     <string name="CSP_Umiesciles_paczke" translatable="false">The package was putting in the box?</string>
     <string name="AddYourName">Add your name</string>
     <string name="infoToUser">Your data</string>
+
+    <string name="SMSyourPackNumberID"  translatable="false">Your parcel with ID number </string>
+    <string name="SMSwasTakenFromBox"  translatable="false"> was taken out of the box: </string>
+    <string name="SMStimeEnd"  translatable="false"> Your time to receive the pack has expired.</string>
+    <string name="LOGsmsWasSend"  translatable="false">SMS has been sent</string>
+    <string name="LOGPackWasTaken"  translatable="false">Package pulled out</string>
+    <string name="LOGWrongLoginOrPassword"  translatable="false">Błędny login lub hasło</string>
+    <string name="LOGReopenBox"  translatable="false">Incorrect login or password </string>
+    <string name="SMSIsInBox"  translatable="false"> is in the box </string>
+    <string name="SMSTimeToTakePack"  translatable="false">  The time to pick up the package is: </string>
+    <string name="LOGPackInBox"  translatable="false"> Pack received </string>
+    <string name="LOGSomeWentWrong">Upss...Something went wrong...</string>
+    <string name="LOGEmail"  translatable="false">Email: </string>
+    <string name="LOGPhoneNumber"  translatable="false">Phone number: </string>
+    <string name="LOGFileCantEmpty">Field can not be empty </string>
+    <string name="LOGPleaseValidEmail">Please enter a valid email address </string>
+    <string name="LOGPleaseValidPhoneNo">Please enter a valid phone number </string>
+    <string name="LOGPasswordTooWeek">Password too weak. Use: 1 lower letter, 1 upper letter, 1 digit, at least 6 characters, no spaces</string>
+    <string name="LOGPasswordNotMatch">The passwords entered do not match </string>
+    <string name="LOGAllBoxFull"  translatable="false">All the small box are full!</string>
+    <string name="LOGNoSuchPackage"  translatable="false">There is no such package in the database: </string>
 </resources>
